@@ -321,28 +321,42 @@ details.card[open] summary{margin-bottom:10px}
 .macro.folded{padding:10px 14px}
 .macro-h{align-items:center}
 .macro-h .fold{min-width:68px}
-.adv{margin:0 0 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
-.adv.folded{padding:10px 14px}
-.adv .linkish{border:0;background:none;padding:0;cursor:pointer;font:inherit;font-size:11.5px;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}
-.adv .linkish:hover{color:var(--ink)}
-.adv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.adv-chips .chip{cursor:pointer;height:26px;font-size:12px;font-family:inherit}
+.adv-fab{position:fixed;right:20px;bottom:20px;z-index:35;display:inline-flex;align-items:center;gap:7px;height:42px;padding:0 15px 0 12px;border-radius:21px;border:1px solid transparent;background:var(--ink);color:var(--surface);font:inherit;font-size:13px;font-weight:650;box-shadow:var(--shadow);cursor:pointer}
+.adv-fab svg{width:18px;height:18px;flex:none}
+.adv-fab:hover{filter:brightness(1.15)}
+.adv-fab.on{background:var(--surface);color:var(--ink);border-color:var(--line-strong)}
+.adv-fab .adv-dot{position:absolute;top:5px;right:7px;width:9px;height:9px;border-radius:50%;background:var(--up-fill);box-shadow:0 0 0 2px var(--surface)}
+.adv-panel{position:fixed;right:20px;bottom:72px;z-index:35;width:380px;max-width:calc(100vw - 24px);height:min(600px,calc(100vh - 96px));display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line-strong);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.adv-panel[hidden]{display:none}
+.adv-ph{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 10px 9px 14px;border-bottom:1px solid var(--line)}
+.adv-ph b{display:block;font-size:13.5px}
+.adv-sub{display:block;font-size:10.5px;color:var(--muted);margin-top:1px}
+.adv-x{border:0;background:none;font-size:22px;line-height:1;color:var(--ink-2);cursor:pointer;padding:3px 8px;border-radius:6px}
+.adv-x:hover{background:var(--hover)}
+.adv-body{flex:1;min-height:0;overflow-y:auto;padding:12px;overscroll-behavior:contain}
+.adv-empty p{font-size:12px;color:var(--ink-2);line-height:1.55;margin:0 0 10px}
+.adv-empty[hidden]{display:none}
+.adv-chips{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.adv-chips .chip{cursor:pointer;height:auto;min-height:26px;padding:3px 10px;font-size:12px;font-family:inherit;white-space:normal;text-align:left}
 .adv-chips .chip:hover{background:var(--hover)}
 .adv-chips .chip:disabled{opacity:.5;cursor:default}
-.adv-log{margin-top:10px;max-height:560px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:2px 2px 4px;overscroll-behavior:contain}
-.adv-log[hidden]{display:none}
+.adv-log{display:flex;flex-direction:column;gap:10px}
 .adv-qw{align-self:flex-end;max-width:88%;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
-.adv-q{background:var(--ink);color:var(--surface);border-radius:12px 12px 3px 12px;padding:8px 11px;font-size:12.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
-.adv-ref{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;font-size:11px;color:var(--muted)}
-.adv-a{align-self:flex-start;max-width:100%;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:12px 12px 12px 3px;padding:9px 12px}
-.adv-a .ai-out{margin-top:0}
+.adv-q{background:var(--ink);color:var(--surface);border-radius:12px 12px 3px 12px;padding:7px 10px;font-size:12.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.adv-ref{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;font-size:10.5px;color:var(--muted)}
+.adv-a{align-self:stretch;min-width:0;border:1px solid var(--line);background:var(--surface-2);border-radius:12px 12px 12px 3px;padding:8px 11px}
+.adv-a .ai-out{margin-top:0;font-size:12px}
+.adv-a .tblw{overflow-x:auto}
 .adv-think{color:var(--muted);font-size:12px}
-.adv-af{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;font-size:11px;color:var(--muted)}
-.adv-in{display:flex;gap:8px;margin-top:10px;align-items:stretch}
-.adv-in textarea{flex:1;min-width:0;min-height:46px;max-height:180px;resize:vertical;border:1px solid var(--line-strong);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px;line-height:1.45;background:var(--surface);color:var(--ink)}
-.adv-btns{display:flex;flex-direction:column;gap:6px}
-.adv-btns .btn{min-width:84px}
-.adv-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.adv-af{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:11px;color:var(--muted)}
+#advisor .linkish{border:0;background:none;padding:0;cursor:pointer;font:inherit;font-size:11px;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:3px}
+#advisor .linkish:hover{color:var(--ink)}
+.adv-in{display:flex;gap:6px;padding:8px 10px 6px;border-top:1px solid var(--line);align-items:flex-end}
+.adv-in textarea{flex:1;min-width:0;height:42px;max-height:120px;resize:none;border:1px solid var(--line-strong);border-radius:8px;padding:7px 9px;font:inherit;font-size:13px;line-height:1.4;background:var(--surface);color:var(--ink)}
+.adv-btns .btn{min-width:64px;height:42px}
+.adv-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:0 10px 2px;min-height:18px}
+.adv-note{font-size:10.5px;color:var(--muted);line-height:1.45;margin:0;padding:2px 10px 9px}
+@media (max-width:720px){.adv-fab{right:14px;bottom:14px;width:46px;height:46px;padding:0;justify-content:center;border-radius:50%}.adv-fab span{display:none}.adv-fab.on{display:none}.adv-panel{left:8px;right:8px;bottom:8px;width:auto;max-width:none;height:min(86vh,calc(100vh - 16px))}}
 .macro.open .macro-body{display:block}
 .mgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
 .msec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
@@ -478,7 +492,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   .modal{padding:0}.modal-panel{border-radius:0;height:100%}.mtiles{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding-bottom:4px}.mtile{flex:0 0 46%;scroll-snap-align:start}.mtile .c .lx{display:none}.key3,.scen3,.box3{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.srcs{columns:1}
   .top-r{align-items:stretch;width:100%}.gsearch input{flex:1;width:auto;min-width:0}.dt-price{text-align:left}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-@media print{.controls,.actions,.addform,.pick-tools,.hold-foot .btn{display:none}.card,.tile{break-inside:avoid}}
+@media print{.controls,.actions,.addform,.pick-tools,.hold-foot .btn,.adv-fab,.adv-panel{display:none}.card,.tile{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -504,7 +518,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   </header>
 
   <section class="macro" id="macro" aria-label="글로벌 매크로 분석"></section>
-  <section class="adv" id="advisor" aria-labelledby="advTitle"></section>
+  <div id="advisor"></div>
 
   <div id="viewMain">
   <section class="controls" aria-label="시뮬레이션 가정">
@@ -2183,12 +2197,12 @@ function checkCustomLookup() {
 function goAnalysis() {
   if (isPending()) commit();
   state.view = 'analysis';
-  $('#viewMain').hidden = true; $('#macro').hidden = true; $('#advisor').hidden = true; $('#viewAnalysis').hidden = false;
+  $('#viewMain').hidden = true; $('#macro').hidden = true; $('#viewAnalysis').hidden = false;
   renderPA(); window.scrollTo(0, 0);
 }
 function goMain() {
   state.view = 'main';
-  $('#viewAnalysis').hidden = true; $('#viewMain').hidden = false; $('#macro').hidden = false; $('#advisor').hidden = false;
+  $('#viewAnalysis').hidden = true; $('#viewMain').hidden = false; $('#macro').hidden = false;
   renderAll(); window.scrollTo(0, 0);
 }
 
@@ -3547,21 +3561,21 @@ function advSuggestions() {
   return [...new Set(out)].slice(0, 6);
 }
 
-/* 화면 */
+/* 화면: 오른쪽 아래 작은 버튼 → 채팅 창 */
 function advNote() {
   return SAMPLE
-    ? `질문 속 종목의 시세(국내 ${dataDate('KR')}·미국 ${dataDate('US')} 종가)·차트 지표·배당·리포트와 내 포트폴리오를 함께 보내요. 앱 안 AI는 웹 검색을 못 해서 그 밖의 최신 소식은 '확인 필요'로 답해요 · 질문할 때마다 Claude 사용량이 쓰여요.`
-    : '이 화면에서는 AI가 바로 답할 수 없어요. [질문 복사]를 누르면 질문과 앱 데이터가 복사돼요 → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요. Claude 앱에서 열면 여기서 바로 답을 받아요.';
+    ? `질문 속 종목의 시세(국내 ${dataDate('KR')}·미국 ${dataDate('US')})·차트·배당·리포트와 내 포트폴리오를 함께 보내요 · 웹 검색은 못 해요 · 질문마다 Claude 사용량이 쓰여요`
+    : '여기서는 AI가 바로 답할 수 없어요. [질문 복사] → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요. Claude 앱에서 연 아티팩트에서는 바로 답해요.';
 }
 function advRefresh() {
-  const send = $('#advSend'); if (send) send.textContent = SAMPLE ? '질문하기' : '질문 복사';
+  const send = $('#advSend'); if (send) send.textContent = SAMPLE ? '보내기' : '질문 복사';
   const note = $('#advNote'); if (note) note.textContent = advNote();
   const web = $('#advWeb'); if (web) web.hidden = !SAMPLE;
 }
 function advQEl(t) {
   const wrap = h('div', { class: 'adv-qw' }, h('div', { class: 'adv-q', text: t.show }));
   if (t.stocks && t.stocks.length) {
-    const ref = h('div', { class: 'adv-ref' }, '참고 데이터:');
+    const ref = h('div', { class: 'adv-ref' }, '참고:');
     t.stocks.forEach(s => ref.append(h('button', { class: 'linkish', type: 'button', title: s.name + ' 차트·분석 창 열기', text: `${s.name}(${s.code})`, onclick: () => openStock(s.id) })));
     wrap.append(ref);
   }
@@ -3570,7 +3584,7 @@ function advQEl(t) {
 function advAEl(t) {
   const el = h('div', { class: 'adv-a' });
   const out = h('div', { class: 'ai-out' }); el.append(out);
-  if (t.content) renderMd(out, t.content); else if (t.pending) out.append(h('span', { class: 'adv-think', text: 'Thinking... 보통 10초~1분 걸려요' + (ADV.turns.filter(x => x.role === 'assistant').length <= 1 ? ' (처음엔 사용 허용 창이 떠요)' : '') }));
+  if (t.content) renderMd(out, t.content); else if (t.pending) out.append(h('span', { class: 'adv-think', text: 'Thinking... 보통 10초~1분' + (ADV.turns.filter(x => x.role === 'assistant').length <= 1 ? ' (처음엔 사용 허용 창이 떠요)' : '') }));
   const foot = h('div', { class: 'adv-af' });
   if (t.note) foot.append(h('span', { text: t.note }));
   if (t.content && !t.pending) {
@@ -3582,18 +3596,30 @@ function advAEl(t) {
   t._el = out;
   return el;
 }
+function advNear() { const sc = $('#advBody'); return !sc || sc.scrollHeight - sc.scrollTop - sc.clientHeight < 80; }
+function advStick() { const sc = $('#advBody'); if (sc) sc.scrollTop = sc.scrollHeight; }
 function advRenderLog(stick) {
   const log = $('#advLog'); if (!log) return;
-  const near = log.scrollHeight - log.scrollTop - log.clientHeight < 80;
+  const near = advNear();
   log.textContent = '';
-  log.hidden = !ADV.turns.length;
   ADV.turns.forEach(t => log.append(t.role === 'user' ? advQEl(t) : advAEl(t)));
-  if (stick || near) log.scrollTop = log.scrollHeight;
+  const empty = $('#advEmpty'); if (empty) empty.hidden = ADV.turns.length > 0;
+  if (stick || near) advStick();
 }
 function advSetBusy(b) {
-  const send = $('#advSend'), stop = $('#advStop'), q = $('#advQ');
-  if (send) send.disabled = b; if (stop) stop.hidden = !b; if (q) q.disabled = false;
+  const send = $('#advSend'), stop = $('#advStop');
+  if (send) send.hidden = b; if (stop) stop.hidden = !b;
   document.querySelectorAll('#advisor .adv-chips .chip').forEach(c => { c.disabled = b; });
+}
+function advToggle(force) {
+  const panel = $('#advPanel'), fab = $('#advFab'); if (!panel || !fab) return;
+  const open = force != null ? !!force : panel.hidden;
+  panel.hidden = !open; fab.setAttribute('aria-expanded', String(open)); fab.classList.toggle('on', open);
+  if (open) {
+    const dot = $('#advFab .adv-dot'); if (dot) dot.hidden = true;
+    advRenderLog(true);
+    setTimeout(() => { const q = $('#advQ'); if (q) q.focus(); }, 20);
+  } else fab.focus();
 }
 async function advSend(qText) {
   const ta = $('#advQ'), msg = $('#advMsg');
@@ -3603,7 +3629,7 @@ async function advSend(qText) {
   if (!SAMPLE) {   // 사이트 등 Claude 밖: 질문 + 앱 데이터를 복사
     const txt = advCopyPrompt(q), ok = await copyText(txt);
     if (msg) msg.textContent = ok ? '복사했어요 → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요' : '복사가 막혀 아래에 펼쳤어요 (전체 선택 후 복사)';
-    if (!ok) { const log = $('#advLog'); log.hidden = false; log.textContent = ''; const box = h('textarea', { readonly: true, style: 'width:100%;height:220px;font-size:11.5px;font-family:inherit' }); box.value = txt; log.append(box); }
+    if (!ok) { const log = $('#advLog'); log.textContent = ''; const box = h('textarea', { readonly: true, style: 'width:100%;height:200px;font-size:11.5px;font-family:inherit' }); box.value = txt; log.append(box); const e = $('#advEmpty'); if (e) e.hidden = true; }
     return;
   }
   const its = advFindStocks(q), intent = advIntent(q, its);
@@ -3618,7 +3644,7 @@ async function advSend(qText) {
   try {
     const res = await SAMPLE(input, { signal: ctl.signal, cache: false, onText: ({ text }) => {
       const first = !ans.content; ans.content = text;
-      if (first || !ans._el) advRenderLog(); else { const log = $('#advLog'), near = log && log.scrollHeight - log.scrollTop - log.clientHeight < 80; renderMd(ans._el, text); if (near) log.scrollTop = log.scrollHeight; }
+      if (first || !ans._el || !document.contains(ans._el)) advRenderLog(); else { const near = advNear(); renderMd(ans._el, text); if (near) advStick(); }
     } });
     ans.content = res.text; if (res.truncated) ans.note = '답변이 길어 중간에 끊겼어요. 범위를 좁혀 다시 물어보세요.';
   } catch (e) {
@@ -3630,42 +3656,51 @@ async function advSend(qText) {
   } finally {
     ans.pending = false; ADV.busy = false; ADV.ctl = null; AI_RUNS.delete(ctl);
     advSetBusy(false); advRenderLog();
+    const panel = $('#advPanel'), dot = $('#advFab .adv-dot');
+    if (panel && panel.hidden && dot && ans.content) dot.hidden = false;   // 창을 닫아 둔 사이 답이 오면 점 표시
   }
+}
+function advIcon() {
+  const ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('fill', 'none'); svg.setAttribute('stroke', 'currentColor'); svg.setAttribute('stroke-width', '2'); svg.setAttribute('stroke-linecap', 'round'); svg.setAttribute('stroke-linejoin', 'round');
+  const p = document.createElementNS(ns, 'path'); p.setAttribute('d', 'M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z'); svg.append(p);
+  [8, 12, 16].forEach(x => { const c = document.createElementNS(ns, 'circle'); c.setAttribute('cx', x); c.setAttribute('cy', 12); c.setAttribute('r', '0.6'); c.setAttribute('fill', 'currentColor'); svg.append(c); });
+  return svg;
 }
 function renderAdvisor() {
   const box = $('#advisor'); if (!box) return;
   box.textContent = '';
-  const folded = !!state.advFold;
-  box.classList.toggle('folded', folded);
-  const fold = h('button', { class: 'btn sm fold', type: 'button', 'aria-expanded': String(!folded), 'aria-controls': 'advBody', title: folded ? 'AI에 조언 구하기 펼치기' : 'AI에 조언 구하기 접기', text: folded ? '펼치기 ▾' : '접기 ▴' });
-  fold.addEventListener('click', () => { state.advFold = !folded; save(); renderAdvisor(); const f2 = $('#advisor .macro-h .fold'); if (f2) f2.focus(); });
-  box.append(h('div', { class: 'macro-h' },
-    h('div', null, h('h2', { id: 'advTitle' }, 'AI에 조언 구하기 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: '월가 애널리스트 관점' }))),
-    h('div', { class: 'r', style: 'display:flex;gap:6px' }, fold)));
-  if (folded) return;
-  const body = h('div', { id: 'advBody' }); box.append(body);
-  body.append(h('p', { class: 'macro-lead', text: '"삼성전자 어떻게 생각해?", "SCHD 유망해?"처럼 편하게 물어보세요. 차트·실적·재무제표·포트폴리오·시장을 물으면 정해 둔 분석 형식으로 답해요.' }));
+  const fab = h('button', { class: 'adv-fab', id: 'advFab', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'advPanel', 'aria-label': 'AI에 조언 구하기 열기', title: 'AI에 조언 구하기 — 종목·포트폴리오를 물어보세요' }, advIcon(), h('span', { text: 'AI 조언' }));
+  const dot = h('i', { class: 'adv-dot', 'aria-hidden': 'true' }); dot.hidden = true; fab.append(dot);
+  const panel = h('section', { class: 'adv-panel', id: 'advPanel', 'aria-labelledby': 'advTitle' }); panel.hidden = true;
+  const close = h('button', { class: 'adv-x', type: 'button', 'aria-label': 'AI 조언 창 닫기', text: '×' });
+  panel.append(h('div', { class: 'adv-ph' }, h('div', { style: 'min-width:0' }, h('b', { id: 'advTitle', text: 'AI에 조언 구하기' }), h('span', { class: 'adv-sub', text: '월가 애널리스트 관점 · 앱 데이터 기반' })), close));
   const chips = h('div', { class: 'adv-chips' });
   advSuggestions().forEach(sq => chips.append(h('button', { class: 'chip', type: 'button', text: sq, onclick: () => advSend(sq) })));
-  body.append(chips);
-  body.append(h('div', { class: 'adv-log', id: 'advLog', 'aria-live': 'polite' }));
-  const ta = h('textarea', { id: 'advQ', rows: 2, maxlength: 600, placeholder: '예: 삼성전자 지금 사도 될까? · KT&G 배당 안전해? · 내 포트폴리오 점검해줘', 'aria-label': 'AI에게 질문' });
+  panel.append(h('div', { class: 'adv-body', id: 'advBody' },
+    h('div', { class: 'adv-empty', id: 'advEmpty' }, h('p', { text: '"삼성전자 어떻게 생각해?", "SCHD 유망해?"처럼 물어보세요. 차트·실적·재무제표·포트폴리오·시장을 물으면 정해 둔 분석 형식으로 답해요.' }), chips),
+    h('div', { class: 'adv-log', id: 'advLog', 'aria-live': 'polite' })));
+  const ta = h('textarea', { id: 'advQ', rows: 2, maxlength: 600, placeholder: '예: 삼성전자 지금 사도 될까?', 'aria-label': 'AI에게 질문' });
   ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); advSend(); } });
-  const send = h('button', { class: 'btn primary', id: 'advSend', type: 'button', text: SAMPLE ? '질문하기' : '질문 복사' });
+  const send = h('button', { class: 'btn primary sm', id: 'advSend', type: 'button', text: SAMPLE ? '보내기' : '질문 복사' });
   send.addEventListener('click', () => advSend());
-  const stop = h('button', { class: 'btn', id: 'advStop', type: 'button', text: '중지' }); stop.hidden = true;
+  const stop = h('button', { class: 'btn sm', id: 'advStop', type: 'button', text: '중지' }); stop.hidden = true;
   stop.addEventListener('click', () => { if (ADV.ctl) ADV.ctl.abort(); });
-  body.append(h('div', { class: 'adv-in' }, ta, h('div', { class: 'adv-btns' }, send, stop)));
-  const web = h('button', { class: 'linkish', id: 'advWeb', type: 'button', text: '웹 검색용 질문 복사' }); web.hidden = !SAMPLE;
+  panel.append(h('div', { class: 'adv-in' }, ta, h('div', { class: 'adv-btns' }, send, stop)));
+  const web = h('button', { class: 'linkish', id: 'advWeb', type: 'button', text: '웹 검색용 복사' }); web.hidden = !SAMPLE;
   web.addEventListener('click', async () => {
     const q = (ta.value || '').trim() || (ADV.turns.filter(t => t.role === 'user').slice(-1)[0] || {}).show;
     const m = $('#advMsg'); if (!q) { m.textContent = '질문을 먼저 입력하세요'; return; }
-    const ok = await copyText(advCopyPrompt(q)); m.textContent = ok ? '복사했어요 → Claude 채팅(웹 검색 켜기)에 붙여 넣으면 최신 자료로 답해요' : '복사가 막혔어요';
+    const ok = await copyText(advCopyPrompt(q)); m.textContent = ok ? '복사했어요 → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요' : '복사가 막혔어요';
   });
   const clear = h('button', { class: 'linkish', type: 'button', text: '대화 지우기' });
-  clear.addEventListener('click', () => { if (ADV.ctl) ADV.ctl.abort(); ADV.turns = []; advRenderLog(); const m = $('#advMsg'); if (m) m.textContent = ''; });
-  body.append(h('div', { class: 'adv-foot' }, h('span', { class: 'mini', id: 'advMsg', role: 'status', style: 'margin:0' }), h('span', { style: 'display:flex;gap:12px' }, web, clear)));
-  body.append(h('p', { class: 'ai-msg', id: 'advNote', text: advNote() }));
+  clear.addEventListener('click', () => { if (ADV.ctl) ADV.ctl.abort(); ADV.turns = []; advRenderLog(); const m = $('#advMsg'); if (m) m.textContent = ''; ta.focus(); });
+  panel.append(h('div', { class: 'adv-foot' }, h('span', { class: 'mini', id: 'advMsg', role: 'status', style: 'margin:0' }), h('span', { style: 'display:flex;gap:10px' }, web, clear)));
+  panel.append(h('p', { class: 'adv-note', id: 'advNote', text: advNote() }));
+  fab.addEventListener('click', () => advToggle());
+  close.addEventListener('click', () => advToggle(false));
+  panel.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal:not([hidden])')) { e.stopPropagation(); advToggle(false); } });
+  box.append(panel, fab);
   advRenderLog(true);
 }
 

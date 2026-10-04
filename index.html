@@ -18,6 +18,7 @@
   --good:#0a7d0a; --warn:#8a6100; --bad:#c23434;
   --good-fill:#0ca30c; --warn-fill:#e9a612; --bad-fill:#d03b3b; --pend:#e9a612;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --s9:#00a3bf; --s10:#8b5a2b; --s11:#b03fc9; --s12:#94a000;
   --up:#d33a2c; --down:#1f5fc9; --up-fill:#e5483a; --down-fill:#2f6fdb;
   --focus:#2a78d6; --shadow:0 8px 28px rgba(20,20,10,.12); --scrim:rgba(18,18,14,.42);
   --radius:10px;
@@ -31,7 +32,7 @@
     --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
     --principal:#33322e; --ghost:#9d9b93; --cash:#5b5a55;
     --good:#3cc23c; --warn:#f2b53a; --bad:#ef7a7a; --pend:#fab219;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767; --s9:#22b8d1; --s10:#b07a45; --s11:#c46ad8; --s12:#a8b41e;
     --up:#ff7a6b; --down:#6ea1ff; --up-fill:#e5584a; --down-fill:#4a86ec;
     --focus:#3987e5; --shadow:0 8px 28px rgba(0,0,0,.5); --scrim:rgba(0,0,0,.6);
   }
@@ -43,7 +44,7 @@
   --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.16);
   --principal:#33322e; --ghost:#9d9b93; --cash:#5b5a55;
   --good:#3cc23c; --warn:#f2b53a; --bad:#ef7a7a; --pend:#fab219;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767; --s9:#22b8d1; --s10:#b07a45; --s11:#c46ad8; --s12:#a8b41e;
   --up:#ff7a6b; --down:#6ea1ff; --up-fill:#e5584a; --down-fill:#4a86ec;
   --focus:#3987e5; --shadow:0 8px 28px rgba(0,0,0,.5); --scrim:rgba(0,0,0,.6);
 }
@@ -694,7 +695,7 @@ document.documentElement.lang = 'ko';
 /* ───────── 상수 ───────── */
 const FX0 = 1350.6;          // 2026.10.2 원/달러
 const START_MONTH = 11;      // 첫 적립: 2026년 11월
-const MAX_SEL = 8;           // 종목 구성 최대 종목 수(색 구분 한계)
+const N_COLORS = 12;         // 종목별 고유 색 수 — 종목 구성 개수 제한은 없음, 넘치는 종목은 회색(기타)
 const EXT_YEARS = 40;        // 목표 도달 연차 탐색 범위
 const STORE_KEY = 'monthly-div-sim-v1';
 const CASH = '__CASH__';
@@ -1078,11 +1079,11 @@ function holdTextById(hold) {
   return m;
 }
 
-/* 색 슬롯: 종목 구성 먼저, 그다음 보유만 한 종목. 8칸이 차면 회색(기타) */
+/* 색 슬롯: 종목 구성 먼저, 그다음 보유만 한 종목. 12칸이 차면 회색(기타) */
 function assignSlot(id) {
   if (state.slots[id] != null) return;
   const used = new Set(Object.values(state.slots));
-  for (let i = 0; i < MAX_SEL; i++) if (!used.has(i)) { state.slots[id] = i; return; }
+  for (let i = 0; i < N_COLORS; i++) if (!used.has(i)) { state.slots[id] = i; return; }
 }
 function syncSlots() {
   const need = new Set([...Object.keys(state.sel), ...heldIds(state.hold)]);
@@ -1508,7 +1509,7 @@ function renderPicker() {
   const ids = Object.keys(state.sel), n = ids.length;
   const sum = ids.reduce((x, id) => x + (+(id in draft.w ? draft.w[id] : state.sel[id]) || 0), 0);
   const ps = $('#pickSum'); ps.textContent = '';
-  ps.append(`선택 ${n}/${MAX_SEL}종목 · 비중 합계 `);
+  ps.append(`선택 ${n}종목 · 비중 합계 `);
   const off = n && Math.abs(sum - 100) > 0.05;
   ps.append(h('b', { class: off ? 'warn' : '', text: fx1(sum, 1) + '%' }));
   if (off) ps.append(h('span', { class: 'warn', text: ' → 계산 시 100%로 환산' }));
@@ -1558,11 +1559,14 @@ function stockRow(s, owned) {
   tr.addEventListener('click', () => toggle(s.id, !on));
   return tr;
 }
-function equalize() { const ids = Object.keys(state.sel); const w = ids.length ? +(100 / ids.length).toFixed(2) : 0; ids.forEach(id => state.sel[id] = w); draft.w = {}; }
+function equalize() {
+  const ids = Object.keys(state.sel), n = ids.length; draft.w = {}; if (!n) return;
+  const base = Math.floor(10000 / n), extra = 10000 - base * n;   // 0.01%p 단위 — 종목이 많아도 합계 100.00%
+  ids.forEach((id, i) => state.sel[id] = (base + (i < extra ? 1 : 0)) / 100);
+}
 function toggle(id, on) {
   const toast = $('#toast'); toast.textContent = '';
   if (on) {
-    if (Object.keys(state.sel).length >= MAX_SEL) { toast.textContent = `종목 구성은 최대 ${MAX_SEL}종목까지 담을 수 있어요 (색 구분 한계). 다른 종목을 먼저 빼 주세요.`; renderPicker(); return; }
     state.sel[id] = state.auto ? 0 : 10;
   } else { delete state.sel[id]; delete draft.w[id]; }
   if (state.auto) equalize();
@@ -1658,7 +1662,7 @@ function tipRow(colorCss, val, label) { return h('div', { class: 'tr' }, h('span
 function legendFor(items, leg) {
   const extra = items.filter(it => state.slots[it.st.id] == null);
   items.filter(it => state.slots[it.st.id] != null).forEach(it => leg.append(h('span', null, h('i', { class: 'k-rect', style: `background:${color(it.st.id)}` }), it.st.name + (it.w > 0 ? '' : ' (보유)'))));
-  if (extra.length) leg.append(h('span', { title: extra.map(it => it.st.name).join(', ') }, h('i', { class: 'k-rect', style: 'background:var(--ghost)' }), `기타 보유 ${extra.length}종목`));
+  if (extra.length) leg.append(h('span', { title: extra.map(it => it.st.name).join(', ') }, h('i', { class: 'k-rect', style: 'background:var(--ghost)' }), `기타 ${extra.length}종목`));
 }
 
 /* 월별 캘린더 */
@@ -1715,7 +1719,9 @@ function renderCalendar() {
       el.append(h('div', { class: 'tt', text: `${mi + 1}월 · ${CUR.H}년 후 ${bl}` }), h('div', { class: 'tv1', text: man(tot[mi]) + '원' }));
       const rows = items.map((it, i) => ({ it, v: det[mi][i] })).filter(r => r.v > 0).sort((p, q) => q.v - p.v);
       if (!rows.length) el.append(h('div', { class: 'tr' }, h('span', { text: '이 달은 배당이 없어요' })));
-      rows.forEach(r => el.append(tipRow(color(r.it.st.id), man(r.v), r.it.st.name + (r.it.w > 0 ? '' : ' (보유)'))));
+      const shownRows = rows.length > 10 ? rows.slice(0, 9) : rows, rest = rows.slice(shownRows.length);
+      shownRows.forEach(r => el.append(tipRow(color(r.it.st.id), man(r.v), r.it.st.name + (r.it.w > 0 ? '' : ' (보유)'))));
+      if (rest.length) el.append(tipRow('var(--ghost)', man(rest.reduce((s, r) => s + r.v, 0)), `그 외 ${rest.length}종목`));
       const foot = [];
       if (bt) foot.push(`기준안 ${man(bt[mi])} (${sgn(tot[mi] - bt[mi], v => man(v), 50)})`);
       foot.push(`목표 대비 ${fx1(tot[mi] / target * 100, 0)}%`);
@@ -2113,7 +2119,6 @@ function replaceCustom(key, id) {
 function addToPlan(id) {
   const st = S(id); if (!st) return '종목을 찾지 못했어요';
   if (state.sel[id] != null) return null;
-  if (Object.keys(state.sel).length >= MAX_SEL) return `종목 구성은 최대 ${MAX_SEL}종목이에요. 다른 종목을 먼저 빼 주세요.`;
   if (st.dbOnly && !state.extra.includes(id)) state.extra.push(id);
   toggle(id, true);
   return null;
@@ -2445,7 +2450,7 @@ function renderDetail(it) {
   acts.append(h('button', { class: 'btn' + (MD.ctx.mode === 'pick' && !inPlan ? ' primary' : ''), type: 'button', text: inPlan ? '종목 구성에서 빼기' : '종목 구성에 담기', onclick: () => {
     if (state.sel[sid] != null) { toggle(sid, false); renderDetail(it); return; }
     const err = addToPlan(sid); if (err) { msg.textContent = err; return; }
-    renderDetail(it); const m2 = $('#mdDetail .dt-actions .mini'); if (m2) m2.textContent = S(sid).noDiv ? '담았어요. 배당 정보가 없어 배당 0원으로 계산돼요 — 아래 배당 칸에서 입력하세요.' : `담았어요 (${Object.keys(state.sel).length}/${MAX_SEL}).`;
+    renderDetail(it); const m2 = $('#mdDetail .dt-actions .mini'); if (m2) m2.textContent = S(sid).noDiv ? '담았어요. 배당 정보가 없어 배당 0원으로 계산돼요 — 아래 배당 칸에서 입력하세요.' : `담았어요 (종목 구성 ${Object.keys(state.sel).length}종목).`;
   } }));
   const qIn = h('input', { type: 'text', inputmode: 'decimal', placeholder: canQty ? '주 수' : '만원', 'aria-label': canQty ? '보유 주 수' : '보유 금액(만원)' });
   const aIn = h('input', { type: 'text', inputmode: 'decimal', placeholder: '선택', 'aria-label': '평균 매수가' });
@@ -3110,14 +3115,16 @@ function renderPA() {
   // ② 상관관계
   const c2 = card('② 종목 간 상관관계와 중복 투자', pa.C ? `주별 수익률 ${pa.weeks}주(${dateKo(pa.wFrom)}~${dateKo(pa.wTo)}) 기준 · 1에 가까울수록 같이 움직임` : '가격 데이터가 있는 종목이 부족해 계산하지 못했어요');
   if (pa.C) {
-    const ht = h('table', { class: 'heat' }), names = pa.covered.map(p => p.name);
+    const HK = 12, nK = Math.min(pa.covered.length, HK);   // 표는 비중 상위 12종목까지(종목 수 제한 없음) — 요약 문구는 전체 기준
+    const ht = h('table', { class: 'heat' }), names = pa.covered.slice(0, nK).map(p => p.name);
     ht.append(h('tr', null, h('th', { text: '' }), ...names.map(nm => h('th', { title: nm, text: nm.length > 6 ? nm.slice(0, 6) + '…' : nm }))));
-    pa.C.forEach((row, i) => ht.append(h('tr', null, h('th', { title: names[i], style: 'text-align:right', text: names[i].length > 8 ? names[i].slice(0, 8) + '…' : names[i] }), ...row.map((v, j) => {
+    pa.C.slice(0, nK).forEach((row, i) => ht.append(h('tr', null, h('th', { title: names[i], style: 'text-align:right', text: names[i].length > 8 ? names[i].slice(0, 8) + '…' : names[i] }), ...row.slice(0, nK).map((v, j) => {
       if (v == null) return h('td', { text: '—' });
       const p = Math.round(Math.min(1, Math.abs(v)) * 72), base = v >= 0 ? 'var(--s2)' : 'var(--s1)';
       return h('td', { title: `${names[i]} × ${names[j]}: ${fx1(v, 2)}`, style: `background:color-mix(in srgb, ${base} ${i === j ? 12 : p}%, var(--surface));color:${p > 48 && i !== j ? '#fff' : 'var(--ink)'}`, text: i === j ? '1' : fx1(v, 2) });
     }))));
     c2.append(h('div', { class: 'heatw' }, ht));
+    if (pa.covered.length > HK) c2.append(h('p', { class: 'mini', text: `표는 비중 상위 ${HK}종목만 보여줘요 · 아래 쌍·평균은 전체 ${pa.covered.length}종목 기준` }));
     const hi = (pa.pairs || []).filter(x => x.c >= 0.6).slice(0, 4), lo = (pa.pairs || []).slice(-2).reverse();
     c2.append(h('p', { class: 'flag' + (hi.length ? ' wn' : ' ok'), text: hi.length ? '함께 움직이는 쌍(0.6 이상): ' + hi.map(x => `${x.a.name}·${x.b.name} ${fx1(x.c, 2)}`).join(', ') : '0.6 이상으로 강하게 같이 움직이는 쌍이 없어요 — 중복 투자 신호 없음' }));
     if (lo.length) c2.append(h('p', { class: 'flag', text: '가장 다르게 움직이는 쌍: ' + lo.map(x => `${x.a.name}·${x.b.name} ${fx1(x.c, 2)}`).join(', ') }));
@@ -3372,7 +3379,6 @@ $('#addForm').addEventListener('submit', e => {
   if (!name) { toast.textContent = '종목명을 입력하세요.'; return; }
   if (!(y >= 0)) { toast.textContent = '배당수익률을 입력하세요.'; return; }
   if (!pickM.size) { toast.textContent = '지급월을 하나 이상 고르세요.'; return; }
-  if (toSel && Object.keys(state.sel).length >= MAX_SEL) { toast.textContent = `종목 구성은 최대 ${MAX_SEL}종목까지예요. '종목 구성에도 바로 담기'를 해제하거나 다른 종목을 먼저 빼 주세요.`; return; }
   const mo = {}; pickM.forEach(m => mo[m] = 1);
   const r = { id: 'U' + Date.now().toString(36), mkt: $('#nMkt').value, name, code: '직접', p: 100, d: y, mo, g, s: $('#nSafe').value, note: `직접 입력 · 수익률 ${fx1(y, 2)}%, 성장 ${fx1(g, 1)}% 가정` };
   state.custom.push(r); U.set(r.id, mkStock(Object.assign({}, r, { custom: true })));

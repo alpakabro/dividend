@@ -162,6 +162,16 @@ table.hold{font-size:12px;min-width:430px}
 .hold-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
 .hold-foot b{color:var(--ink);font-size:15px;font-weight:700;margin-left:4px}
 .hint{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.45}
+.pnl-line{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;font-size:11.5px;color:var(--ink-2);padding:0 2px}
+.pnl-line .avg-lab{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.pnl-line .muted{color:var(--muted)}
+.pnl-out b{font-weight:650}
+.sum-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-left:auto;text-align:right}
+.pnl-sum{font-size:12px;color:var(--ink-2)}
+.pnl-sum b{font-size:13px;font-weight:700;margin-left:2px}
+.pnl-sum .muted{display:block;color:var(--muted);font-size:10.5px}
+.pnl-line .cur-px{white-space:nowrap}
+.pnl-line .cur-px b{font-weight:600;color:var(--ink);margin-left:4px}
 .hold-issues{display:none;margin-top:8px;padding:8px 10px;border-radius:8px;border:1px solid color-mix(in srgb,var(--bad-fill) 35%,transparent);background:color-mix(in srgb,var(--bad-fill) 7%,var(--surface));font-size:11.5px;color:var(--ink-2);line-height:1.5}
 .hold-issues.on{display:block}
 .hold-issues b{color:var(--bad);font-weight:650}
@@ -503,13 +513,13 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         </form>
         <div class="hold-wrap">
           <table class="hold">
-            <thead><tr><th>종목</th><th>입력 단위</th><th class="num">수량·금액</th><th class="num">현재가</th><th class="num">평가금액</th><th></th></tr></thead>
+            <thead><tr><th>종목</th><th>단위</th><th class="num">수량·금액</th><th class="num">평가금액</th><th></th></tr></thead>
             <tbody id="holdBody"></tbody>
           </table>
         </div>
         <div class="hold-foot">
           <span style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" id="btnHoldAdd" type="button">+ 보유 종목 추가</button><button class="btn sm" id="btnHoldCustom" type="button">+ 목록에 없는 종목</button><button class="btn sm query" id="btnQuery2" type="button">조회</button></span>
-          <span>초기 투자금 합계<b id="holdSum">0원</b></span>
+          <span class="sum-wrap"><span>초기 투자금 합계<b id="holdSum">0원</b></span><span class="pnl-sum" id="holdPnl" role="status"></span></span>
         </div>
         <div class="hold-issues" id="holdIssues" role="status"></div>
         <p class="hint">보유 주식은 팔지 않고 그대로 두고, 그 배당과 매달 넣는 돈은 아래 '종목 구성' 비중대로 투자한다고 계산합니다. 현금은 첫 달에 '종목 구성' 비중대로 매수합니다.<br><b>국내 상장 2,766종목·미국 2,048종목</b>은 위 [조회]로 찾아 현재가가 자동으로 채워집니다(국내 10.1·미국 10.2 종가 스냅샷, 실시간 시세 아님). 배당 정보가 없는 종목은 검색 창에서 배당수익률·지급월을 넣으면 시뮬레이션에 반영돼요. 그래도 없는 펀드·국내 ETF 등은 [+ 목록에 없는 종목]으로 직접 입력하세요.</p>
@@ -1252,8 +1262,8 @@ function commit() {
   }
   if (wChanged) state.auto = false;
   if (draft.hold) state.hold = draft.hold.map(r => r.id === CUSTOM
-    ? { id: CUSTOM, key: r.key, mode: r.mode, v: Math.max(0, numOr(r.v, 0)), name: (r.name || '').trim(), mkt: r.mkt === 'US' ? 'US' : 'KR', price: Math.max(0, numOr(r.price, 0)), y: Math.max(0, numOr(r.y, 0)), mp: r.mp || 'none', g: numOr(r.g, 4) }
-    : { id: r.id, mode: r.mode, v: Math.max(0, numOr(r.v, 0)) });
+    ? { id: CUSTOM, key: r.key, mode: r.mode, v: Math.max(0, numOr(r.v, 0)), name: (r.name || '').trim(), mkt: r.mkt === 'US' ? 'US' : 'KR', price: Math.max(0, numOr(r.price, 0)), y: Math.max(0, numOr(r.y, 0)), mp: r.mp || 'none', g: numOr(r.g, 4), avg: numOr(r.avg, 0) > 0 ? numOr(r.avg, 0) : undefined }
+    : { id: r.id, mode: r.mode, v: Math.max(0, numOr(r.v, 0)), avg: numOr(r.avg, 0) > 0 ? numOr(r.avg, 0) : undefined });
   draft.a = {}; draft.w = {}; draft.hold = null;
   renderAll();
   flashDone();
@@ -1317,16 +1327,41 @@ function holdOptions(sel, cur) {
   if (cs.length) { const og = h('optgroup', { label: '종목 구성에서 직접 추가한 종목' }); cs.forEach(s => og.append(h('option', { value: s.id, text: `${s.name} (${s.mkt === 'KR' ? '국내' : '미국'})` }))); sel.append(og); }
   sel.value = cur;
 }
+// 평가손익: 평균 매수가(1주 단가, 현지 통화) 기준. 금액 입력이어도 현재가 대비 비율로 계산
+function pnlOf(hd) {
+  if (!hd || hd.id === CASH) return null;
+  const st = holdStock(hd), avgP = numOr(hd.avg, 0); if (!st || !(avgP > 0)) return null;
+  if (hd.id !== CUSTOM && st.custom) return null;   // 종목 구성에서 직접 만든 종목은 실제 현재가가 없음
+  const price = hd.id === CUSTOM ? (hd.mode === 'qty' ? numOr(hd.price, 0) : 0) : st.p0, val = holdValue(hd);
+  if (!(price > 0) || !(val > 0)) return null;
+  const cost = val * avgP / price;
+  return { val, cost, pnl: val - cost, pct: (val - cost) / cost };   // 합계·분석 화면과 같은 식(반올림 일치)
+}
+function fillPnl(el, hd) {
+  el.textContent = '';
+  if (!(numOr(hd.avg, 0) > 0)) { el.append(h('span', { class: 'muted', text: '평균 매수가를 넣으면 손익이 계산돼요' })); return; }
+  const p = pnlOf(hd);
+  if (!p) { el.append(h('span', { class: 'muted', text: hd.id === CUSTOM ? '주 단위로 수량과 현재가를 넣으면 손익이 계산돼요' : '수량이나 금액을 넣으면 손익이 계산돼요' })); return; }
+  el.append(`매수금액 ${wonT(p.cost)} · 평가손익 `, h('b', { class: dirCls(p.pnl), text: `${sgn(p.pnl, wonT, 50)} (${sp(p.pct * 100, 1)})` }));
+}
 function updateHoldSum() {
-  const sum = holdRows().reduce((s, r) => s + holdValue(r), 0);
+  const rows = holdRows(), sum = rows.reduce((s, r) => s + holdValue(r), 0);
   $('#holdSum').textContent = won(sum) + (sum >= 1e4 ? '원' : '');
+  let pnl = 0, cost = 0, n = 0, m = 0;
+  rows.forEach(r => {
+    if (r.id === CASH || !(holdValue(r) > 0)) return;
+    const st = holdStock(r); if (!st || (r.id !== CUSTOM && st.custom)) return;   // 현재가 없는 직접 만든 종목은 제외
+    m++; const p = pnlOf(r); if (p) { pnl += p.pnl; cost += p.cost; n++; }
+  });
+  const el = $('#holdPnl'); el.textContent = '';
+  if (cost > 0) el.append('평가손익 ', h('b', { class: dirCls(pnl), text: `${sgn(pnl, wonT, 50)} (${sp(pnl / cost * 100, 1)})` }), n < m ? h('span', { class: 'muted', text: `평균 매수가 넣은 ${n}/${m}종목 기준` }) : null);
 }
 function newCustomRow() { return { id: CUSTOM, key: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), mode: 'qty', v: '', name: '', mkt: 'KR', price: '', y: '', mp: 'qkr', g: 4 }; }
 function renderHold() {
   const body = $('#holdBody'); body.textContent = '';
   const rows = holdRows();
   const issues = draft.hold ? [] : holdIssues(rows);
-  if (!rows.length) body.append(h('tr', null, h('td', { colspan: 6, class: 'hold-empty', text: '보유 종목이 없어요 → 초기 투자금 0원. 이미 가진 주식이나 바로 넣을 현금이 있으면 아래 버튼으로 추가하세요. 목록에 없는 종목은 [+ 목록에 없는 종목]으로 직접 입력할 수 있어요.' })));
+  if (!rows.length) body.append(h('tr', null, h('td', { colspan: 5, class: 'hold-empty', text: '보유 종목이 없어요 → 초기 투자금 0원. 이미 가진 주식이나 바로 넣을 현금이 있으면 아래 버튼으로 추가하세요. 목록에 없는 종목은 [+ 목록에 없는 종목]으로 직접 입력할 수 있어요.' })));
   rows.forEach((hd, idx) => holdRow(hd, idx, issues.filter(x => x.idx === idx)).forEach(tr => body.append(tr)));
   updateHoldSum();
   const box = $('#holdIssues'); box.textContent = '';
@@ -1337,7 +1372,7 @@ function renderHold() {
     hard.forEach(x => ul.append(h('li', { text: x.msg })));
     soft.forEach(x => ul.append(h('li', { class: 'soft', text: x.msg })));
     box.append(ul);
-    if (rows.some(r => r.id === CUSTOM)) box.append(h('div', { class: 'soft', text: '이 파일은 인터넷에서 시세를 불러오지 않아요. 직접 입력 종목의 현재가·배당수익률은 증권사 앱 종목 정보에서 확인해 넣어 주세요.' }));
+    if (rows.some(r => r.id === CUSTOM)) box.append(h('div', { class: 'soft', text: '직접 입력 종목은 현재가가 자동으로 채워지지 않아요. 위 [조회]로 찾으면 현재가가 들어간 종목으로 바꿀 수 있고, 데이터에 없는 종목은 증권사 앱에서 현재가·배당수익률을 확인해 넣어 주세요.' }));
   }
   box.classList.toggle('on', issues.length > 0);
 }
@@ -1351,7 +1386,9 @@ function holdRow(hd, idx, iss) {
   const qtyOk = isC || !!(st && !st.custom), mode = qtyOk ? (hd.mode || 'qty') : 'amt';
   const cur = isC && hd.mkt === 'US' ? '$' : '원';
   const pend = draft.hold !== null;
-  const tr = h('tr', isC ? { class: 'main-c' } : null);
+  const pickCustom = !isC && !!(st && st.custom), hasSub = hd.id !== CASH && !!st && !pickCustom;   // 직접 만든 종목(현재가 없음)은 손익 줄 생략
+  const tr = h('tr', hasSub ? { class: 'main-c' } : null);
+  const pnlOut = h('span', { class: 'pnl-out', role: 'status' });
   const sel = h('select', { 'aria-label': '보유 종목' }); holdOptions(sel, hd.id);
   sel.addEventListener('change', () => {
     const rows = editHold(), r = rows[idx];
@@ -1371,30 +1408,49 @@ function holdRow(hd, idx, iss) {
   [['qty', '주'], ['amt', '금액']].forEach(([m, label]) => {
     const b = h('button', { type: 'button', text: label, 'aria-pressed': String(mode === m) });
     if (m === 'qty' && !qtyOk) { b.disabled = true; b.title = '현금은 금액으로 입력'; }
-    b.addEventListener('click', () => { const rows = editHold(); rows[idx].mode = m; renderHold(); updatePending(); });
+    b.addEventListener('click', () => {
+      const rows = editHold(), r = rows[idx]; if ((r.mode || 'qty') === m) return;
+      const s2 = holdStock(r), v = numOr(r.v, NaN);
+      if (isFinite(v) && v > 0 && s2) {
+        const px = r.id === CUSTOM ? numOr(r.price, 0) * (s2.mkt === 'US' ? FX0 : 1) : pxKRW0(s2);
+        if (px > 0) r.v = m === 'amt' ? +(v * px / 1e4).toFixed(1) : +(v * 1e4 / px).toFixed(2);   // 주 ↔ 만원 (평가금액 유지)
+        else if (m === 'qty') r.v = '';   // 현재가를 모르면 주 수로 바꿀 수 없음
+      }
+      r.mode = m; renderHold(); updatePending();
+    });
     seg.append(b);
   });
   tr.append(h('td', null, seg));
   const vcell = h('td', { class: 'vv', text: valText(hd) });
-  const refresh = () => { const rows = editHold(); vcell.textContent = valText(rows[idx]); vcell.classList.toggle('need', vcell.textContent === '현재가 입력'); updateHoldSum(); updatePending(); };
+  const refresh = () => { const rows = editHold(); vcell.textContent = valText(rows[idx]); vcell.classList.toggle('need', vcell.textContent === '현재가 입력'); fillPnl(pnlOut, rows[idx]); updateHoldSum(); updatePending(); };
+  const avgCur = isC ? (hd.mkt === 'US' ? '$' : '원') : (st && st.mkt === 'US' ? '$' : '원');
+  const avgIn = h('input', { class: 'q px-in' + (pend ? ' pending' : ''), type: 'text', inputmode: 'decimal', autocomplete: 'off', placeholder: '1주 기준', 'aria-label': (st ? st.name : '종목') + ' 평균 매수가(' + (avgCur === '$' ? '달러' : '원') + ')' });
+  avgIn.value = fmtIn(hd.avg, 2);
+  avgIn.addEventListener('input', () => { editHold()[idx].avg = avgIn.value; avgIn.classList.add('pending'); refresh(); });
+  avgIn.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
+  const avgLab = h('label', { class: 'avg-lab', title: '증권사 앱의 평균단가(매입가) — 1주 기준' }, '평균 매수가', avgCur === '$' ? h('span', { class: 'unit', style: 'margin:0 2px 0 4px', text: '$' }) : null, avgIn, avgCur === '원' ? h('span', { class: 'unit', text: '원' }) : null);
+  fillPnl(pnlOut, hd);
   const inp = h('input', { class: 'q' + (pend ? ' pending' : '') + errOf('v'), type: 'text', inputmode: 'decimal', autocomplete: 'off', placeholder: mode === 'qty' ? '주 수' : '금액', 'aria-label': (st ? st.name : '현금') + (mode === 'qty' ? ' 보유 주 수' : ' 보유 금액(만원)') });
   inp.value = fmtIn(hd.v);
   inp.addEventListener('input', () => { editHold()[idx].v = inp.value; inp.classList.add('pending'); refresh(); });
   inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
   tr.append(h('td', { class: 'num' }, inp, h('span', { class: 'unit', text: mode === 'qty' ? '주' : '만원' })));
+  let priceLab = null;   // 직접 입력(주 단위)일 때 현재가 입력칸 — 상세 박스에 표시
   if (isC && mode === 'qty') {
     const pin = h('input', { class: 'q px-in' + (pend ? ' pending' : '') + errOf('price'), type: 'text', inputmode: 'decimal', autocomplete: 'off', placeholder: '현재가', 'aria-label': '현재가(' + (cur === '$' ? '달러' : '원') + ')' });
     pin.value = fmtIn(hd.price);
     pin.addEventListener('input', () => { editHold()[idx].price = pin.value; pin.classList.add('pending'); refresh(); });
     pin.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
-    tr.append(h('td', { class: 'px' }, cur === '$' ? h('span', { class: 'unit', style: 'margin:0 3px 0 0', text: '$' }) : null, pin, cur === '원' ? h('span', { class: 'unit', text: '원' }) : null));
-  } else tr.append(h('td', { class: 'px', text: hd.id === CASH ? '—' : isC ? '금액 입력' : priceText(st) }));
+    priceLab = h('label', { class: 'avg-lab' }, '현재가', cur === '$' ? h('span', { class: 'unit', style: 'margin:0 2px 0 4px', text: '$' }) : null, pin, cur === '원' ? h('span', { class: 'unit', text: '원' }) : null);
+  }
   if (vcell.textContent === '현재가 입력') vcell.classList.add('need');
   tr.append(vcell);
   const del = h('button', { class: 'del', type: 'button', title: '삭제', 'aria-label': '이 보유 항목 삭제', text: '×' });
   del.addEventListener('click', () => { const rows = editHold(); rows.splice(idx, 1); renderHold(); updatePending(); });
   tr.append(h('td', null, del));
-  if (!isC) return [tr];
+  if (!hasSub) return [tr];
+  if (!isC) return [tr, h('tr', { class: 'sub', 'data-idx': idx }, h('td', { colspan: 5 }, h('div', { class: 'pnl-line', title: st.mkt === 'US' ? '미국 종목: 수익률은 달러 기준, 원화 금액은 현재 환율로 환산(환차손익 제외)' : null },
+    h('span', { class: 'cur-px' }, '현재가', h('b', { text: priceText(st) })), avgLab, pnlOut)))];
 
   // 직접 입력 상세: 종목명 · 시장 · 배당수익률 · 지급월 · 성장 가정
   const box = h('div', { class: 'cfields' });
@@ -1425,7 +1481,8 @@ function holdRow(hd, idx, iss) {
   gi.addEventListener('input', () => { editHold()[idx].g = gi.value; gi.classList.add('pending'); updatePending(); });
   gi.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
   box.append(h('label', { title: '배당과 주가가 매년 이만큼 늘어난다고 가정 (배당 없는 성장주는 주가 상승률로 입력)' }, '성장 가정', gi, '%'));
-  const sub = h('tr', { class: 'sub', 'data-idx': idx }, h('td', { colspan: 6 }, box));
+  box.append(h('div', { class: 'pnl-line', style: 'flex-basis:100%;padding:0' }, priceLab, avgLab, pnlOut));
+  const sub = h('tr', { class: 'sub', 'data-idx': idx }, h('td', { colspan: 5 }, box));
   return [tr, sub];
 }
 
@@ -2858,12 +2915,15 @@ function paHoldPositions() {
     if (r.id === CASH) { cash += v; return; }
     const st = holdStock(r); if (!st) return;
     let p = map.get(st.id);
-    if (!p) { p = { id: st.id, st, name: st.name, mkt: st.mkt, sector: stockSector(st), qty: 0, value: 0, cost: 0, costOk: true, rows: [] }; map.set(st.id, p); }
+    if (!p) { p = { id: st.id, st, name: st.name, mkt: st.mkt, sector: stockSector(st), qty: 0, qtyEst: false, value: 0, cost: 0, costOk: true, rows: [] }; map.set(st.id, p); }
     p.value += v; p.rows.push(idx);
-    if (r.mode === 'qty' && !st.custom) {
-      const q = numOr(r.v, 0), a = numOr(r.avg, 0); p.qty += q;
-      if (a > 0) p.cost += q * a * (st.mkt === 'US' ? FX0 : 1); else p.costOk = false;
-    } else p.costOk = false;
+    // 수량: '주' 입력은 그대로, '금액' 입력은 현재가로 환산한 추정치
+    const px = st.custom ? (st.priced ? pxKRW0(st) : 0) : pxKRW0(st);
+    if (r.mode === 'qty' && px > 0) p.qty += numOr(r.v, 0);
+    else if (px > 0) { p.qty += v / px; p.qtyEst = true; }
+    // 매수 원금: 평균 매수가 기준 (주·금액 입력 모두)
+    const pl = pnlOf(r);
+    if (pl) p.cost += pl.cost; else p.costOk = false;
   });
   return { pos: [...map.values()], cash };
 }
@@ -3015,13 +3075,14 @@ function renderPA() {
     t.append(h('thead', null, h('tr', null, ...['종목', '수량', '평균 매수가', '현재가', '투자금(매수 원금)', '평가금액', '손익', '비중'].map(x => h('th', { text: x })))));
     const tb = h('tbody'); let costSum = 0, costAll = true;
     pa.pos.forEach(p => {
-      const avgIn = h('input', { type: 'text', inputmode: 'decimal', placeholder: p.qty ? (p.mkt === 'US' ? '달러' : '원') : '—', 'aria-label': p.name + ' 평균 매수가', disabled: !p.qty });
+      const canAvg = !p.st.custom || !!p.st.priced;   // 직접 만든 종목(현재가 없음)은 손익 계산 불가
+      const avgIn = h('input', { type: 'text', inputmode: 'decimal', placeholder: canAvg ? (p.mkt === 'US' ? '달러' : '원') : '—', 'aria-label': p.name + ' 평균 매수가', disabled: !canAvg });
       const curAvg = p.rows.map(i => numOr(state.hold[i].avg, 0)).find(x => x > 0); if (curAvg) avgIn.value = curAvg.toLocaleString('ko-KR', { maximumFractionDigits: 2 });
       avgIn.addEventListener('change', () => { const a = numOr(avgIn.value, 0); p.rows.forEach(i => { if (a > 0) state.hold[i].avg = a; else delete state.hold[i].avg; }); save(); renderPA(); });
       if (p.costOk) costSum += p.cost; else costAll = false;
       tb.append(h('tr', null, h('td', null, h('span', { class: 'sw', style: `background:${color(p.id)}` }), p.name, h('span', { class: 'cd', text: p.st.code })),
-        h('td', { text: p.qty ? p.qty.toLocaleString('ko-KR') + '주' : '금액 입력' }), h('td', null, avgIn),
-        h('td', { text: priceText(p.st) }), h('td', { text: p.costOk ? won(p.cost) : '—' }), h('td', { text: won(p.value) }),
+        h('td', { title: p.qtyEst ? '금액으로 입력해 현재가로 환산한 추정 수량' : null, text: p.qty ? (p.qtyEst ? '≈' : '') + p.qty.toLocaleString('ko-KR', { maximumFractionDigits: p.qtyEst ? (p.qty >= 100 ? 0 : 1) : 4 }) + '주' : '금액 입력' }), h('td', null, avgIn),
+        h('td', { text: p.st.custom && p.st.priced ? pxFmt(p.st.p0, p.mkt) : priceText(p.st) }), h('td', { text: p.costOk ? won(p.cost) : '—' }), h('td', { text: won(p.value) }),
         h('td', { class: p.pnl == null ? '' : dirCls(p.pnl), text: p.pnl == null ? '—' : `${sgn(p.pnl, won)} (${sp(p.pnl / p.cost * 100)})` }), h('td', { text: pct(p.w, 1) })));
     });
     tb.append(h('tr', null, h('td', { text: '현금' }), h('td', { text: '—' }), h('td', { text: '—' }), h('td', { text: '—' }), h('td', { text: won(pa.cash) }), h('td', { text: won(pa.cash) }), h('td', { text: '—' }), h('td', { text: pct(pa.cashW, 1) })));
@@ -3114,7 +3175,7 @@ function renderPA() {
 function promptPortfolio(pa, years, forCopy) {
   const hold = pa.pos.map(p => {
     const inv = p.costOk ? wonT(p.cost) : (pa.basis === 'plan' ? `매달 ${pct(p.w0 || p.w, 1)}` : '미입력');
-    const avgP = p.qty && p.rows.length ? p.rows.map(i => numOr(state.hold[i].avg, 0)).find(x => x > 0) : null;
+    const avgP = p.rows.length ? p.rows.map(i => numOr(state.hold[i].avg, 0)).find(x => x > 0) : null;
     return `\n- ${p.name}(${p.st.code}, ${p.mkt === 'US' ? '미국' : '국내'}, ${p.sector}): 투자금 ${inv}, 평균 매수가 ${avgP ? pxFmt(avgP, p.mkt) : '미입력'}, 현재가 ${pxFmt(p.st.p0, p.mkt)}, 평가금액 ${wonT(p.value)}, 비중 ${pct(p.w, 1)}`;
   }).join('') + `\n- 현금 비중: ${pct(pa.cashW, 1)}${pa.cash ? ` (${wonT(pa.cash)})` : ''}`;
   const g = G_PF.replace('{HOLD}', hold).replace('{YEARS}', `${years}년`).replace('{RISK}', pa.R.k);

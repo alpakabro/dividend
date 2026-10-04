@@ -304,7 +304,7 @@ details.card[open] summary{margin-bottom:10px}
 .macro{margin:0 0 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
 .macro-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
 .macro-h h2{font-size:14px;margin:0;font-weight:700}
-.macro-h p{margin:3px 0 0;font-size:12px;color:var(--ink-2);max-width:900px;line-height:1.5}
+.macro-lead{margin:3px 0 0;font-size:12px;color:var(--ink-2);max-width:900px;line-height:1.5}
 .mtiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
 .mtile{border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0;background:var(--surface)}
 .mtile .k{font-size:11px;color:var(--muted)}
@@ -318,6 +318,9 @@ details.card[open] summary{margin-bottom:10px}
 .key3 .kc b{display:block;font-size:12px;margin-bottom:2px}
 .key3 .kc span{font-size:11.5px;color:var(--ink-2);line-height:1.45}
 .macro-body{margin-top:12px;display:none}
+.macro.folded{padding:10px 14px}
+.macro-h{align-items:center}
+.macro-h .fold{min-width:68px}
 .macro.open .macro-body{display:block}
 .mgrid{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
 .msec{border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
@@ -968,7 +971,7 @@ function recSel() { const o = {}; REC.forEach(id => o[id] = +(100 / REC.length).
 let state = {
   sel: recSel(), auto: true, slots: {}, custom: [], hold: [], a: Object.assign({}, DEFAULT_A),
   base: recSel(), filter: 'all', onlySel: false, theme: null, views: { cal: false, val: false, inc: false },
-  ov: {}, extra: [], risk: 'mid', paBasis: 'hold', paYears: null, view: 'main', macroOpen: false, pickQ: ''
+  ov: {}, extra: [], risk: 'mid', paBasis: 'hold', paYears: null, view: 'main', macroOpen: false, macroFold: false, pickQ: ''
 };
 REC.forEach((id, i) => state.slots[id] = i);
 
@@ -3233,12 +3236,19 @@ function mchg(c) {
 function renderMacro() {
   const box = $('#macro'); box.textContent = '';
   if (!MACRO) { box.hidden = true; return; }
-  box.classList.toggle('open', !!state.macroOpen);
-  const tog = h('button', { class: 'btn sm', type: 'button', 'aria-expanded': String(!!state.macroOpen), text: state.macroOpen ? '접기' : '전체 분석 보기 (①~⑦)' });
+  const folded = !!state.macroFold;   // 브리핑 전체 접기(제목 줄만 남김)
+  box.classList.toggle('open', !folded && !!state.macroOpen);
+  box.classList.toggle('folded', folded);
+  const tog = h('button', { class: 'btn sm', type: 'button', 'aria-expanded': String(!!state.macroOpen), text: state.macroOpen ? '전체 분석 접기' : '전체 분석 보기 (①~⑦)' });
   tog.addEventListener('click', () => { state.macroOpen = !state.macroOpen; save(); renderMacro(); if (state.macroOpen) setTimeout(() => box.scrollIntoView({ block: 'start', behavior: 'smooth' }), 30); });
+  const fold = h('button', { class: 'btn sm fold', type: 'button', 'aria-expanded': String(!folded), 'aria-controls': 'macroContent', title: folded ? '매크로 브리핑 펼치기' : '매크로 브리핑 접기', text: folded ? '펼치기 ▾' : '접기 ▴' });
+  fold.addEventListener('click', () => { state.macroFold = !folded; save(); renderMacro(); fold.blur(); const f2 = $('#macro .macro-h .fold'); if (f2) f2.focus(); });
   box.append(h('div', { class: 'macro-h' },
-    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: dateKo(MACRO.asof) + ' 기준' })), h('p', { text: MACRO.headline })),
-    h('div', { class: 'r', style: 'display:flex;gap:6px' }, tog)));
+    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: dateKo(MACRO.asof) + ' 기준' }))),
+    h('div', { class: 'r', style: 'display:flex;gap:6px' }, folded ? null : tog, fold)));
+  if (!folded) box.append(h('p', { class: 'macro-lead', text: MACRO.headline }));   // 요약 문장은 제목 줄 아래(휴대폰에서도 접기 버튼이 위에 보이게)
+  const content = h('div', { id: 'macroContent', hidden: folded }); box.append(content);
+  if (folded) return;
   const tiles = h('div', { class: 'mtiles' });
   MACRO.tiles.forEach(t => {
     const c = mchg(t.chg);
@@ -3246,11 +3256,11 @@ function renderMacro() {
       c ? h('div', { class: 'c ' + dirCls(c.d), title: `${c.lab} · 이전 ${t.chg.ptxt || t.chg.prev.toLocaleString('ko-KR')}` }, h('span', { class: 'l' }, c.lab.replace(/ 대비$/, ''), / 대비$/.test(c.lab) ? h('span', { class: 'lx', text: ' 대비' }) : null), c.txt) : null,
       h('div', { class: 'd', text: t.d })));
   });
-  box.append(tiles);
+  content.append(tiles);
   const k3 = h('div', { class: 'key3' });
   MACRO.key3.forEach((k, i) => k3.append(h('div', { class: 'kc' }, h('b', null, `주목할 지표 ${i + 1} · ${k.name}`, mcite(k.s)), h('span', { text: k.why }))));
-  box.append(k3);
-  const body = h('div', { class: 'macro-body' }); box.append(body);
+  content.append(k3);
+  const body = h('div', { class: 'macro-body' }); content.append(body);
   if (!state.macroOpen) return;
 
   // 지수 차트 + 섹터 등락

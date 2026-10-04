@@ -1,0 +1,17 @@
+US ETF symbols 5758
+batch 0 5758 rows 80 kept px 24 5 s
+batch 400 5758 rows 480 kept px 178 39 s
+batch 800 5758 rows 880 kept px 372 74 s
+batch 1200 5758 rows 1280 kept px 546 108 s
+batch 1600 5758 rows 1680 kept px 734 143 s
+batch 2000 5758 rows 2080 kept px 944 178 s
+batch 2400 5758 rows 2480 kept px 1148 213 s
+batch 2800 5758 rows 2880 kept px 1373 250 s
+batch 3200 5758 rows 3280 kept px 1503 284 s
+batch 3600 5758 rows 3680 kept px 1645 317 s
+batch 4000 5758 rows 4080 kept px 1804 352 s
+batch 4400 5758 rows 4480 kept px 1977 387 s
+batch 4800 5758 rows 4880 kept px 2176 422 s
+batch 5200 5758 rows 5280 kept px 2335 456 s
+batch 5600 5758 rows 5680 kept px 2530 491 s
+META {"started": "2026-10-04T07:40:03.219364Z", "symbols": 5758, "priced": 5758, "kept": 2549, "px_rows": 1616167, "div_rows": 38415, "must_found": ["DRAM"], "finished": "2026-10-04T07:48:23.799890Z"}

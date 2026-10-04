@@ -1,0 +1,12 @@
+{
+ "started": "2026-10-04T07:40:03.219364Z",
+ "symbols": 5758,
+ "priced": 5758,
+ "kept": 2549,
+ "px_rows": 1616167,
+ "div_rows": 38415,
+ "must_found": [
+  "DRAM"
+ ],
+ "finished": "2026-10-04T07:48:23.799890Z"
+}

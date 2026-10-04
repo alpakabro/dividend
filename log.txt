@@ -1,0 +1,14 @@
+KR ETF list 1171 cols ['itemcode', 'etfTabCode', 'itemname', 'nowVal', 'risefall', 'changeVal', 'changeRate', 'nav', 'threeMonthEarnRate', 'quant', 'amonut', 'marketSum']
+KR hist 0 1171 1 s
+KR hist 100 1171 30 s
+KR hist 200 1171 57 s
+KR hist 300 1171 85 s
+KR hist 400 1171 112 s
+KR hist 500 1171 140 s
+KR hist 600 1171 168 s
+KR hist 700 1171 196 s
+KR hist 800 1171 224 s
+KR hist 900 1171 252 s
+KR hist 1000 1171 280 s
+KR hist 1100 1171 308 s
+META {"started": "2026-10-04T07:02:35.434611Z", "kr_list": 1171, "kr_hist": 1171, "kr_rows": 1371885, "kr_last": "2026-10-02", "kr_hist_fail": [], "kr_div_rows": 7193, "kr_div_codes": 950, "us_tickers": 168, "us_rows": 405574, "us_last": "2026-10-02", "us_missing": ["SPLG"], "us_div_rows": 8612, "finished": "2026-10-04T07:10:31.214895Z"}

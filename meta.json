@@ -1,0 +1,18 @@
+{
+ "started": "2026-10-04T07:02:35.434611Z",
+ "kr_list": 1171,
+ "kr_hist": 1171,
+ "kr_rows": 1371885,
+ "kr_last": "2026-10-02",
+ "kr_hist_fail": [],
+ "kr_div_rows": 7193,
+ "kr_div_codes": 950,
+ "us_tickers": 168,
+ "us_rows": 405574,
+ "us_last": "2026-10-02",
+ "us_missing": [
+  "SPLG"
+ ],
+ "us_div_rows": 8612,
+ "finished": "2026-10-04T07:10:31.214895Z"
+}

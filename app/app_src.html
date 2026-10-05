@@ -500,7 +500,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   <header class="top">
     <div>
       <h1>월배당 포트폴리오 시뮬레이터</h1>
-      <p class="sub">국내·미국 배당주 지급월을 엇갈려 매달 배당 받기 · 종목·ETF 8,000여 개 검색 · 주가 국내 2026.10.1·미국 10.2 종가, 원/달러 1,350.6원 기준</p>
+      <p class="sub">국내·미국 배당주 지급월을 엇갈려 매달 배당 받기 · 종목·ETF {{N_ALL}} 검색 · 주가 국내 {{KR_D}}·미국 {{US_DS}} 종가, 원/달러 {{FX}}원 기준</p>
     </div>
     <div class="top-r">
       <form class="gsearch" id="gSearch" role="search" autocomplete="off">
@@ -565,7 +565,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
           <span class="sum-wrap"><span>초기 투자금 합계<b id="holdSum">0원</b></span><span class="pnl-sum" id="holdPnl" role="status"></span></span>
         </div>
         <div class="hold-issues" id="holdIssues" role="status"></div>
-        <p class="hint">보유 주식은 팔지 않고 그대로 두고, 그 배당과 매달 넣는 돈은 아래 '종목 구성' 비중대로 투자한다고 계산합니다. 현금은 첫 달에 '종목 구성' 비중대로 매수합니다.<br><b>국내 상장 2,766종목·국내 ETF 1,171개, 미국 2,031종목·미국 ETF 2,033개</b>는 위 [조회]로 찾아 현재가가 자동으로 채워집니다(국내 10.1·미국 10.2 종가 스냅샷, 실시간 시세 아님). 배당 정보가 없는 종목은 검색 창에서 배당수익률·지급월을 넣으면 시뮬레이션에 반영돼요. ETF는 최근 12개월 분배금과 지급월이 자동으로 들어가요. 그래도 없는 펀드 등은 [+ 목록에 없는 종목]으로 직접 입력하세요.</p>
+        <p class="hint">보유 주식은 팔지 않고 그대로 두고, 그 배당과 매달 넣는 돈은 아래 '종목 구성' 비중대로 투자한다고 계산합니다. 현금은 첫 달에 '종목 구성' 비중대로 매수합니다.<br><b>국내 상장 {{N_KR_STK}}종목·국내 ETF {{N_KR_ETF}}개, 미국 {{N_US_STK}}종목·미국 ETF {{N_US_ETF}}개</b>는 위 [조회]로 찾아 현재가가 자동으로 채워집니다(국내 {{KR_DS}}·미국 {{US_DS}} 종가 스냅샷, 실시간 시세 아님). 배당 정보가 없는 종목은 검색 창에서 배당수익률·지급월을 넣으면 시뮬레이션에 반영돼요. ETF는 최근 12개월 분배금과 지급월이 자동으로 들어가요. 그래도 없는 펀드 등은 [+ 목록에 없는 종목]으로 직접 입력하세요.</p>
       </section>
 
       <section class="card" id="pickCard" aria-labelledby="pickTitle">
@@ -664,12 +664,12 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
     <div class="card">
       <h3>시뮬레이션 가정</h3>
       <ul>
-        <li>주가는 국내 2026.10.1·미국 10.2 종가, 배당은 최근 확정 배당(연환산). 미국 종목은 원/달러 1,350.6원에서 출발해 '환율 연 변동'만큼 변합니다.</li>
-        <li>초기 투자금 = 보유 주식 평가액(현재가 기준) + 현금. 보유 주식은 계속 들고 가고, 현금은 첫 달(2026년 11월)에 '종목 구성' 비중대로 매수합니다.</li>
+        <li>주가는 국내 {{KR_D}}·미국 {{US_DS}} 종가, 배당은 최근 확정 배당(연환산). 미국 종목은 원/달러 {{FX}}원에서 출발해 '환율 연 변동'만큼 변합니다.</li>
+        <li>초기 투자금 = 보유 주식 평가액(현재가 기준) + 현금. 보유 주식은 계속 들고 가고, 현금은 첫 달({{START}})에 '종목 구성' 비중대로 매수합니다.</li>
         <li>매달 초 적립금과 받은 세후 배당(보유 종목 배당 포함)은 '종목 구성' 비중대로 매수합니다(소수점 매수 가정). 종목 구성이 비어 있으면 보유 비중대로 매수합니다.</li>
         <li>'성장 가정'은 종목별 최근 5년 배당 증가율·배당성향·리스크를 반영해 보수적으로 정한 연평균 배당성장률입니다. 기본 시나리오에선 주가도 같은 속도로 올라 배당수익률이 유지됩니다.</li>
         <li>보수: 배당성장 ▲1.5%p, 주가상승은 배당성장보다 ▲0.5%p · 낙관: 배당성장 +1.5%p.</li>
-        <li>'N년 후 월평균 배당' = 적립을 멈춘 뒤 1년간 받는 배당 ÷ 12 (주식 수 고정). 수수료·환전 스프레드는 반영하지 않았습니다. 'N년차'는 2026+N년 10월 말 기준입니다.</li>
+        <li>'N년 후 월평균 배당' = 적립을 멈춘 뒤 1년간 받는 배당 ÷ 12 (주식 수 고정). 수수료·환전 스프레드는 반영하지 않았습니다. 'N년차'는 {{AS_Y}}+N년 {{AS_M}}월 말 기준입니다.</li>
       </ul>
     </div>
     <div class="card">
@@ -689,13 +689,13 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
       <h3>데이터 출처</h3>
       <ul>
         <li>국내 주가·거래량: <a href="https://github.com/FinanceData/marcap" target="_blank" rel="noopener">FinanceData/marcap</a> (KRX 일별 데이터, 2016~, 기준가 방식 수정주가 자체 계산)</li>
-        <li>미국 주가·거래량: 시가총액 20억달러 이상 2,048종목 일별 데이터(2024.7~), 섹터 분류 포함</li>
-        <li>국내 ETF 1,171개: 네이버 금융 일별 시세(2015~, 2026.10.1 종가까지), 분배금은 야후 파이낸스 배당락 이력(최근 12개월 합계·지급월 추정)</li>
-        <li>미국 ETF 2,033개: 미국 상장 ETF 5,758개(나스닥 심볼 목록) 중 20일 평균 거래대금 200만 달러 이상인 것과 주요 상품 · 야후 파이낸스 분할조정 종가·분배금(주요 168개는 2016~, 나머지는 2023.9~, 2026.10.2까지)</li>
-        <li>코스피·코스닥 추이: 상장폐지 종목 포함 전 종목 시총가중 자체 계산, 2026.10.1 실제 종가로 수준 보정</li>
+        <li>미국 주가·거래량: 시가총액 20억달러 이상 {{N_US_STK}}종목 일별 데이터(2024.7~), 섹터 분류 포함</li>
+        <li>국내 ETF {{N_KR_ETF}}개: 네이버 금융 일별 시세(2015~, {{KR_D}} 종가까지), 분배금은 야후 파이낸스 배당락 이력(최근 12개월 합계·지급월 추정)</li>
+        <li>미국 ETF {{N_US_ETF}}개: 미국 상장 ETF {{N_US_ETF_UNI}}개(나스닥 심볼 목록) 중 20일 평균 거래대금 200만 달러 이상인 것과 주요 상품 · 야후 파이낸스 분할조정 종가·분배금(주요 168개는 2016~, 나머지는 2023.9~, {{US_D}}까지)</li>
+        <li>코스피·코스닥 추이: 상장폐지 종목 포함 전 종목 시총가중 자체 계산, {{KR_D}} 실제 종가({{IDX_SRC}})로 수준 보정</li>
         <li>주가·배당 이력: <a href="https://stockanalysis.com" target="_blank" rel="noopener">stockanalysis.com</a>, 각 사 IR·공시</li>
         <li>세제: <a href="https://www.korea.kr/news/policyNewsView.do?newsId=148960552" target="_blank" rel="noopener">국세청 고배당 분리과세 안내</a>, <a href="https://taxlaw.nts.go.kr/downloadPDFFile.do?fleId=300000000001047678&amp;fleSn=923559" target="_blank" rel="noopener">국세청 해외주식과 세금</a></li>
-        <li>환율: <a href="https://www.news1.kr/finance/market-exr/6309176" target="_blank" rel="noopener">뉴스1 (10.2, 1,350.6원)</a></li>
+        <li>환율: <a href="{{FX_URL}}" target="_blank" rel="noopener">{{FX_SRC}} ({{FX_DS}}, {{FX}}원)</a></li>
         <li>배당 성장 참고: <a href="https://www.multpl.com/s-p-500-dividend-growth/table/by-year" target="_blank" rel="noopener">S&amp;P 500 배당 성장률</a></li>
       </ul>
       <p style="font-size:11px;color:var(--muted);margin:8px 0 0">보유 종목·선택·비중·가정은 이 브라우저에만 저장됩니다.</p>
@@ -734,8 +734,9 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 document.documentElement.lang = 'ko';
 
 /* ───────── 상수 ───────── */
-const FX0 = 1350.6;          // 2026.10.2 원/달러
-const START_MONTH = 11;      // 첫 적립: 2026년 11월
+const META = window.META;    // 데이터 날짜·환율·지수·종목 수 (app/data/meta.json, pipeline/refresh.py가 갱신)
+const FX0 = META.fx;         // 원/달러 (미국 데이터 날짜 기준)
+const START_MONTH = META.start_month;   // 첫 적립 월 = 미국 데이터 날짜의 다음 달
 const N_COLORS = 12;         // 종목별 고유 색 수 — 종목 구성 개수 제한은 없음, 넘치는 종목은 회색(기타)
 const EXT_YEARS = 40;        // 목표 도달 연차 탐색 범위
 const STORE_KEY = 'monthly-div-sim-v1';
@@ -760,7 +761,7 @@ const SCEN = {
 const TAX = { normal: { KR: 0.154, US: 0.15 }, isa: { KR: 0.099, US: 0.15 }, isa0: { KR: 0, US: 0.15 } };
 const SAFE = { good: { e: '✅', t: '배당 삭감 위험 낮음' }, warn: { e: '⚠️', t: '주의 (삭감 이력 또는 리스크 요인)' }, bad: { e: '❌', t: '최근 삭감·중단 또는 커버리지 부족' } };
 
-/* ───────── 종목 데이터 (2026.10.2 종가, 최근 확정 배당 기준) ───────── */
+/* ───────── 종목 데이터 (가격은 DB 종가로 맞춤 · 최근 확정 배당 기준) ───────── */
 const RAW = [
   { id:'KTG',   mkt:'KR', name:'KT&G',        code:'033780', p:176900, d:6600,  mo:{4:4600, 9:2000}, g:4,   s:'good', rec:1, tags:['반기'], note:'10년+ 무삭감, 배당성향 50% 이상 유지 정책 · 26년 중간배당 2,000원(+43%)' },
   { id:'KT',    mkt:'KR', name:'KT',          code:'030200', p:51900,  d:2400,  mo:{4:1,6:1,8:1,11:1}, g:2, s:'good', rec:1, note:'2026~28 연 최소 2,400원 약속 · 25년 해킹 이후에도 분기 600원 유지' },
@@ -1878,7 +1879,7 @@ renderMacro();
 renderAdvisor();
 
 renderAll();
-window.__divsim = { advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
+window.__divsim = { FX0, META, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
 })();
 </script>
 </body>

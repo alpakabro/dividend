@@ -1,5 +1,5 @@
 # stock_db.js 디코더 검증 (build_db.py 와 독립 구현)
-import os, json, math
+import os, json, math, glob
 import pandas as pd
 D = os.path.dirname(os.path.abspath(__file__))
 
@@ -26,7 +26,7 @@ bad = [r[1] for r in db['s'] if len(series(r[20])) != len(series(r[13]))]
 print('len(v) == len(d) for all records:', not bad, bad[:5])
 day = lambda n: str((pd.Timestamp('1970-01-01') + pd.Timedelta(days=n)).date())
 
-raw_kr = pd.read_parquet(os.path.join(D, 'marcap-2026.parquet'), columns=['Date', 'Code', 'Close', 'Volume'])
+raw_kr = pd.read_parquet(sorted(glob.glob(os.path.join(D, 'marcap-*.parquet')))[-1], columns=['Date', 'Code', 'Close', 'Volume'])   # 가장 최근 연도 파일
 raw_us = pd.read_parquet(os.path.join(D, 'us_prices.parquet'), columns=['date', 'ticker', 'close', 'volume'])
 for code, mk in (('005930', 'KR'), ('AAPL', 'US')):
     r = recs[code]; scale = 100 if mk == 'US' else 1

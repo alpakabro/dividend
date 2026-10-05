@@ -1,0 +1,49 @@
+name: refresh
+# 데이터 자동 갱신: 매일 아침 pipeline/refresh.py를 실행해 새 종가가 있으면 종목 DB·index.html을 다시 만들어 main에 커밋
+# → GitHub Pages가 자동 배포. Actions 탭 → refresh → Run workflow 로 수동 실행도 가능.
+# 검증(헤드리스 크롬)에 실패하면 커밋하지 않고 실패로 끝나며, GitHub가 저장소 소유자에게 이메일로 알린다.
+on:
+  schedule:
+    - cron: '0 23 * * 1-5'   # UTC 23:00 월~금 = 한국시간 08:00 화~토 (미국 장 마감 다음 날 아침)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '데이터 날짜가 같아도 다시 빌드·배포'
+        type: boolean
+        default: false
+      steps:
+        description: '실행 단계(쉼표로 나열, 비우면 전체): db,etf,merge,meta,build,verify,commit'
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 파이썬 패키지·크롬 설치
+        run: |
+          pip install --quiet pandas pyarrow numpy yfinance requests playwright
+          python -m playwright install --with-deps chromium
+      - name: 갱신 실행 (수집 → DB → 빌드 → 검증 → 커밋·푸시)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python pipeline/refresh.py --push ${{ inputs.force && '--force' || '' }} ${{ inputs.steps && format('--steps {0}', inputs.steps) || '' }}
+      - name: 결과물 보관 (Claude 아티팩트용 조각·실행 기록, 14일)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: refresh-${{ github.run_number }}
+          path: |
+            app/dist/artifact.html
+            pipeline/refresh.log
+          if-no-files-found: ignore
+          retention-days: 14

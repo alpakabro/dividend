@@ -1,5 +1,5 @@
 # 종목 DB 생성: 국내(FinanceData/marcap, 2016~) + 미국(us-stock-data, 2024.7~) → 압축 JS
-import os, json, math, urllib.request, time
+import os, json, math, urllib.request, time, datetime as dt
 import numpy as np, pandas as pd
 D = os.path.dirname(os.path.abspath(__file__))
 os.chdir(D)
@@ -101,10 +101,14 @@ def kr_index(allr):
 
 # ───────── 국내 ─────────
 def build_kr():
-    years = list(range(2016, 2027))
+    years = list(range(2016, dt.date.today().year + 1))
     for y in years:
-        fetch(f'https://raw.githubusercontent.com/FinanceData/marcap/master/data/marcap-{y}.parquet', f'marcap-{y}.parquet')
-    last = pd.read_parquet('marcap-2026.parquet', columns=['Date', 'Code', 'Name', 'Close', 'Changes', 'ChangesRatio', 'Amount', 'Marcap', 'Stocks', 'Market', 'High', 'Low', 'Volume'])
+        try:
+            fetch(f'https://raw.githubusercontent.com/FinanceData/marcap/master/data/marcap-{y}.parquet', f'marcap-{y}.parquet')
+        except RuntimeError:
+            if y != years[-1]: raise
+            years.pop(); print('marcap', y, '파일이 아직 없음(새해 첫 거래일 전) → 전년도까지 사용')
+    last = pd.read_parquet(f'marcap-{years[-1]}.parquet', columns=['Date', 'Code', 'Name', 'Close', 'Changes', 'ChangesRatio', 'Amount', 'Marcap', 'Stocks', 'Market', 'High', 'Low', 'Volume'])
     last['Date'] = pd.to_datetime(last['Date'])
     ld = last['Date'].max()
     snap = last[(last['Date'] == ld) & (last['Market'].isin(['KOSPI', 'KOSDAQ', 'KOSDAQ GLOBAL']))].copy()

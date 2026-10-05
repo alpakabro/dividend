@@ -4,7 +4,7 @@ const RISKP = {
   mid: { k: '보통', single: 0.25, sector: 0.45, vol: 0.18, us: 0.75 },
   high: { k: '높음', single: 0.35, sector: 0.60, vol: 0.25, us: 0.90 }
 };
-const FX_RANGE = { hi: 1555.8, hiD: '7/2', lo: 1336.1, loD: '9/9' };   // 2026년 원/달러 주간종가 고·저 (서울외환시장, 리서치 K4)
+const FX_RANGE = META.fx_range;   // 연중 원/달러 일별 종가 고·저 (meta.json)
 
 function paHoldPositions() {
   const map = new Map(); let cash = 0;
@@ -288,7 +288,8 @@ function promptPortfolio(pa, years, forCopy) {
   if (pa.bt) L.push(`- 최근 1년 같은 비중 백테스트: 수익률 ${sp(pa.bt.ret1y * 100)}, 최대 낙폭 ${neg}${pct(-pa.bt.mdd, 1)}, 최악의 하루 ${neg}${pct(-pa.bt.worst, 1)}(${dayStr(pa.bt.worstD)})`);
   L.push(`- 배당: 포트폴리오 배당수익률 ${pct(pa.yieldP)}, 연 세후 ${wonT(pa.divN)}, 배당 들어오는 달 ${pa.covMonths}/12, 가중평균 배당성장 가정 ${fx1(pa.gAvg, 1)}%`);
   L.push('- 종목별: ' + pa.pos.map(p => `${p.name}[배당 ${pct(p.y)}, 성장가정 ${fx1(p.st.g, 1)}%, 1년 ${sp(p.r1y)}, 변동성 ${p.vol1 != null ? fx1(p.vol1, 0) + '%' : '—'}${p.per != null ? `, PER ${p.per}` : ''}${p.pbr != null ? `, PBR ${p.pbr}` : ''}${p.roe != null ? `, ROE ${p.roe}%` : ''}]`).join('; '));
-  L.push('- 매크로(2026-10-04): 美 기준금리 3.75~4.00%(9/16 인상), 美 10년물 5.28%, CPI 3.4%, 원/달러 1,350.6원, 브렌트 102달러, 코스피 7,003.74');
+  if (MACRO) L.push(`- 매크로 브리핑(${MACRO.asof}): ` + MACRO.tiles.map(t => `${t.k} ${t.v}`).join(', '));
+  L.push(`- 앱 환율 기준: 원/달러 ${FX0.toLocaleString('ko-KR')}원 (${dateKo(META.fx_date)})`);
   L.push('- 앱 규칙 기반 점검 — 강점: ' + pa.strengths.join(' / ') + ' · 취약점: ' + (pa.weaknesses.join(' / ') || '없음'));
   return g + rulesBlock(forCopy) + '\n- 위 [앱이 계산한 분석 데이터]의 수치를 근거로 쓰고, 그 밖의 수치는 출처를 밝혀.\n\n' + L.join('\n');
 }

@@ -155,7 +155,7 @@ function idxSeries(name, k) {   // KOSPI·KOSDAQ 시총가중 프록시 (실제 
   const key = 'IDX' + name + k; if (SERC.has(key)) return SERC.get(key);
   const pos = { d: 0, w: 2, m: 4, y: 6 }[k], vals = decSeries(a[pos + 1]), off = a[pos], ax = axis('KR', k);
   const last = decSeries(a[1]); const lastV = last[last.length - 1] / 100;
-  const ACT = { KOSPI: 6971.35, KOSDAQ: 894.29 };   // 2026-10-01 실제 종가 (연합뉴스·아시아경제)
+  const ACT = { KOSPI: META.kospi, KOSDAQ: META.kosdaq };   // 데이터 날짜의 실제 종가 (meta.json)
   const sc = ACT[name] && lastV ? ACT[name] / lastV : 1;
   const out = { t: ax.slice(off, off + vals.length), v: vals.map(x => x / 100 * sc) };
   SERC.set(key, out); return out;
@@ -182,10 +182,10 @@ function recSectorKo(rec) {
   for (const [re, s] of KR_NAME_SECTOR) if (re.test(rec[2])) return s + '(추정)';
   return '기타(국내)';
 }
-// 큐레이션 종목 ↔ DB 연결, 가격은 DB 종가로 통일 (국내 10.1 · 미국 10.2)
+// 큐레이션 종목 ↔ DB 연결, 가격은 DB 종가로 통일
 const CUR_BY_DB = new Map();
 RAW.forEach(r => {
   const dbid = (r.mkt === 'KR' ? 'K:' : 'U:') + r.code;
   if (DB_IDX.has(dbid)) { r.db = dbid; CUR_BY_DB.set(dbid, r.id); r.p = DB_IDX.get(dbid)[RF.price]; }
 });
-const DATA_DATE = { KR: DBR.asof.KR || '2026-10-01', US: DBR.asof.US || '2026-10-02' };
+const DATA_DATE = { KR: DBR.asof.KR || META.asof.KR, US: DBR.asof.US || META.asof.US };

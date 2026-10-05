@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <link rel="preload" href="db.js?v=1d598f5bf3" as="script">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f6feb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>월배당 포트폴리오 시뮬레이터</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -747,6 +751,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 'use strict';
 document.documentElement.lang = 'ko';
 { const ld = document.getElementById('dbLoading'); if (ld) ld.remove(); }   // db.js가 다 오면 이 스크립트가 돌기 시작한다
+if ('serviceWorker' in navigator && /^https?:/.test(location.protocol) && document.querySelector('link[rel="manifest"]')) navigator.serviceWorker.register('sw.js').catch(() => {});   // 사이트에서만: 설치형 웹앱·오프라인
 
 /* ───────── 상수 ───────── */
 const META = window.META;    // 데이터 날짜·환율·지수·종목 수 (app/data/meta.json, pipeline/refresh.py가 갱신)

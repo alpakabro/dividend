@@ -10,14 +10,15 @@
 
 | 경로 | 내용 |
 |---|---|
-| `index.html`, `db.js` | **빌드 결과물. 직접 고치지 않는다.** GitHub Pages가 그대로 배포. 종목 DB는 `db.js`(약 11MB)로 분리돼 있고 `index.html`(약 0.7MB)이 `db.js?v=해시`로 불러온다(머리말이 먼저 뜨고, 데이터가 안 바뀌면 캐시 사용). 아티팩트용 `app/dist/artifact.html`은 DB 인라인 |
+| `index.html`, `db.js`, `sw.js` | **빌드 결과물. 직접 고치지 않는다.** `sw.js`는 `app/sw.js`에 DB 해시 버전을 넣은 서비스 워커(설치형 웹앱·오프라인·캐시). GitHub Pages가 그대로 배포. 종목 DB는 `db.js`(약 11MB)로 분리돼 있고 `index.html`(약 0.7MB)이 `db.js?v=해시`로 불러온다(머리말이 먼저 뜨고, 데이터가 안 바뀌면 캐시 사용). 아티팩트용 `app/dist/artifact.html`은 DB 인라인 |
 | `app/app_src.html` | 페이지 틀: CSS(테마 토큰) + HTML + 핵심 스크립트(상태·시뮬레이션·보유 종목·종목 구성·차트) |
 | `app/src/*.js` | 기능 모듈 (2절) |
 | `app/src/research.json` | 종목 리포트 8개(삼성전자·KT·KT&G·두산에너빌리티·하나금융·ADP·맥도날드·P&G) + 매크로 사실(us/kr, 출처 번호 포함) |
 | `app/src/macro_report.json` | 매크로 브리핑 화면 데이터. 지표 타일 10개는 `refresh.py`의 `macro` 단계가 매일 자동 갱신(출처 코드 Y/F/B, `tiles_asof`·`src_auto`도 자동 기록), headline·주목 지표 3개·분석 ①~⑦은 수동(출처 코드 U#/K#) |
 | `app/data/stock_db_full.js` | 종목 DB `window.STOCK_DB`(약 11MB): 국내 주식·ETF, 미국 주식·ETF 약 8,000개(종목 수는 `meta.json`의 `counts`) |
 | `app/data/meta.json` | 데이터 날짜(`asof`)·원/달러(`fx`, 출처 `fx_src`)·연중 환율 고저(`fx_range`)·코스피/코스닥 실제 종가·첫 적립 월·종목 수. `refresh.py`가 쓰고 `build.py`가 문구와 `window.META`에 넣는다 |
-| `app/build.py` | 조립 스크립트(`fill`이 문구 자리표시자 `{{KR_D}}` 등을 meta로 채움) → `index.html`, `app/dist/artifact.html` |
+| `app/build.py` | 조립 스크립트(`fill`이 문구 자리표시자 `{{KR_D}}` 등을 meta로 채움) → `index.html`, `db.js`, `sw.js`, `app/dist/artifact.html` |
+| `manifest.webmanifest`, `icons/` | 설치형 웹앱(PWA) 정보와 아이콘. 휴대폰·PC 브라우저의 '홈 화면에 추가/앱 설치'로 설치되고, 사이트 빌드의 head에만 연결된다(아티팩트·exe 사본은 등록 안 함) |
 | `app/tests/*.py` | Playwright 확인 스크립트 |
 | `pipeline/` | DB 생성 `build_db.py`, ETF 병합 `add_etf.py`(개별 주식 배당도 붙임), 검증 `check_db.py`, 미국 종목 메타 `universe.csv`, 주요 미국 ETF 168개의 한글명·유형 `us_etf_list.json` |
 | `pipeline/fetch_stock_div.py` | 개별 주식 배당락 이력 수집(야후 파이낸스, 2021~) → `pipeline/raw_div/stock_div.csv`(git 제외). 지급월 추정·성장 가정·배당 정보 조립 함수는 여기 있고 `add_etf.py`가 가져다 쓴다 |
@@ -151,7 +152,7 @@ ETF 데이터의 특성:
 
 ## 6. 알려진 제약
 
-- **용량:** 종목 DB `db.js`가 11MB라 처음 열 때 몇 초 걸린다(머리말은 바로 뜨고 '불러오는 중' 표시). 같은 데이터면 브라우저 캐시를 쓴다
+- **용량:** 종목 DB `db.js`가 11MB라 처음 열 때 몇 초 걸린다(머리말은 바로 뜨고 '불러오는 중' 표시). 두 번째부터는 서비스 워커 캐시(같은 데이터면 다시 받지 않음, 새 데이터면 한 번만 받음)로 바로 열리고 오프라인에서도 열린다
 - **가격 이력:** 미국 개별 주식은 2024.7부터라(원본 데이터 한계) 3년·5년 수익률이 없다. 주요 미국 ETF는 2016~, 나머지 ETF는 2023.9~
 - **사이트의 AI:** GitHub Pages에는 Claude 연결이 없어 AI가 바로 답하지 못한다(질문 복사로 동작). 바로 답하게 하려면 아티팩트를 공유하거나 API 키와 서버가 필요하다
 - **종목 리포트:** 종목 창의 '기업/실적/재무' 리포트는 research.json의 8개 종목만 사전 조사돼 있다. 나머지 종목은 AI 실행 또는 프롬프트 복사를 쓴다

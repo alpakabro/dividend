@@ -66,10 +66,13 @@ def main():
     # 1) 공개 사이트(GitHub Pages): 완전한 문서 + 검색엔진 노출 차단
     site = site_src.replace('<meta name="viewport" content="width=device-width, initial-scale=1">',
                             '<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n'
-                            f'<link rel="preload" href="db.js?v={ver}" as="script">', 1)   # 머리말 그리는 동안 DB 내려받기 시작
+                            f'<link rel="preload" href="db.js?v={ver}" as="script">\n'
+                            '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color" content="#1f6feb">\n'
+                            '<meta name="apple-mobile-web-app-capable" content="yes">\n<link rel="apple-touch-icon" href="icons/icon-192.png">', 1)   # 머리말 그리는 동안 DB 내려받기 시작 · 설치형 웹앱(PWA)
     assert 'noindex' in site
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(site)
     open(os.path.join(ROOT, 'db.js'), 'w', encoding='utf-8').write(db + '\n')
+    open(os.path.join(ROOT, 'sw.js'), 'w', encoding='utf-8').write(open('sw.js', encoding='utf-8').read().replace('__VER__', ver))   # 서비스 워커(버전 = DB 해시)
     print('wrote index.html', round(len(site.encode('utf-8')) / 1e6, 2), 'MB + db.js', round(len(db.encode('utf-8')) / 1e6, 2), 'MB (v=' + ver + ')')
 
     # 2) Claude 아티팩트: 문서 골격(doctype/html/head/body)은 게시 때 씌워지므로 <title>부터 시작하는 조각만

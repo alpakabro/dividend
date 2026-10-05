@@ -514,6 +514,12 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         <button class="btn" id="btnReset" title="종목 구성과 가정을 추천안으로 되돌립니다 (보유 종목은 유지)">추천안으로 되돌리기</button>
         <button class="btn icon" id="btnTheme" aria-label="밝은/어두운 테마 전환" title="테마 전환">◐</button>
       </div>
+      <div class="actions" id="backupBar">
+        <button class="btn sm" id="btnExport" title="보유 종목·종목 구성·가정을 JSON 파일로 저장합니다 (브라우저 데이터를 지우거나 다른 기기로 옮길 때 대비)">설정 내보내기</button>
+        <button class="btn sm" id="btnImport" title="저장해 둔 JSON 파일을 불러와 지금 설정을 바꿉니다">가져오기</button>
+        <button class="btn sm" id="btnShare" title="현재 설정(보유 종목 포함)이 담긴 링크를 복사합니다. 다른 기기·브라우저·PC 프로그램에서 열면 같은 화면이 됩니다">공유 링크 복사</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+      </div>
     </div>
   </header>
 
@@ -1019,6 +1025,14 @@ let state = {
 };
 REC.forEach((id, i) => state.slots[id] = i);
 
+// 공유 링크(#s=...)로 열렸으면 확인 뒤 저장소에 넣고 주소에서 지운다 (아래 초기화가 그대로 읽어 간다)
+if (/^#s=/.test(location.hash)) {
+  try {
+    const obj = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(3).replace(/-/g, '+').replace(/_/g, '/')))));
+    if (obj && obj.app === 'monthly-div-sim' && obj.state && confirm('링크에 담긴 포트폴리오 구성을 불러올까요?\n지금 저장된 보유 종목·종목 구성·가정은 덮어써집니다.')) localStorage.setItem(STORE_KEY, JSON.stringify(obj.state));
+  } catch (e) { alert('공유 링크를 읽지 못했어요: ' + e.message); }
+  history.replaceState(null, '', location.pathname + location.search);
+}
 try {
   const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
   if (saved && typeof saved === 'object') {
@@ -3729,6 +3743,30 @@ document.querySelectorAll('#fMkt button').forEach(b => b.addEventListener('click
 $('#fOnly').addEventListener('change', e => { state.onlySel = e.target.checked; renderPicker(); save(); });
 $('#fAuto').addEventListener('change', e => { state.auto = e.target.checked; if (state.auto) equalize(); renderAll(); });
 $('#btnEq').addEventListener('click', () => { state.auto = true; equalize(); renderAll(); });
+/* ───────── 백업·복원·공유 링크 ───────── */
+const SHARE_KEYS = ['sel', 'base', 'a', 'hold', 'custom', 'ov', 'extra', 'risk', 'slots'];   // 사용자가 입력한 것만 (화면 상태는 제외)
+function exportState() { const o = {}; SHARE_KEYS.forEach(k => { if (state[k] !== undefined) o[k] = state[k]; }); return { app: 'monthly-div-sim', v: 1, saved: new Date().toISOString().slice(0, 10), state: o }; }
+function applyState(obj) {   // 가져오기: 검증 → 저장소에 덮어쓰기 → 새로고침(초기화 때 id 정규화 등을 다시 거치게)
+  const st = obj && obj.app === 'monthly-div-sim' && obj.state && typeof obj.state === 'object' ? obj.state : null;
+  if (!st) throw new Error('이 앱에서 내보낸 설정 파일이 아니에요');
+  let cur = {}; try { cur = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch (e) { cur = {}; }
+  SHARE_KEYS.forEach(k => { if (st[k] !== undefined) cur[k] = st[k]; });
+  localStorage.setItem(STORE_KEY, JSON.stringify(cur)); location.reload();
+}
+function shareLink() { const b = btoa(unescape(encodeURIComponent(JSON.stringify(exportState())))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); return location.href.split('#')[0] + '#s=' + b; }
+$('#btnExport').addEventListener('click', () => {
+  const a = h('a', { href: URL.createObjectURL(new Blob([JSON.stringify(exportState(), null, 1)], { type: 'application/json' })), download: `월배당_설정_${new Date().toISOString().slice(0, 10)}.json` });
+  document.body.append(a); a.click(); a.remove(); flash('#btnExport', '저장됨');
+});
+$('#btnImport').addEventListener('click', () => $('#importFile').click());
+$('#importFile').addEventListener('change', e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  f.text().then(t => { if (confirm('파일의 설정으로 바꿀까요?\n지금 저장된 보유 종목·종목 구성·가정은 덮어써집니다.')) applyState(JSON.parse(t)); }).catch(err => alert('가져오기 실패: ' + err.message));
+});
+$('#btnShare').addEventListener('click', () => {
+  const u = shareLink();
+  (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject(new Error('clipboard'))).then(() => flash('#btnShare', '복사됨'), () => prompt('아래 링크를 복사하세요', u));
+});
 $('#btnPin').addEventListener('click', () => { state.base = Object.assign({}, state.sel); renderAll(); flash('#btnPin', '비교 기준 저장됨'); });
 $('#btnReset').addEventListener('click', () => {
   state.sel = recSel(); state.base = recSel(); state.auto = true;
@@ -3804,7 +3842,7 @@ renderMacro();
 renderAdvisor();
 
 renderAll();
-window.__divsim = { FX0, META, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
+window.__divsim = { FX0, META, exportState, applyState, shareLink, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
 })();
 </script>
 </body>

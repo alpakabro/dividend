@@ -1,28 +1,38 @@
 name: etf-data
+# ETF 시세·분배금 수집. etf-job 브랜치에 푸시하거나 Actions 탭에서 수동 실행(Run workflow).
+#   fetch_us_all.py → etf-data-us 브랜치 (미국 상장 ETF 전체)
+#   fetch_etf.py    → etf-data 브랜치    (국내 ETF 전체 + 주요 미국 ETF 168개)
 on:
   push:
     branches: [etf-job]
   workflow_dispatch:
+    inputs:
+      script:
+        description: 'fetch_us_all.py(미국 ETF 전체) 또는 fetch_etf.py(국내 ETF + 주요 미국 ETF)'
+        default: 'fetch_us_all.py'
 permissions:
   contents: write
 jobs:
   fetch:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      SCRIPT: ${{ github.event.inputs.script || vars.ETF_SCRIPT || 'fetch_us_all.py' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - run: pip install --quiet yfinance pandas pyarrow requests
-      - run: python tools/etf/${{ vars.ETF_SCRIPT || 'fetch_us_all.py' }}
+      - run: python "tools/etf/$SCRIPT"
         continue-on-error: true
-      - name: publish outputs to etf-data branch
+      - name: publish outputs
         if: always()
         run: |
+          if [ "$SCRIPT" = "fetch_etf.py" ]; then B=etf-data; else B=etf-data-us; fi
           mkdir -p out && cd out
-          git init -q && git checkout -q -b etf-data-us
+          git init -q && git checkout -q -b "$B"
           git config user.name "etf-data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A && git commit -qm "ETF data $(date -u +%FT%TZ)"
-          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" etf-data-us
+          git add -A && git commit -qm "ETF data $(date -u +%FT%TZ) ($SCRIPT)"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "$B"

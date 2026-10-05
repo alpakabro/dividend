@@ -1,0 +1,12 @@
+# 빌드 산출물(사이트용 index.html은 커밋, 아티팩트 조각·미리보기는 제외)
+app/dist/
+app/tests/out/
+# 데이터 파이프라인 원본·중간 파일(스크립트가 다시 내려받음)
+pipeline/*.parquet
+pipeline/stock_db.js
+pipeline/raw_etf/
+pipeline/*.pkl
+pipeline/*.log
+pipeline/manifest.json
+__pycache__/
+*.pyc

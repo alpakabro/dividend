@@ -1,0 +1,847 @@
+{
+"SPY": [
+"SPDR S&P 500 ETF Trust",
+"S&P500",
+"미국 대표지수"
+],
+"VOO": [
+"Vanguard S&P 500 ETF",
+"뱅가드 S&P500",
+"미국 대표지수"
+],
+"IVV": [
+"iShares Core S&P 500 ETF",
+"아이셰어즈 S&P500",
+"미국 대표지수"
+],
+"SPLG": [
+"SPDR Portfolio S&P 500 ETF",
+"SPDR S&P500 저비용",
+"미국 대표지수"
+],
+"VTI": [
+"Vanguard Total Stock Market ETF",
+"뱅가드 미국 전체시장",
+"미국 대표지수"
+],
+"ITOT": [
+"iShares Core S&P Total U.S. Stock Market ETF",
+"아이셰어즈 미국 전체시장",
+"미국 대표지수"
+],
+"SCHB": [
+"Schwab U.S. Broad Market ETF",
+"슈왑 미국 전체시장",
+"미국 대표지수"
+],
+"SCHX": [
+"Schwab U.S. Large-Cap ETF",
+"슈왑 미국 대형주",
+"미국 대표지수"
+],
+"QQQ": [
+"Invesco QQQ Trust",
+"나스닥100",
+"미국 대표지수"
+],
+"QQQM": [
+"Invesco NASDAQ 100 ETF",
+"나스닥100 저비용",
+"미국 대표지수"
+],
+"DIA": [
+"SPDR Dow Jones Industrial Average ETF Trust",
+"다우존스30",
+"미국 대표지수"
+],
+"IWM": [
+"iShares Russell 2000 ETF",
+"러셀2000 소형주",
+"미국 대표지수"
+],
+"RSP": [
+"Invesco S&P 500 Equal Weight ETF",
+"S&P500 동일가중",
+"미국 대표지수"
+],
+"MDY": [
+"SPDR S&P MidCap 400 ETF Trust",
+"미국 중형주",
+"미국 대표지수"
+],
+"IJH": [
+"iShares Core S&P Mid-Cap ETF",
+"아이셰어즈 중형주",
+"미국 대표지수"
+],
+"IJR": [
+"iShares Core S&P Small-Cap ETF",
+"아이셰어즈 소형주",
+"미국 대표지수"
+],
+"VB": [
+"Vanguard Small-Cap ETF",
+"뱅가드 소형주",
+"미국 대표지수"
+],
+"VO": [
+"Vanguard Mid-Cap ETF",
+"뱅가드 중형주",
+"미국 대표지수"
+],
+"VT": [
+"Vanguard Total World Stock ETF",
+"뱅가드 전세계 주식",
+"해외(미국 외)"
+],
+"VXUS": [
+"Vanguard Total International Stock ETF",
+"뱅가드 미국 외 전세계",
+"해외(미국 외)"
+],
+"VEA": [
+"Vanguard FTSE Developed Markets ETF",
+"뱅가드 선진국",
+"해외(미국 외)"
+],
+"VWO": [
+"Vanguard FTSE Emerging Markets ETF",
+"뱅가드 신흥국",
+"해외(미국 외)"
+],
+"EFA": [
+"iShares MSCI EAFE ETF",
+"아이셰어즈 선진국",
+"해외(미국 외)"
+],
+"EEM": [
+"iShares MSCI Emerging Markets ETF",
+"아이셰어즈 신흥국",
+"해외(미국 외)"
+],
+"VGK": [
+"Vanguard FTSE Europe ETF",
+"뱅가드 유럽",
+"해외(미국 외)"
+],
+"EWJ": [
+"iShares MSCI Japan ETF",
+"일본",
+"해외(미국 외)"
+],
+"EWY": [
+"iShares MSCI South Korea ETF",
+"한국",
+"해외(미국 외)"
+],
+"EWT": [
+"iShares MSCI Taiwan ETF",
+"대만",
+"해외(미국 외)"
+],
+"INDA": [
+"iShares MSCI India ETF",
+"인도",
+"해외(미국 외)"
+],
+"MCHI": [
+"iShares MSCI China ETF",
+"중국",
+"해외(미국 외)"
+],
+"FXI": [
+"iShares China Large-Cap ETF",
+"중국 대형주",
+"해외(미국 외)"
+],
+"KWEB": [
+"KraneShares CSI China Internet ETF",
+"중국 인터넷",
+"해외(미국 외)"
+],
+"EWZ": [
+"iShares MSCI Brazil ETF",
+"브라질",
+"해외(미국 외)"
+],
+"VUG": [
+"Vanguard Growth ETF",
+"뱅가드 성장주",
+"성장·기술"
+],
+"SCHG": [
+"Schwab U.S. Large-Cap Growth ETF",
+"슈왑 대형성장주",
+"성장·기술"
+],
+"MGK": [
+"Vanguard Mega Cap Growth ETF",
+"뱅가드 초대형 성장주",
+"성장·기술"
+],
+"IWF": [
+"iShares Russell 1000 Growth ETF",
+"러셀1000 성장주",
+"성장·기술"
+],
+"VGT": [
+"Vanguard Information Technology ETF",
+"뱅가드 IT",
+"성장·기술"
+],
+"XLK": [
+"Technology Select Sector SPDR Fund",
+"기술 섹터",
+"섹터"
+],
+"SMH": [
+"VanEck Semiconductor ETF",
+"반에크 반도체",
+"성장·기술"
+],
+"SOXX": [
+"iShares Semiconductor ETF",
+"아이셰어즈 반도체",
+"성장·기술"
+],
+"IGV": [
+"iShares Expanded Tech-Software Sector ETF",
+"소프트웨어",
+"성장·기술"
+],
+"ARKK": [
+"ARK Innovation ETF",
+"아크 혁신",
+"성장·기술"
+],
+"VTV": [
+"Vanguard Value ETF",
+"뱅가드 가치주",
+"가치"
+],
+"SCHV": [
+"Schwab U.S. Large-Cap Value ETF",
+"슈왑 대형가치주",
+"가치"
+],
+"IWD": [
+"iShares Russell 1000 Value ETF",
+"러셀1000 가치주",
+"가치"
+],
+"SCHD": [
+"Schwab U.S. Dividend Equity ETF",
+"슈왑 미국배당",
+"배당"
+],
+"VYM": [
+"Vanguard High Dividend Yield ETF",
+"뱅가드 고배당",
+"배당"
+],
+"DGRO": [
+"iShares Core Dividend Growth ETF",
+"아이셰어즈 배당성장",
+"배당"
+],
+"VIG": [
+"Vanguard Dividend Appreciation ETF",
+"뱅가드 배당성장",
+"배당"
+],
+"HDV": [
+"iShares Core High Dividend ETF",
+"아이셰어즈 고배당",
+"배당"
+],
+"SPYD": [
+"SPDR Portfolio S&P 500 High Dividend ETF",
+"SPDR 고배당",
+"배당"
+],
+"NOBL": [
+"ProShares S&P 500 Dividend Aristocrats ETF",
+"프로셰어즈 배당귀족",
+"배당"
+],
+"DVY": [
+"iShares Select Dividend ETF",
+"아이셰어즈 셀렉트배당",
+"배당"
+],
+"SDY": [
+"SPDR S&P Dividend ETF",
+"SPDR 배당귀족",
+"배당"
+],
+"FDVV": [
+"Fidelity High Dividend ETF",
+"피델리티 고배당",
+"배당"
+],
+"DGRW": [
+"WisdomTree U.S. Quality Dividend Growth Fund",
+"위즈덤트리 퀄리티 배당성장",
+"배당"
+],
+"SPHD": [
+"Invesco S&P 500 High Dividend Low Volatility ETF",
+"고배당 저변동",
+"배당"
+],
+"CGDV": [
+"Capital Group Dividend Value ETF",
+"캐피탈그룹 배당가치",
+"배당"
+],
+"COWZ": [
+"Pacer US Cash Cows 100 ETF",
+"페이서 캐시카우",
+"배당"
+],
+"RDVY": [
+"First Trust Rising Dividend Achievers ETF",
+"퍼스트트러스트 배당성장",
+"배당"
+],
+"FVD": [
+"First Trust Value Line Dividend Index Fund",
+"퍼스트트러스트 밸류라인 배당",
+"배당"
+],
+"PEY": [
+"Invesco High Yield Equity Dividend Achievers ETF",
+"인베스코 고배당 성취자",
+"배당"
+],
+"DHS": [
+"WisdomTree U.S. High Dividend Fund",
+"위즈덤트리 고배당",
+"배당"
+],
+"KBWD": [
+"Invesco KBW High Dividend Yield Financial ETF",
+"금융 고배당",
+"배당"
+],
+"SDIV": [
+"Global X SuperDividend ETF",
+"글로벌X 슈퍼배당",
+"배당"
+],
+"SCHY": [
+"Schwab International Dividend Equity ETF",
+"슈왑 국제배당",
+"배당"
+],
+"VYMI": [
+"Vanguard International High Dividend Yield ETF",
+"뱅가드 국제 고배당",
+"배당"
+],
+"IDV": [
+"iShares International Select Dividend ETF",
+"아이셰어즈 국제배당",
+"배당"
+],
+"VIGI": [
+"Vanguard International Dividend Appreciation ETF",
+"뱅가드 국제 배당성장",
+"배당"
+],
+"DIVO": [
+"Amplify CWP Enhanced Dividend Income ETF",
+"앰플리파이 배당인컴",
+"커버드콜·인컴"
+],
+"JEPI": [
+"JPMorgan Equity Premium Income ETF",
+"JP모건 S&P500 프리미엄인컴",
+"커버드콜·인컴"
+],
+"JEPQ": [
+"JPMorgan Nasdaq Equity Premium Income ETF",
+"JP모건 나스닥 프리미엄인컴",
+"커버드콜·인컴"
+],
+"QYLD": [
+"Global X NASDAQ 100 Covered Call ETF",
+"글로벌X 나스닥 커버드콜",
+"커버드콜·인컴"
+],
+"XYLD": [
+"Global X S&P 500 Covered Call ETF",
+"글로벌X S&P500 커버드콜",
+"커버드콜·인컴"
+],
+"RYLD": [
+"Global X Russell 2000 Covered Call ETF",
+"글로벌X 러셀 커버드콜",
+"커버드콜·인컴"
+],
+"SPYI": [
+"NEOS S&P 500 High Income ETF",
+"네오스 S&P500 고배당인컴",
+"커버드콜·인컴"
+],
+"QQQI": [
+"NEOS Nasdaq-100 High Income ETF",
+"네오스 나스닥 고배당인컴",
+"커버드콜·인컴"
+],
+"GPIX": [
+"Goldman Sachs S&P 500 Core Premium Income ETF",
+"골드만 S&P500 프리미엄인컴",
+"커버드콜·인컴"
+],
+"GPIQ": [
+"Goldman Sachs Nasdaq-100 Core Premium Income ETF",
+"골드만 나스닥 프리미엄인컴",
+"커버드콜·인컴"
+],
+"QDTE": [
+"Roundhill Innovation-100 0DTE Covered Call Strategy ETF",
+"라운드힐 나스닥 주배당",
+"커버드콜·인컴"
+],
+"XDTE": [
+"Roundhill S&P 500 0DTE Covered Call Strategy ETF",
+"라운드힐 S&P500 주배당",
+"커버드콜·인컴"
+],
+"SVOL": [
+"Simplify Volatility Premium ETF",
+"심플리파이 변동성 프리미엄",
+"커버드콜·인컴"
+],
+"TSLY": [
+"YieldMax TSLA Option Income Strategy ETF",
+"일드맥스 테슬라",
+"커버드콜·인컴"
+],
+"NVDY": [
+"YieldMax NVDA Option Income Strategy ETF",
+"일드맥스 엔비디아",
+"커버드콜·인컴"
+],
+"MSTY": [
+"YieldMax MSTR Option Income Strategy ETF",
+"일드맥스 마이크로스트래티지",
+"커버드콜·인컴"
+],
+"ULTY": [
+"YieldMax Ultra Option Income Strategy ETF",
+"일드맥스 울트라",
+"커버드콜·인컴"
+],
+"YMAX": [
+"YieldMax Universe Fund of Option Income ETFs",
+"일드맥스 유니버스",
+"커버드콜·인컴"
+],
+"TLT": [
+"iShares 20+ Year Treasury Bond ETF",
+"미국채 20년+",
+"채권"
+],
+"IEF": [
+"iShares 7-10 Year Treasury Bond ETF",
+"미국채 7~10년",
+"채권"
+],
+"SHY": [
+"iShares 1-3 Year Treasury Bond ETF",
+"미국채 1~3년",
+"채권"
+],
+"EDV": [
+"Vanguard Extended Duration Treasury ETF",
+"뱅가드 초장기 국채",
+"채권"
+],
+"TLTW": [
+"iShares 20+ Year Treasury Bond BuyWrite Strategy ETF",
+"미국채 20년 커버드콜",
+"채권"
+],
+"TMF": [
+"Direxion Daily 20+ Year Treasury Bull 3X Shares",
+"미국채 20년 3배",
+"레버리지·인버스"
+],
+"BND": [
+"Vanguard Total Bond Market ETF",
+"뱅가드 미국 종합채권",
+"채권"
+],
+"AGG": [
+"iShares Core U.S. Aggregate Bond ETF",
+"아이셰어즈 종합채권",
+"채권"
+],
+"BNDX": [
+"Vanguard Total International Bond ETF",
+"뱅가드 국제채권",
+"채권"
+],
+"LQD": [
+"iShares iBoxx $ Investment Grade Corporate Bond ETF",
+"투자등급 회사채",
+"채권"
+],
+"VCIT": [
+"Vanguard Intermediate-Term Corporate Bond ETF",
+"뱅가드 중기 회사채",
+"채권"
+],
+"VCSH": [
+"Vanguard Short-Term Corporate Bond ETF",
+"뱅가드 단기 회사채",
+"채권"
+],
+"HYG": [
+"iShares iBoxx $ High Yield Corporate Bond ETF",
+"하이일드 회사채",
+"채권"
+],
+"JNK": [
+"SPDR Bloomberg High Yield Bond ETF",
+"SPDR 하이일드",
+"채권"
+],
+"EMB": [
+"iShares J.P. Morgan USD Emerging Markets Bond ETF",
+"신흥국 달러채권",
+"채권"
+],
+"TIP": [
+"iShares TIPS Bond ETF",
+"물가연동국채",
+"채권"
+],
+"MUB": [
+"iShares National Muni Bond ETF",
+"지방채",
+"채권"
+],
+"SGOV": [
+"iShares 0-3 Month Treasury Bond ETF",
+"초단기 미국채",
+"채권"
+],
+"BIL": [
+"SPDR Bloomberg 1-3 Month T-Bill ETF",
+"SPDR 단기국채",
+"채권"
+],
+"SHV": [
+"iShares Short Treasury Bond ETF",
+"아이셰어즈 단기국채",
+"채권"
+],
+"JAAA": [
+"Janus Henderson AAA CLO ETF",
+"AAA CLO",
+"채권"
+],
+"PFF": [
+"iShares Preferred and Income Securities ETF",
+"우선주",
+"채권"
+],
+"PGX": [
+"Invesco Preferred ETF",
+"인베스코 우선주",
+"채권"
+],
+"VNQ": [
+"Vanguard Real Estate ETF",
+"뱅가드 리츠",
+"리츠"
+],
+"SCHH": [
+"Schwab U.S. REIT ETF",
+"슈왑 리츠",
+"리츠"
+],
+"XLRE": [
+"Real Estate Select Sector SPDR Fund",
+"부동산 섹터",
+"리츠"
+],
+"IYR": [
+"iShares U.S. Real Estate ETF",
+"아이셰어즈 부동산",
+"리츠"
+],
+"REM": [
+"iShares Mortgage Real Estate ETF",
+"모기지 리츠",
+"리츠"
+],
+"MORT": [
+"VanEck Mortgage REIT Income ETF",
+"반에크 모기지리츠",
+"리츠"
+],
+"VNQI": [
+"Vanguard Global ex-U.S. Real Estate ETF",
+"뱅가드 해외리츠",
+"리츠"
+],
+"XLE": [
+"Energy Select Sector SPDR Fund",
+"에너지 섹터",
+"섹터"
+],
+"XLF": [
+"Financial Select Sector SPDR Fund",
+"금융 섹터",
+"섹터"
+],
+"XLV": [
+"Health Care Select Sector SPDR Fund",
+"헬스케어 섹터",
+"섹터"
+],
+"XLI": [
+"Industrial Select Sector SPDR Fund",
+"산업재 섹터",
+"섹터"
+],
+"XLY": [
+"Consumer Discretionary Select Sector SPDR Fund",
+"경기소비재 섹터",
+"섹터"
+],
+"XLP": [
+"Consumer Staples Select Sector SPDR Fund",
+"필수소비재 섹터",
+"섹터"
+],
+"XLU": [
+"Utilities Select Sector SPDR Fund",
+"유틸리티 섹터",
+"섹터"
+],
+"XLB": [
+"Materials Select Sector SPDR Fund",
+"소재 섹터",
+"섹터"
+],
+"XLC": [
+"Communication Services Select Sector SPDR Fund",
+"커뮤니케이션 섹터",
+"섹터"
+],
+"KRE": [
+"SPDR S&P Regional Banking ETF",
+"지역은행",
+"섹터"
+],
+"KBE": [
+"SPDR S&P Bank ETF",
+"은행",
+"섹터"
+],
+"XBI": [
+"SPDR S&P Biotech ETF",
+"바이오테크",
+"섹터"
+],
+"IBB": [
+"iShares Biotechnology ETF",
+"아이셰어즈 바이오",
+"섹터"
+],
+"ITA": [
+"iShares U.S. Aerospace & Defense ETF",
+"항공우주·방산",
+"섹터"
+],
+"XOP": [
+"SPDR S&P Oil & Gas Exploration & Production ETF",
+"석유가스 탐사",
+"섹터"
+],
+"OIH": [
+"VanEck Oil Services ETF",
+"석유 서비스",
+"섹터"
+],
+"XME": [
+"SPDR S&P Metals & Mining ETF",
+"금속·광업",
+"섹터"
+],
+"GDX": [
+"VanEck Gold Miners ETF",
+"금광",
+"섹터"
+],
+"GDXJ": [
+"VanEck Junior Gold Miners ETF",
+"중소형 금광",
+"섹터"
+],
+"GLD": [
+"SPDR Gold Shares",
+"금",
+"원자재"
+],
+"IAU": [
+"iShares Gold Trust",
+"아이셰어즈 금",
+"원자재"
+],
+"GLDM": [
+"SPDR Gold MiniShares Trust",
+"금 미니",
+"원자재"
+],
+"SLV": [
+"iShares Silver Trust",
+"은",
+"원자재"
+],
+"USO": [
+"United States Oil Fund",
+"원유",
+"원자재"
+],
+"DBC": [
+"Invesco DB Commodity Index Tracking Fund",
+"원자재 종합",
+"원자재"
+],
+"PDBC": [
+"Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF",
+"원자재 종합(K-1 없음)",
+"원자재"
+],
+"URA": [
+"Global X Uranium ETF",
+"우라늄",
+"테마"
+],
+"ICLN": [
+"iShares Global Clean Energy ETF",
+"클린에너지",
+"테마"
+],
+"TAN": [
+"Invesco Solar ETF",
+"태양광",
+"테마"
+],
+"LIT": [
+"Global X Lithium & Battery Tech ETF",
+"리튬·2차전지",
+"테마"
+],
+"BOTZ": [
+"Global X Robotics & Artificial Intelligence ETF",
+"로봇·AI",
+"테마"
+],
+"AIQ": [
+"Global X Artificial Intelligence & Technology ETF",
+"인공지능·기술",
+"테마"
+],
+"CIBR": [
+"First Trust NASDAQ Cybersecurity ETF",
+"사이버보안",
+"테마"
+],
+"PAVE": [
+"Global X U.S. Infrastructure Development ETF",
+"미국 인프라",
+"테마"
+],
+"TQQQ": [
+"ProShares UltraPro QQQ",
+"나스닥 3배",
+"레버리지·인버스"
+],
+"SQQQ": [
+"ProShares UltraPro Short QQQ",
+"나스닥 3배 인버스",
+"레버리지·인버스"
+],
+"QLD": [
+"ProShares Ultra QQQ",
+"나스닥 2배",
+"레버리지·인버스"
+],
+"UPRO": [
+"ProShares UltraPro S&P500",
+"S&P500 3배",
+"레버리지·인버스"
+],
+"SPXL": [
+"Direxion Daily S&P 500 Bull 3X Shares",
+"S&P500 3배(디렉시온)",
+"레버리지·인버스"
+],
+"SSO": [
+"ProShares Ultra S&P500",
+"S&P500 2배",
+"레버리지·인버스"
+],
+"SOXL": [
+"Direxion Daily Semiconductor Bull 3X Shares",
+"반도체 3배",
+"레버리지·인버스"
+],
+"SOXS": [
+"Direxion Daily Semiconductor Bear 3X Shares",
+"반도체 3배 인버스",
+"레버리지·인버스"
+],
+"TNA": [
+"Direxion Daily Small Cap Bull 3X Shares",
+"소형주 3배",
+"레버리지·인버스"
+],
+"LABU": [
+"Direxion Daily S&P Biotech Bull 3X Shares",
+"바이오 3배",
+"레버리지·인버스"
+],
+"TSLL": [
+"Direxion Daily TSLA Bull 2X Shares",
+"테슬라 2배",
+"레버리지·인버스"
+],
+"NVDL": [
+"GraniteShares 2x Long NVDA Daily ETF",
+"엔비디아 2배",
+"레버리지·인버스"
+],
+"IBIT": [
+"iShares Bitcoin Trust ETF",
+"비트코인(아이셰어즈)",
+"가상자산"
+],
+"FBTC": [
+"Fidelity Wise Origin Bitcoin Fund",
+"비트코인(피델리티)",
+"가상자산"
+],
+"GBTC": [
+"Grayscale Bitcoin Trust ETF",
+"비트코인(그레이스케일)",
+"가상자산"
+],
+"ETHA": [
+"iShares Ethereum Trust ETF",
+"이더리움",
+"가상자산"
+],
+"BITO": [
+"ProShares Bitcoin Strategy ETF",
+"비트코인 선물",
+"가상자산"
+]
+}

@@ -1,0 +1,2049 @@
+ticker,name,sector,industry,market_cap,country,sp500,etf
+NVDA,NVIDIA Corporation,Technology,Semiconductors,5563726000000.0,United States,1,0
+AAPL,Apple Inc.,Technology,Computer Manufacturing,4820749537600.0,United States,1,0
+GOOGL,Alphabet Inc.,Technology,Computer Software: Programming Data Processing,4136675200000.0,United States,1,0
+GOOG,Alphabet Inc.,Technology,Computer Software: Programming Data Processing,4096193900000.0,United States,1,0
+MSFT,Microsoft Corporation,Technology,Computer Software: Prepackaged Software,3807819727785.0,United States,1,0
+AMZN,Amazon.com Inc.,Consumer Discretionary,Catalog/Specialty Distribution,2677486617978.0,United States,1,0
+TSM,Taiwan Semiconductor Manufacturing Company Ltd.,Technology,Semiconductors,2381643051917.0,Taiwan,0,0
+SPCX,Space Exploration Technologies Corp.,Technology,Computer Software: Programming Data Processing,2009727698014.0,United States,0,0
+META,Meta Platforms Inc.,Technology,Computer Software: Programming Data Processing,1849311193914.0,United States,1,0
+AVGO,Broadcom Inc.,Technology,Semiconductors,1640410166809.0,United States,1,0
+SKHY,SK hynix Inc.,Technology,Semiconductors,1410354742500.0,South Korea,0,0
+TSLA,Tesla Inc.,Industrials,Auto Manufacturing,1398574227689.0,United States,1,0
+MU,Micron Technology Inc.,Technology,Semiconductors,1239384749976.0,United States,1,0
+BRK-B,Berkshire Hathaway Inc.,Uncategorized,Uncategorized,1104258841186.0,United States,1,0
+LLY,Eli Lilly and Company,Health Care,Biotechnology: Pharmaceutical Preparations,1082419421190.0,United States,1,0
+AMD,Advanced Micro Devices Inc.,Technology,Semiconductors,1005163857611.0,United States,1,0
+JPM,JP Morgan Chase & Co.,Finance,Major Banks,885654476450.0,United States,1,0
+WMT,Walmart Inc.,Consumer Discretionary,Department/Specialty Retail Stores,827172383087.0,United States,1,0
+ASML,ASML Holding N.V.,Technology,Industrial Machinery/Components,697023992976.0,Netherlands,0,0
+XOM,ExxonMobil Holdings Corporation,Energy,Integrated oil Companies,673613417287.0,United States,1,0
+V,Visa Inc.,Consumer Discretionary,Business Services,642963867716.0,United States,1,0
+INTC,Intel Corporation,Technology,Semiconductors,634208341320.0,United States,1,0
+JNJ,Johnson & Johnson,Health Care,Biotechnology: Pharmaceutical Preparations,623344371100.0,United States,1,0
+MA,Mastercard Incorporated,Consumer Discretionary,Business Services,481805467000.0,United States,1,0
+ABBV,AbbVie Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,459326795890.0,United States,1,0
+PLTR,Palantir Technologies Inc.,Technology,Computer Software: Prepackaged Software,456486243339.0,United States,1,0
+CSCO,Cisco Systems Inc.,Telecommunications,Computer Communications Equipment,428795748307.0,United States,1,0
+LRCX,Lam Research Corporation,Technology,Industrial Machinery/Components,425609425516.0,United States,1,0
+AMAT,Applied Materials Inc.,Technology,Semiconductors,420051126580.0,United States,1,0
+ORCL,Oracle Corporation,Technology,Computer Software: Prepackaged Software,418559363642.0,United States,1,0
+CVX,Chevron Corporation,Energy,Integrated oil Companies,409182230845.0,United States,1,0
+COST,Costco Wholesale Corporation,Consumer Discretionary,Department/Specialty Retail Stores,405756496932.0,United States,1,0
+CAT,Caterpillar Inc.,Industrials,Construction/Ag Equipment/Trucks,379852344525.0,United States,1,0
+BAC,Bank of America Corporation,Finance,Major Banks,375720369651.0,United States,1,0
+KO,Coca-Cola Company (The),Consumer Staples,Beverages (Production/Distribution),370449489822.0,United States,1,0
+MRK,Merck & Company Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,354803953261.0,United States,1,0
+DELL,Dell Technologies Inc.,Technology,Computer Manufacturing,344445199185.0,United States,1,0
+PG,Procter & Gamble Company (The),Consumer Discretionary,Package Goods/Cosmetics,334602138987.0,United States,1,0
+HSBC,HSBC Holdings plc.,Finance,Savings Institutions,328982481368.0,United Kingdom,0,0
+UNH,UnitedHealth Group Incorporated,Health Care,Medical Specialities,327801638124.0,United States,1,0
+PANW,Palo Alto Networks Inc.,Technology,Computer peripheral equipment,324132500000.0,United States,1,0
+GE,GE Aerospace,Technology,Consumer Electronics/Appliances,324124153436.0,United States,1,0
+ARM,Arm Holdings plc,Technology,Semiconductors,311065912370.0,United Kingdom,0,0
+MS,Morgan Stanley,Finance,Investment Bankers/Brokers/Service,295282168559.0,United States,1,0
+PM,Philip Morris International Inc,Health Care,Medicinal Chemicals and Botanical Products,293299876951.0,United States,1,0
+NFLX,Netflix Inc.,Consumer Discretionary,Consumer Electronics/Video Chains,282523307017.0,United States,1,0
+HD,Home Depot Inc. (The),Consumer Discretionary,RETAIL: Building Materials,281807411760.0,United States,1,0
+CRWD,CrowdStrike Holdings Inc.,Technology,Computer Software: Prepackaged Software,272458822108.0,United States,1,0
+RY,Royal Bank Of Canada,Finance,Commercial Banks,270462205533.0,Canada,0,0
+NVS,Novartis AG,Health Care,Biotechnology: Pharmaceutical Preparations,269144794323.0,Switzerland,0,0
+MUFG,Mitsubishi UFJ Financial Group Inc.,Finance,Commercial Banks,268447621010.0,Japan,0,0
+SHEL,Shell PLC,Energy,Oil & Gas Production,264464224137.0,Netherlands,0,0
+GEV,GE Vernova Inc.,Technology,Consumer Electronics/Appliances,262991094558.0,United States,1,0
+SNDK,Sandisk Corporation,Technology,Electronic Components,261751783898.0,United States,1,0
+KLAC,KLA Corporation,Technology,Electronic Components,261431950542.0,United States,1,0
+GS,Goldman Sachs Group Inc. (The),Finance,Investment Bankers/Brokers/Service,261084666411.0,United States,1,0
+BABA,Alibaba Group Holding Limited,Consumer Discretionary,Business Services,260296122634.0,China,0,0
+SAP,SAP  SE ADS,Technology,Computer Software: Prepackaged Software,258956407063.0,Germany,0,0
+ANET,Arista Networks Inc.,Telecommunications,Computer Communications Equipment,257907828270.0,United States,1,0
+TXN,Texas Instruments Incorporated,Technology,Semiconductors,256905706549.0,United States,1,0
+RTX,RTX Corporation,Industrials,Aerospace,249348734221.0,United States,1,0
+AZN,AstraZeneca PLC,Health Care,Biotechnology: Pharmaceutical Preparations,244549469541.0,United Kingdom,0,0
+WFC,Wells Fargo & Company,Finance,Major Banks,242675946714.0,United States,1,0
+TMO,Thermo Fisher Scientific Inc,Industrials,Industrial Machinery/Components,241263801588.0,United States,1,0
+TM,Toyota Motor Corporation,Industrials,Auto Manufacturing,238964108738.0,Japan,0,0
+MRVL,Marvell Technology Inc.,Technology,Semiconductors,235079352000.0,United States,1,0
+AMGN,Amgen Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),220183196676.0,United States,1,0
+LIN,Linde plc,Basic Materials,Major Chemicals,216407137520.0,United States,1,0
+STX,Seagate Technology Holdings PLC,Technology,Electronic Components,216269400269.0,Ireland,1,0
+BHP,BHP Group Limited,Energy,Coal Mining,215188020503.0,Australia,0,0
+C,Citigroup Inc.,Finance,Major Banks,213034471441.0,United States,1,0
+IBM,International Business Machines Corporation,Technology,Computer Manufacturing,212564361072.0,United States,1,0
+APH,Amphenol Corporation,Technology,Electrical Products,211259385522.0,United States,1,0
+AXP,American Express Company,Finance,Finance: Consumer Services,204004347451.0,United States,1,0
+ADI,Analog Devices Inc.,Technology,Semiconductors,196055187139.0,United States,1,0
+CRM,Salesforce Inc.,Technology,Computer Software: Prepackaged Software,194795870000.0,United States,1,0
+SHOP,Shopify Inc.,Technology,Computer Software: Prepackaged Software,193192465717.0,Canada,0,0
+SAN,Banco Santander S.A. Sponsored ADR (Spain),Finance,Commercial Banks,192224128017.0,Spain,0,0
+TD,Toronto Dominion Bank (The),Finance,Commercial Banks,192072504685.0,Canada,0,0
+QCOM,QUALCOMM Incorporated,Technology,Radio And Television Broadcasting And Communications Equipment,191237094675.0,United States,1,0
+VZ,Verizon Communications Inc.,Telecommunications,Telecommunications Equipment,191036563788.0,United States,1,0
+TTE,TotalEnergies SE,Energy,Oil & Gas Production,184389141056.0,France,0,0
+GILD,Gilead Sciences Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),182893385363.0,United States,1,0
+DE,Deere & Company,Industrials,Industrial Machinery/Components,179910252411.0,United States,1,0
+DIS,Walt Disney Company (The),Consumer Discretionary,Services-Misc. Amusement & Recreation,174965183780.0,United States,1,0
+TMUS,T-Mobile US Inc.,Telecommunications,Telecommunications Equipment,173483179970.0,United States,1,0
+PEP,PepsiCo Inc.,Consumer Staples,Beverages (Production/Distribution),171430379685.0,United States,1,0
+SCHW,Charles Schwab Corporation (The),Finance,Investment Bankers/Brokers/Service,170114754186.0,United States,1,0
+ETN,Eaton Corporation PLC,Technology,Industrial Machinery/Components,169839552000.0,Ireland,1,0
+ABT,Abbott Laboratories,Health Care,Biotechnology: Pharmaceutical Preparations,167310760890.0,United States,1,0
+WDC,Western Digital Corporation,Technology,Electronic Components,166771819057.0,United States,1,0
+T,AT&T Inc.,Telecommunications,Telecommunications Equipment,166512971295.0,United States,1,0
+SCCO,Southern Copper Corporation,Basic Materials,Metal Mining,166215562469.0,United States,0,0
+NVO,Novo Nordisk A/S,Health Care,Biotechnology: Pharmaceutical Preparations,165604601448.0,Denmark,0,0
+BLK,BlackRock Inc.,Finance,Investment Bankers/Brokers/Service,164836644509.0,United States,1,0
+MCD,McDonald's Corporation,Consumer Discretionary,Restaurants,164052536132.0,United States,1,0
+WELL,Welltower Inc.,Real Estate,Real Estate Investment Trusts,163565859180.0,United States,1,0
+UNP,Union Pacific Corporation,Industrials,Railroads,161838047165.0,United States,1,0
+PFE,Pfizer Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,160274821323.0,United States,1,0
+NEE,NextEra Energy Inc.,Utilities,Electric Utilities: Central,159264436257.0,United States,1,0
+BBVA,Banco Bilbao Vizcaya Argentaria S.A.,Finance,Commercial Banks,153399988969.0,Spain,0,0
+COP,ConocoPhillips,Energy,Integrated oil Companies,152641940082.0,United States,1,0
+BA,Boeing Company (The),Industrials,Aerospace,151972347446.0,United States,1,0
+DHR,Danaher Corporation,Industrials,Industrial Machinery/Components,148864326795.0,United States,1,0
+UBS,UBS Group AG Registered,Finance,Major Banks,147630415271.0,Switzerland,0,0
+TJX,TJX Companies Inc. (The),Consumer Discretionary,Clothing/Shoe/Accessory Stores,146945534809.0,United States,1,0
+NOW,ServiceNow Inc.,Technology,Computer Software: Prepackaged Software,142443840000.0,United States,1,0
+ISRG,Intuitive Surgical Inc.,Health Care,Industrial Specialties,141749279967.0,United States,1,0
+ACN,Accenture plc,Consumer Discretionary,Business Services,141712417583.0,Ireland,1,0
+UBER,Uber Technologies Inc.,Consumer Discretionary,Business Services,138648981013.0,United States,1,0
+SONY,Sony Group Corporation,Consumer Staples,Consumer Electronics/Appliances,138498274493.0,Japan,0,0
+GLW,Corning Incorporated,Industrials,Telecommunications Equipment,138183916059.0,United States,1,0
+PBR,Petroleo Brasileiro S.A. Petrobras ADS,Energy,Oil & Gas Production,135202806673.0,Brazil,0,0
+MFG,Mizuho Financial Group Inc. Sponosred ADR (Japan),Finance,Major Banks,133953854357.0,Japan,0,0
+FTNT,Fortinet Inc.,Technology,Computer peripheral equipment,131129304064.0,United States,1,0
+VRTX,Vertex Pharmaceuticals Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,128438788628.0,United States,1,0
+UL,Unilever PLC,Consumer Discretionary,Package Goods/Cosmetics,128354823156.0,United Kingdom,0,0
+CB,Chubb Limited,Finance,Property-Casualty Insurers,127815493287.0,Switzerland,1,0
+BMY,Bristol-Myers Squibb Company,Health Care,Biotechnology: Pharmaceutical Preparations,125545242758.0,United States,1,0
+NET,Cloudflare Inc.,Technology,Computer Software: Prepackaged Software,124983979965.0,United States,0,0
+MNST,Monster Beverage Corporation,Consumer Staples,Beverages (Production/Distribution),123831785852.0,United States,1,0
+PGR,Progressive Corporation (The),Finance,Property-Casualty Insurers,122646188599.0,United States,1,0
+PH,Parker-Hannifin Corporation,Industrials,Metal Fabrications,121809459400.0,United States,1,0
+PLD,Prologis Inc.,Real Estate,Real Estate Investment Trusts,121524381680.0,United States,1,0
+NEM,Newmont Corporation,Basic Materials,Precious Metals,120826892716.0,United States,1,0
+SNOW,Snowflake Inc.,Technology,Computer Software: Prepackaged Software,120654072000.0,United States,0,0
+BKNG,Booking Holdings Inc.,Consumer Discretionary,Transportation Services,120431266540.0,United States,1,0
+COF,Capital One Financial Corporation,Finance,Major Banks,119310530905.0,United States,1,0
+MPC,Marathon Petroleum Corporation,Energy,Integrated oil Companies,117988524174.0,United States,1,0
+HDB,HDFC Bank Limited,Finance,Commercial Banks,117759267709.0,India,0,0
+VLO,Valero Energy Corporation,Energy,Integrated oil Companies,117606850720.0,United States,1,0
+LMT,Lockheed Martin Corporation,Industrials,Military/Government/Technical,116664725642.0,United States,1,0
+RIO,Rio Tinto Plc,Basic Materials,Metal Mining,116648303296.0,Australia,0,0
+BP,BP p.l.c.,Energy,Integrated oil Companies,116497902845.0,United Kingdom,0,0
+BMO,Bank Of Montreal,Finance,Commercial Banks,115593839013.0,Canada,0,0
+SMFG,Sumitomo Mitsui Financial Group Inc Unsponsored,Finance,Commercial Banks,115310924764.0,Japan,0,0
+BTI,British American Tobacco  Industries p.l.c.,Health Care,Medicinal Chemicals and Botanical Products,114908141790.0,United Kingdom,0,0
+SPGI,S&P Global Inc.,Finance,Finance: Consumer Services,114429568000.0,United States,1,0
+MO,Altria Group Inc.,Health Care,Medicinal Chemicals and Botanical Products,111789355846.0,United States,1,0
+BNS,Bank Nova Scotia Halifax Pfd 3,Finance,Major Banks,111232809931.0,Canada,0,0
+MDT,Medtronic plc.,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus,110568679212.0,United States,1,0
+CVS,CVS Health Corporation,Consumer Staples,Retail-Drug Stores and Proprietary Stores,108968275439.0,United States,1,0
+PDD,PDD Holdings Inc.,Consumer Discretionary,Business Services,108889829343.0,China,0,0
+SBUX,Starbucks Corporation,Consumer Discretionary,Restaurants,108163200000.0,United States,1,0
+PSX,Phillips 66,Energy,Integrated oil Companies,105433296635.0,United States,1,0
+MCK,McKesson Corporation,Health Care,Other Pharmaceuticals,104793750072.0,United States,1,0
+SYK,Stryker Corporation,Health Care,Medical/Dental Instruments,104700098636.0,United States,1,0
+ADP,Automatic Data Processing Inc.,Technology,EDP Services,104594558610.0,United States,1,0
+LOW,Lowe's Companies Inc.,Consumer Discretionary,RETAIL: Building Materials,102325031985.0,United States,1,0
+SPOT,Spotify Technology S.A.,Consumer Discretionary,Broadcasting,101146103768.0,Luxembourg,0,0
+ENB,Enbridge Inc,Energy,Natural Gas Distribution,101058706727.0,Canada,0,0
+TT,Trane Technologies plc,Industrials,Auto Parts:O.E.M.,100977436852.0,Ireland,1,0
+HOOD,Robinhood Markets Inc.,Finance,Investment Bankers/Brokers/Service,99932994644.0,United States,1,0
+EQIX,Equinix Inc.,Real Estate,Real Estate Investment Trusts,99888307888.0,United States,1,0
+CM,Canadian Imperial Bank of Commerce,Finance,Commercial Banks,99829777373.0,Canada,0,0
+ASX,ASE Technology Holding Co. Ltd.,Technology,Semiconductors,99609182921.0,Taiwan,0,0
+FCX,Freeport-McMoRan Inc.,Basic Materials,Metal Mining,99487293993.0,United States,1,0
+ING,ING Group N.V.,Finance,Commercial Banks,99408490814.0,Netherlands,0,0
+DDOG,Datadog Inc.,Technology,Computer Software: Prepackaged Software,99269881135.0,United States,1,0
+SNY,Sanofi ADS,Health Care,Biotechnology: Pharmaceutical Preparations,99188199989.0,France,0,0
+CNQ,Canadian Natural Resources Limited,Energy,Oil & Gas Production,98869863600.0,Canada,0,0
+IBN,ICICI Bank Limited,Finance,Commercial Banks,98487348400.0,India,0,0
+BNY,The Bank of New York Mellon Corporation,Finance,Major Banks,97650316117.0,United States,1,0
+PWR,Quanta Services Inc.,Industrials,Engineering & Construction,97620711565.0,United States,1,0
+CDNS,Cadence Design Systems Inc.,Technology,Computer Software: Prepackaged Software,96588586890.0,United States,1,0
+ABNB,Airbnb Inc.,Consumer Discretionary,Diversified Commercial Services,96087138391.0,United States,1,0
+SO,Southern Company (The),Utilities,Electric Utilities: Central,96020796772.0,United States,1,0
+GSK,GSK plc,Health Care,Biotechnology: Pharmaceutical Preparations,95431251293.0,United Kingdom,0,0
+CME,CME Group Inc.,Finance,Investment Bankers/Brokers/Service,95324462621.0,United States,1,0
+VRT,Vertiv Holdings LLC,Technology,Industrial Machinery/Components,94753289139.0,United States,1,0
+APP,Applovin Corporation,Technology,Computer Software: Programming Data Processing,94140672810.0,United States,1,0
+SNPS,Synopsys Inc.,Technology,Computer Software: Prepackaged Software,94005440329.0,United States,1,0
+ADBE,Adobe Inc.,Technology,Computer Software: Prepackaged Software,93906176000.0,United States,1,0
+LITE,Lumentum Holdings Inc.,Telecommunications,Telecommunications Equipment,93806466000.0,United States,1,0
+ITUB,Itau Unibanco Banco Holding SA,Finance,Major Banks,93174132279.0,Brazil,0,0
+MAR,Marriott International,Consumer Discretionary,Hotels/Resorts,92517271320.0,United States,1,0
+JCI,Johnson Controls International plc Ordinary Share,Industrials,Industrial Machinery/Components,91933382902.0,Switzerland,1,0
+CEG,Constellation Energy Corporation,Utilities,Electric Utilities: Central,91737266571.0,United States,1,0
+HCA,HCA Healthcare Inc.,Health Care,Hospital/Nursing Management,91664570085.0,United States,1,0
+AEM,Agnico Eagle Mines Limited,Basic Materials,Precious Metals,91660440629.0,Canada,0,0
+HWM,Howmet Aerospace Inc.,Industrials,Metal Fabrications,91078263504.0,United States,1,0
+RACE,Ferrari N.V.,Industrials,Auto Manufacturing,90606718018.0,Italy,0,0
+GD,General Dynamics Corporation,Industrials,Marine Transportation,90019789920.0,United States,1,0
+BN,Brookfield Corporation,Real Estate,Building operators,89550392759.0,Canada,0,0
+USB,U.S. Bancorp,Finance,Major Banks,89369830943.0,United States,1,0
+DUK,Duke Energy Corporation (Holding Company),Utilities,Power Generation,88683327432.0,United States,1,0
+EMR,Emerson Electric Company,Technology,Consumer Electronics/Appliances,88450346000.0,United States,1,0
+PNC,PNC Financial Services Group Inc. (The),Finance,Major Banks,88066814490.0,United States,1,0
+CSX,CSX Corporation,Industrials,Railroads,86214182637.0,United States,1,0
+HPE,Hewlett Packard Enterprise Company,Technology,Retail: Computer Software & Peripheral Equipment,85727675428.0,United States,1,0
+E,ENI S.p.A.,Energy,Oil & Gas Production,85576277275.0,Italy,0,0
+MELI,MercadoLibre Inc.,Consumer Discretionary,Business Services,85430194986.0,Argentina,0,0
+ICE,Intercontinental Exchange Inc.,Finance,Investment Bankers/Brokers/Service,85034422946.0,United States,1,0
+WMB,Williams Companies Inc. (The),Utilities,Natural Gas Distribution,84667652412.0,United States,1,0
+BX,Blackstone Inc.,Finance,Investment Managers,84250162795.0,United States,1,0
+MMM,3M Company,Health Care,Medical/Dental Instruments,84073068419.0,United States,1,0
+ELV,Elevance Health Inc.,Health Care,Medical Specialities,82772501914.0,United States,1,0
+MRSH,Marsh,Finance,Specialty Insurers,82008756406.0,United States,1,0
+KKR,KKR & Co. Inc.,Finance,Investment Managers,81900272235.0,United States,1,0
+BE,Bloom Energy Corporation,Energy,Industrial Machinery/Components,81754900703.0,United States,1,0
+SU,Suncor Energy  Inc.,Energy,Integrated oil Companies,80821406189.0,Canada,0,0
+WM,Waste Management Inc.,Utilities,Environmental Services,80702495650.0,United States,1,0
+LYG,Lloyds Banking Group Plc,Finance,Commercial Banks,80329895414.0,United Kingdom,0,0
+UPS,United Parcel Service Inc.,Industrials,Trucking Freight/Courier Services,79879882734.0,United States,1,0
+BCS,Barclays PLC,Finance,Commercial Banks,79436746040.0,United Kingdom,0,0
+NGG,National Grid Transco PLC National Grid PLC (NEW),Utilities,Natural Gas Distribution,79093962735.0,United Kingdom,0,0
+DASH,DoorDash Inc.,Consumer Discretionary,Business Services,78936051673.0,United States,1,0
+CTAS,Cintas Corporation,Industrials,Garments and Clothing,78145479625.0,United States,1,0
+SHW,Sherwin-Williams Company (The),Consumer Discretionary,RETAIL: Building Materials,77871959678.0,United States,1,0
+WBD,Warner Bros. Discovery Inc. Series A,Telecommunications,Cable & Other Pay Television Services,77706267568.0,United States,1,0
+MCO,Moody's Corporation,Finance,Finance: Consumer Services,77482752000.0,United States,1,0
+EPD,Enterprise Products Partners L.P.,Utilities,Natural Gas Distribution,77028550618.0,United States,0,0
+CMCSA,Comcast Corporation,Telecommunications,Cable & Other Pay Television Services,77005413634.0,United States,1,0
+NTES,NetEase Inc.,Technology,Computer Software: Prepackaged Software,76964630744.0,China,0,0
+ECL,Ecolab Inc.,Consumer Discretionary,Package Goods/Cosmetics,76041936850.0,United States,1,0
+REGN,Regeneron Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,75652354732.0,United States,1,0
+INTU,Intuit Inc.,Technology,Computer Software: Prepackaged Software,75568996080.0,United States,1,0
+MRNA,Moderna Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),75431628868.0,United States,1,0
+TRV,The Travelers Companies Inc.,Finance,Property-Casualty Insurers,75429070956.0,United States,1,0
+CP,Canadian Pacific Kansas City Limited,Industrials,Railroads,75369531380.0,Canada,0,0
+AMT,American Tower Corporation (REIT),Real Estate,Real Estate Investment Trusts,75047525331.0,United States,1,0
+ROST,Ross Stores Inc.,Consumer Discretionary,Clothing/Shoe/Accessory Stores,74783973051.0,United States,1,0
+ITW,Illinois Tool Works Inc.,Industrials,Industrial Machinery/Components,74287232000.0,United States,1,0
+MSI,Motorola Solutions Inc.,Technology,Radio And Television Broadcasting And Communications Equipment,74146181838.0,United States,1,0
+EOG,EOG Resources Inc.,Energy,Oil & Gas Production,74121217861.0,United States,1,0
+MDLZ,Mondelez International Inc.,Consumer Staples,Packaged Foods,73719553372.0,United States,1,0
+SLB,SLB Limited,Energy,Oilfield Services/Equipment,72218409620.0,France,1,0
+RCL,Royal Caribbean Cruises Ltd.,Consumer Discretionary,Marine Transportation,72209388159.0,United States,1,0
+TGT,Target Corporation,Consumer Discretionary,Department/Specialty Retail Stores,71188298531.0,United States,1,0
+BAM,Brookfield Asset Management Inc,Real Estate,Building operators,71172881522.0,,0,0
+CMI,Cummins Inc.,Industrials,Industrial Machinery/Components,71172539779.0,United States,1,0
+MFC,Manulife Financial Corporation,Finance,Life Insurance,71011291371.0,Canada,0,0
+HLT,Hilton Worldwide Holdings Inc.,Consumer Discretionary,Hotels/Resorts,70994475210.0,United States,1,0
+CI,The Cigna Group,Health Care,Medical Specialities,70805880629.0,United States,1,0
+CNI,Canadian National Railway Company,Industrials,Railroads,70776356000.0,Canada,0,0
+NSC,Norfolk Southern Corporation,Industrials,Railroads,69686993807.0,United States,1,0
+GM,General Motors Company,Industrials,Auto Manufacturing,69590681717.0,United States,1,0
+CVNA,Carvana Co.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,69373236061.0,United States,1,0
+ET,Energy Transfer LP,Utilities,Natural Gas Distribution,69210321980.0,United States,0,0
+NWG,NatWest Group plc,Finance,Commercial Banks,69165601918.0,United Kingdom,0,0
+ORLY,O'Reilly Automotive Inc.,Consumer Discretionary,Auto & Home Supply Stores,68785936144.0,United States,1,0
+NOC,Northrop Grumman Corporation,Industrials,Industrial Machinery/Components,68474378532.0,United States,1,0
+KMI,Kinder Morgan Inc.,Utilities,Natural Gas Distribution,67984267777.0,United States,1,0
+FDX,FedEx Corporation,Consumer Discretionary,Air Freight/Delivery Services,67940981775.0,United States,1,0
+HON,Honeywell International Inc.,Industrials,Aerospace,67761774138.0,United States,1,0
+APO,Apollo Global Management Inc. (New),Finance,Investment Managers,67522704800.0,United States,1,0
+MSTR,Strategy Inc,Technology,Computer Software: Prepackaged Software,67489768982.0,United States,0,0
+CL,Colgate-Palmolive Company,Consumer Discretionary,Package Goods/Cosmetics,67385019235.0,United States,1,0
+MPWR,Monolithic Power Systems Inc.,Technology,Semiconductors,66882148710.0,United States,1,0
+DB,Deutsche Bank AG,Finance,Major Banks,66093582000.0,Germany,0,0
+B,Barrick Mining Corporation,Basic Materials,Precious Metals,65999965202.0,Canada,0,0
+DLR,Digital Realty Trust Inc.,Real Estate,Real Estate Investment Trusts,65307684702.0,United States,1,0
+AEP,American Electric Power Company Inc.,Utilities,Electric Utilities: Central,65191582902.0,United States,1,0
+TER,Teradyne Inc.,Industrials,Electrical Products,65004920443.0,United States,1,0
+SPG,Simon Property Group Inc.,Real Estate,Real Estate Investment Trusts,64972379727.0,United States,1,0
+NU,Nu Holdings Ltd.,Finance,Finance: Consumer Services,64531902569.0,Cayman Islands,0,0
+URI,United Rentals Inc.,Consumer Discretionary,Diversified Commercial Services,64365580300.0,United States,1,0
+KEYS,Keysight Technologies Inc.,Industrials,Industrial Machinery/Components,63651105261.0,United States,1,0
+UMC,United Microelectronics Corporation (NEW),Technology,Semiconductors,63469484291.0,Taiwan,0,0
+RSG,Republic Services Inc.,Utilities,Environmental Services,63379962186.0,United States,1,0
+NBIS,Nebius Group N.V.,Technology,Computer Software: Programming Data Processing,63146530037.0,Netherlands,0,0
+TEL,TE Connectivity plc,Technology,Electronic Components,63044400529.0,Ireland,1,0
+BSX,Boston Scientific Corporation,Health Care,Medical/Dental Instruments,62650192409.0,United States,1,0
+COHR,Coherent Corp.,Technology,Electronic Components,62507694601.0,United States,1,0
+AMX,America Movil S.A.B. de C.V.,Telecommunications,Telecommunications Equipment,62392117500.0,Mexico,0,0
+ALAB,Astera Labs Inc.,Technology,Semiconductors,61833560768.0,United States,0,0
+APD,Air Products and Chemicals Inc.,Basic Materials,Major Chemicals,60866635915.0,United States,1,0
+TDG,Transdigm Group Incorporated,Industrials,Military/Government/Technical,60651614291.0,United States,1,0
+WPM,Wheaton Precious Metals Corp,Basic Materials,Precious Metals,60594022931.0,Canada,0,0
+GWW,W.W. Grainger Inc.,Industrials,Office Equipment/Supplies/Services,60368335343.0,United States,1,0
+NXPI,NXP Semiconductors N.V.,Technology,Semiconductors,60315148779.0,Netherlands,1,0
+IMO,Imperial Oil Limited,Energy,Integrated oil Companies,60221836290.0,Canada,0,0
+MET,MetLife Inc.,Finance,Life Insurance,59957248062.0,United States,1,0
+TRGP,Targa Resources Inc.,Utilities,Natural Gas Distribution,59892728476.0,United States,1,0
+NOK,Nokia Corporation Sponsored,Technology,Radio And Television Broadcasting And Communications Equipment,59547025648.0,Finland,0,0
+AJG,Arthur J. Gallagher & Co.,Finance,Specialty Insurers,59415466000.0,United States,1,0
+CVE,Cenovus Energy Inc,Energy,Oil & Gas Production,59343750000.0,Canada,0,0
+FIX,Comfort Systems USA Inc.,Industrials,Engineering & Construction,59312650720.0,United States,1,0
+COR,Cencora Inc.,Health Care,Other Pharmaceuticals,59114439174.0,United States,1,0
+NTRA,Natera Inc.,Health Care,Medical Specialities,58878569120.0,United States,0,0
+TRP,TC Energy Corporation,Utilities,Natural Gas Distribution,58620000000.0,Canada,0,0
+AON,Aon plc,Finance,Specialty Insurers,58536013512.0,United States,1,0
+RELX,RELX PLC PLC,Consumer Discretionary,Business Services,58525799872.0,United Kingdom,0,0
+SE,Sea Limited,Consumer Discretionary,Other Consumer Services,58351400411.0,United States,0,0
+ARGX,argenx SE,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),58090863168.0,Netherlands,0,0
+PCAR,PACCAR Inc.,Industrials,Auto Manufacturing,57868562933.0,United States,1,0
+OXY,Occidental Petroleum Corporation,Energy,Oil & Gas Production,57819025539.0,United States,1,0
+FAST,Fastenal Company,Consumer Discretionary,RETAIL: Building Materials,57633065604.0,United States,1,0
+VALE,VALE S.A.,Basic Materials,Metal Mining,57424968048.0,Brazil,0,0
+MPLX,MPLX LP,Energy,Natural Gas Distribution,57130912444.0,United States,0,0
+AME,AMETEK Inc.,Industrials,Industrial Machinery/Components,57106683268.0,United States,1,0
+ALL,Allstate Corporation (The),Finance,Property-Casualty Insurers,56743852560.0,United States,1,0
+TFC,Truist Financial Corporation,Finance,Major Banks,56536859981.0,United States,1,0
+TAK,Takeda Pharmaceutical Company Limited,Health Care,Biotechnology: Pharmaceutical Preparations,56434824699.0,Japan,0,0
+LNG,Cheniere Energy Inc.,Utilities,Oil/Gas Transmission,56259904639.0,United States,0,0
+AFL,AFLAC Incorporated,Finance,Accident &Health Insurance,55739347872.0,United States,1,0
+DAL,Delta Air Lines Inc.,Consumer Discretionary,Air Freight/Delivery Services,55325825514.0,United States,1,0
+BKR,Baker Hughes Company,Consumer Discretionary,Oil and Gas Field Machinery,55212531829.0,United States,1,0
+OKE,ONEOK Inc.,Utilities,Oil & Gas Production,54943020176.0,United States,1,0
+CRH,CRH PLC,Industrials,Building Materials,54685031594.0,Ireland,1,0
+GRMN,Garmin Ltd.,Industrials,Industrial Machinery/Components,54473127319.0,Switzerland,1,0
+CIEN,Ciena Corporation,Utilities,Telecommunications Equipment,53765284169.0,United States,1,0
+NUE,Nucor Corporation,Industrials,Steel/Iron Ore,53538122022.0,United States,1,0
+D,Dominion Energy Inc.,Utilities,Electric Utilities: Central,53439996661.0,United States,1,0
+CAH,Cardinal Health Inc.,Health Care,Other Pharmaceuticals,53279489691.0,United States,1,0
+NKE,Nike Inc.,Consumer Discretionary,Shoe Manufacturing,52144979410.0,United States,1,0
+FANG,Diamondback Energy Inc.,Energy,Oil & Gas Production,51947317725.0,United States,1,0
+DVN,Devon Energy Corporation,Energy,Oil & Gas Production,51876000000.0,United States,1,0
+NDAQ,Nasdaq Inc.,Finance,Investment Bankers/Brokers/Service,51241455691.0,United States,1,0
+SRE,DBA Sempra,Utilities,Natural Gas Distribution,51036922161.0,United States,1,0
+O,Realty Income Corporation,Real Estate,Real Estate Investment Trusts,50651051306.0,United States,1,0
+COIN,Coinbase Global Inc.,Finance,Finance: Consumer Services,49941691155.0,United States,1,0
+PSA,Public Storage,Real Estate,Real Estate Investment Trusts,49876402056.0,United States,1,0
+ROK,Rockwell Automation Inc.,Industrials,Industrial Machinery/Components,49233160505.0,United States,1,0
+MT,Arcelor Mittal NY Registry Shares NEW,Industrials,Steel/Iron Ore,49138282875.0,Luxembourg,0,0
+EW,Edwards Lifesciences Corporation,Health Care,Industrial Specialties,49103516000.0,United States,1,0
+CRWV,CoreWeave Inc.,Technology,Computer Software: Prepackaged Software,48849596839.0,United States,0,0
+HONA,Honeywell Aerospace Inc.,Industrials,Aerospace,48832906341.0,United States,1,0
+WAB,Westinghouse Air Brake Technologies Corporation,Industrials,Railroads,48619299352.0,United States,1,0
+BDX,Becton Dickinson and Company,Health Care,Medical/Dental Instruments,48503917476.0,United States,1,0
+TEAM,Atlassian Corporation,Technology,Computer Software: Prepackaged Software,48073592357.0,Australia,0,0
+F,Ford Motor Company,Industrials,Auto Manufacturing,48058443862.0,United States,1,0
+STT,State Street Corporation,Finance,Major Banks,47968422204.0,United States,1,0
+STM,STMicroelectronics N.V.,Technology,Semiconductors,47751168575.0,Switzerland,0,0
+AU,AngloGold Ashanti PLC,Basic Materials,Precious Metals,47643463915.0,South Africa,0,0
+VMRK,Vivmark Residential,Real Estate,Real Estate Investment Trusts,47383875000.0,United States,1,0
+EBAY,eBay Inc.,Consumer Discretionary,Business Services,47121050000.0,United States,1,0
+DEO,Diageo plc,Consumer Staples,Beverages (Production/Distribution),46992388441.0,United Kingdom,0,0
+A,Agilent Technologies Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,46991901385.0,United States,1,0
+VST,Vistra Corp.,Utilities,Electric Utilities: Central,46905018501.0,United States,1,0
+ETR,Entergy Corporation,Utilities,Electric Utilities: Central,46849802399.0,United States,1,0
+TWLO,Twilio Inc.,Technology,Computer Software: Prepackaged Software,46267606529.0,United States,0,0
+INFY,Infosys Limited,Technology,EDP Services,46039687033.0,India,0,0
+AZO,AutoZone Inc.,Consumer Discretionary,Auto & Home Supply Stores,46021665506.0,United States,1,0
+MDLN,Medline Inc.,Health Care,Medical/Dental Instruments,45935879770.0,United States,0,0
+TEVA,Teva Pharmaceutical Industries Limited,Health Care,Biotechnology: Pharmaceutical Preparations,45807789062.0,Israel,0,0
+CCEP,Coca-Cola Europacific Partners plc,Consumer Staples,Beverages (Production/Distribution),45756889422.0,United Kingdom,0,0
+FITB,Fifth Third Bancorp,Finance,Major Banks,45716454151.0,United States,1,0
+ABEV,Ambev S.A.,Consumer Staples,Beverages (Production/Distribution),45708752392.0,Brazil,0,0
+VEEV,Veeva Systems Inc.,Technology,Computer Software: Prepackaged Software,45646962081.0,United States,1,0
+HUM,Humana Inc.,Health Care,Medical Specialities,45592091341.0,United States,1,0
+CARR,Carrier Global Corporation,Industrials,Industrial Machinery/Components,45519229648.0,United States,1,0
+FNV,Franco-Nevada Corporation,Basic Materials,Precious Metals,45477715660.0,Canada,0,0
+PYPL,PayPal Holdings Inc.,Industrials,Diversified Commercial Services,45390753974.0,United States,1,0
+WDAY,Workday Inc.,Technology,EDP Services,45006750000.0,United States,1,0
+P,Everpure Inc.,Technology,Electronic Components,44695771177.0,United States,1,0
+AMP,Ameriprise Financial Inc.,Finance,Investment Managers,44482875105.0,United States,1,0
+XYZ,Block Inc.,Technology,Computer Software: Prepackaged Software,44482861800.0,United States,1,0
+LHX,L3Harris Technologies Inc.,Industrials,Industrial Machinery/Components,44393564454.0,United States,1,0
+RKLB,Rocket Lab Corporation,Industrials,Military/Government/Technical,44231951210.0,United States,0,0
+ADSK,Autodesk Inc.,Technology,Computer Software: Prepackaged Software,44163790000.0,United States,1,0
+RVMD,Revolution Medicines Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),44129725102.0,United States,0,0
+XEL,Xcel Energy Inc.,Utilities,Power Generation,44067950288.0,United States,1,0
+KB,KB Financial Group Inc,Finance,Commercial Banks,43776389102.0,South Korea,0,0
+SLF,Sun Life Financial Inc.,Finance,Life Insurance,43251689327.0,Canada,0,0
+TRI,Thomson Reuters Corporation,Consumer Discretionary,Publishing,43042752000.0,United States,0,0
+VTR,Ventas Inc.,Real Estate,Real Estate Investment Trusts,42948998639.0,United States,1,0
+IQV,IQVIA Holdings Inc.,Health Care,Biotechnology: Commercial Physical & Biological Resarch,42914512000.0,United States,1,0
+CLS,Celestica Inc.,Technology,Electrical Products,42895316491.0,Canada,0,0
+FERG,Ferguson Enterprises Inc.,Miscellaneous,Miscellaneous,42847842288.0,United Kingdom,1,0
+HEI,Heico Corporation,Industrials,Aerospace,42820271318.0,United States,0,0
+MCHP,Microchip Technology Incorporated,Technology,Semiconductors,42626182244.0,United States,1,0
+NTAP,NetApp Inc.,Technology,Electronic Components,42239907025.0,United States,1,0
+IX,ORIX Corporation,Finance,Diversified Financial Services,41996623473.0,Japan,0,0
+WAT,Waters Corporation,Industrials,Biotechnology: Laboratory Analytical Instruments,41807518674.0,United States,1,0
+EXC,Exelon Corporation,Utilities,Power Generation,41775318044.0,United States,1,0
+KDP,Keurig Dr Pepper Inc.,Consumer Staples,Beverages (Production/Distribution),41763751106.0,United States,1,0
+FLEX,Flex Ltd.,Technology,Electrical Products,41661267859.0,Singapore,1,0
+WDS,Woodside Energy Group Limited,Energy,Oil & Gas Production,41443983117.0,Australia,0,0
+HMC,Honda Motor Company Ltd.,Industrials,Auto Manufacturing,41027797859.0,Japan,0,0
+CMG,Chipotle Mexican Grill Inc.,Consumer Discretionary,Restaurants,40898309760.0,United States,1,0
+ONC,BeOne Medicines Ltd.,Health Care,Biotechnology: Pharmaceutical Preparations,40792822411.0,Cayman Islands,0,0
+IDXX,IDEXX Laboratories Inc.,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances,40788922809.0,United States,1,0
+CBRS,Cerebras Systems Inc.,Technology,Semiconductors,40271856230.0,United States,0,0
+ILMN,Illumina Inc.,Health Care,Medical Specialities,40123720000.0,United States,1,0
+BSBR,Banco Santander Brasil SA,Finance,Commercial Banks,39821486038.0,Brazil,0,0
+MSCI,MSCI Inc.,Consumer Discretionary,Business Services,39649853000.0,United States,1,0
+CRDO,Credo Technology Group Holding Ltd,Technology,Semiconductors,39501854606.0,United States,0,0
+AIG,American International Group Inc. New,Finance,Property-Casualty Insurers,39441831738.0,United States,1,0
+LYV,Live Nation Entertainment Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,39315509541.0,United States,1,0
+BBD,Banco Bradesco Sa,Finance,Major Banks,39260031747.0,Brazil,0,0
+FMX,Fomento Economico Mexicano S.A.B. de C.V.,Consumer Staples,Beverages (Production/Distribution),39243098299.0,Mexico,0,0
+PRU,Prudential Financial Inc.,Finance,Life Insurance,39029850000.0,United States,1,0
+IBKR,Interactive Brokers Group Inc.,Finance,Investment Bankers/Brokers/Service,38878637854.0,United States,1,0
+ARES,Ares Management Corporation,Finance,Investment Managers,38500416585.0,United States,1,0
+WCN,Waste Connections Inc.,Utilities,Environmental Services,38452202718.0,Canada,0,0
+HLN,Haleon plc,Consumer Discretionary,Package Goods/Cosmetics,38352952698.0,United Kingdom,0,0
+DHI,D.R. Horton Inc.,Consumer Discretionary,Homebuilding,38335855655.0,United States,1,0
+ADM,Archer-Daniels-Midland Company,Consumer Staples,Packaged Foods,38325426040.0,United States,1,0
+ED,Consolidated Edison Inc.,Utilities,Power Generation,38277263516.0,United States,1,0
+SYY,Sysco Corporation,Consumer Discretionary,Food Distributors,38256148669.0,United States,1,0
+FER,Ferrovial N.V.,Industrials,Military/Government/Technical,38088093391.0,Netherlands,0,0
+TTWO,Take-Two Interactive Software Inc.,Technology,Computer Software: Prepackaged Software,38072957804.0,United States,1,0
+VOD,Vodafone Group Plc,Telecommunications,Telecommunications Equipment,37908170364.0,United Kingdom,0,0
+CBRE,CBRE Group Inc,Finance,Real Estate,37798263648.0,United States,1,0
+CCJ,Cameco Corporation,Basic Materials,Other Metals and Minerals,37320820885.0,Canada,0,0
+YUM,Yum! Brands Inc.,Consumer Discretionary,Restaurants,37302849309.0,United States,1,0
+OKTA,Okta Inc.,Technology,Computer Software: Prepackaged Software,37172173921.0,United States,0,0
+ODFL,Old Dominion Freight Line Inc.,Industrials,Trucking Freight/Courier Services,36930214378.0,United States,1,0
+UI,Ubiquiti Inc.,Technology,Radio And Television Broadcasting And Communications Equipment,36900522193.0,United States,0,0
+SHG,Shinhan Financial Group Co Ltd,Finance,Major Banks,36358524053.0,South Korea,0,0
+UAL,United Airlines Holdings Inc.,Consumer Discretionary,Air Freight/Delivery Services,36281974034.0,United States,1,0
+PAYX,Paychex Inc.,Industrials,Diversified Commercial Services,35897070897.0,United States,1,0
+ROP,Roper Technologies Inc.,Industrials,Industrial Machinery/Components,35860467904.0,United States,1,0
+BAP,Credicorp Ltd.,Finance,Commercial Banks,35709549637.0,Peru,0,0
+JD,JD.com Inc.,Consumer Discretionary,Other Specialty Stores,35441280000.0,China,0,0
+CHT,Chunghwa Telecom Co. Ltd.,Telecommunications,Telecommunications Equipment,35335168990.0,Taiwan,0,0
+KR,Kroger Company (The),Consumer Staples,Food Chains,35128215876.0,United States,1,0
+BBDO,Banco Bradesco Sa,Finance,Major Banks,35121509882.0,Brazil,0,0
+VIK,Viking Holdings Ltd,Consumer Discretionary,Marine Transportation,34860468250.0,United States,0,0
+AXON,Axon Enterprise Inc.,Industrials,Ordnance And Accessories,34299248987.0,United States,1,0
+HIG,The Hartford Insurance Group Inc.,Finance,Property-Casualty Insurers,34059445531.0,United States,1,0
+EME,EMCOR Group Inc.,Industrials,Engineering & Construction,33921837166.0,United States,1,0
+RKT,Rocket Companies Inc.,Finance,Finance: Consumer Services,33894759779.0,United States,0,0
+PEG,Public Service Enterprise Group Incorporated,Utilities,Power Generation,33837735837.0,United States,1,0
+CCL,Carnival Corporation Ltd.,Consumer Discretionary,Marine Transportation,33709375934.0,United States,1,0
+NTR,Nutrien Ltd.,Industrials,Agricultural Chemicals,33607226507.0,Canada,0,0
+EC,Ecopetrol S.A.,Energy,Oil & Gas Production,33448431138.0,Colombia,0,0
+TKO,TKO Group Holdings Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,33319040277.0,United States,1,0
+WEC,WEC Energy Group Inc.,Utilities,Power Generation,33148657733.0,United States,1,0
+RPRX,Royalty Pharma plc,Health Care,Biotechnology: Pharmaceutical Preparations,33137319387.0,United States,0,0
+IRM,Iron Mountain Incorporated (Delaware)Common Stock REIT,Real Estate,Real Estate Investment Trusts,33083713498.0,United States,1,0
+KVUE,Kenvue Inc.,Consumer Discretionary,Package Goods/Cosmetics,33075719102.0,United States,1,0
+BIIB,Biogen Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),32922545834.0,United States,1,0
+EL,Estee Lauder Companies Inc. (The),Consumer Discretionary,Package Goods/Cosmetics,32677891077.0,United States,1,0
+PCG,Pacific Gas & Electric Co.,Utilities,Power Generation,32616944736.0,United States,1,0
+DXCM,DexCom Inc.,Health Care,Medical/Dental Instruments,32539818766.0,United States,1,0
+STLD,Steel Dynamics Inc.,Industrials,Steel/Iron Ore,32416513663.0,United States,1,0
+ZS,Zscaler Inc.,Technology,EDP Services,32412012868.0,United States,0,0
+ESLT,Elbit Systems Ltd.,Industrials,Military/Government/Technical,32355334509.0,Israel,0,0
+ACGL,Arch Capital Group Ltd.,Finance,Property-Casualty Insurers,32164257417.0,Bermuda,1,0
+GFI,Gold Fields Limited,Basic Materials,Precious Metals,32032917800.0,South Africa,0,0
+HSY,The Hershey Company,Consumer Staples,Specialty Foods,32007457160.0,United States,1,0
+ALC,Alcon Inc.,Health Care,Ophthalmic Goods,31950818000.0,Switzerland,0,0
+TECK,Teck Resources Ltd,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),31927983373.0,Canada,0,0
+VG,Venture Global Inc.,Utilities,Oil/Gas Transmission,31926185707.0,United States,0,0
+RMD,ResMed Inc.,Health Care,Medical/Dental Instruments,31901397472.0,United States,1,0
+QSR,Restaurant Brands International Inc.,Consumer Discretionary,Restaurants,31706540376.0,Canada,0,0
+VMC,Vulcan Materials Company (Holding Company),Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),31614620741.0,United States,1,0
+JBL,Jabil Inc.,Technology,Electrical Products,31414121411.0,United States,1,0
+MTB,M&T Bank Corporation,Finance,Major Banks,31388874546.0,United States,1,0
+KMB,Kimberly-Clark Corporation,Consumer Discretionary,Containers/Packaging,31375506445.0,United States,1,0
+EQT,EQT Corporation,Energy,Oil & Gas Production,31332096440.0,United States,1,0
+ON,ON Semiconductor Corporation,Technology,Semiconductors,31176634529.0,United States,1,0
+ERIC,Ericsson,Technology,Radio And Television Broadcasting And Communications Equipment,31067006238.0,Sweden,0,0
+CBOE,Cboe Global Markets Inc.,Finance,Investment Bankers/Brokers/Service,30995039313.0,,1,0
+SUNB,Sunbelt Rentals Holdings Inc.,Consumer Discretionary,Diversified Commercial Services,30982323862.0,United States,0,0
+NTRS,Northern Trust Corporation,Finance,Major Banks,30956096488.0,United States,1,0
+ALNY,Alnylam Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,30933991899.0,United States,0,0
+PUK,Prudential Public Limited Company,Finance,Life Insurance,30882504231.0,United Kingdom,0,0
+RJF,Raymond James Financial Inc.,Finance,Investment Bankers/Brokers/Service,30731706949.0,United States,1,0
+RBLX,Roblox Corporation,Technology,Computer Software: Prepackaged Software,30718165463.0,United States,0,0
+HBAN,Huntington Bancshares Incorporated,Finance,Major Banks,30690101207.0,United States,1,0
+CNC,Centene Corporation,Health Care,Medical Specialities,30128755050.0,United States,1,0
+EXPE,Expedia Group Inc.,Consumer Discretionary,Transportation Services,30074635689.0,United States,1,0
+MTD,Mettler-Toledo International Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,29677550094.0,Switzerland,1,0
+CQP,Cheniere Energy Partners LP,Utilities,Oil/Gas Transmission,29527519944.0,United States,0,0
+TS,Tenaris S.A.,Industrials,Steel/Iron Ore,29463910920.0,Luxembourg,0,0
+IR,Ingersoll Rand Inc.,Industrials,Industrial Machinery/Components,29196957032.0,United States,1,0
+BIDU,Baidu Inc. ADS,Technology,Computer Software: Programming Data Processing,29122225084.0,China,0,0
+HPQ,HP Inc.,Technology,Computer Manufacturing,28992579653.0,United States,1,0
+GEHC,GE HealthCare Technologies Inc.,Health Care,Medical Electronics,28898886403.0,United States,1,0
+MLM,Martin Marietta Materials Inc.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),28781748074.0,United States,1,0
+RDDT,Reddit Inc.,Technology,EDP Services,28769050140.0,United States,1,0
+KGC,Kinross Gold Corporation,Basic Materials,Precious Metals,28730046000.0,Canada,0,0
+ZTS,Zoetis Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,28553750898.0,United States,1,0
+RYAAY,Ryanair Holdings plc,Consumer Discretionary,Air Freight/Delivery Services,28511346688.0,Ireland,0,0
+TDY,Teledyne Technologies Incorporated,Industrials,Industrial Machinery/Components,28402120847.0,United States,1,0
+MDB,MongoDB Inc.,Technology,Computer Software: Prepackaged Software,28334081820.0,United States,0,0
+NMR,Nomura Holdings Inc ADR,Finance,Investment Bankers/Brokers/Service,28259024562.0,Japan,0,0
+CCI,Crown Castle Inc.,Real Estate,Real Estate Investment Trusts,28131113627.0,United States,1,0
+EXR,Extra Space Storage Inc,Real Estate,Real Estate Investment Trusts,28115752779.0,United States,1,0
+AEE,Ameren Corporation,Utilities,Power Generation,27584661530.0,United States,1,0
+SMCI,Super Micro Computer Inc.,Technology,Computer Manufacturing,27539988897.0,United States,1,0
+WSM,Williams-Sonoma Inc.,Consumer Discretionary,Home Furnishings,27488481186.0,United States,1,0
+CTSH,Cognizant Technology Solutions Corporation,Technology,EDP Services,27423043444.0,United States,1,0
+ZM,Zoom Communications Inc.,Technology,Computer Software: Programming Data Processing,27369312092.0,United States,0,0
+TSEM,Tower Semiconductor Ltd.,Technology,Semiconductors,27274380300.0,Israel,0,0
+GFS,GlobalFoundries Inc.,Technology,Semiconductors,27135137594.0,United States,0,0
+WTW,Willis Towers Watson Public Limited Company,Finance,Specialty Insurers,27081456829.0,United Kingdom,1,0
+FTI,TechnipFMC plc Ordinary Share,Consumer Discretionary,Oil and Gas Field Machinery,27000518114.0,,0,0
+FTS,Fortis Inc.,Utilities,Electric Utilities: Central,26944866000.0,United States,0,0
+Q,Qnity Electronics Inc.,Technology,Semiconductors,26872837348.0,United States,1,0
+NVT,nVent Electric plc,Industrials,Industrial Machinery/Components,26831190548.0,United Kingdom,0,0
+CFG,Citizens Financial Group Inc.,Finance,Major Banks,26828961396.0,United States,1,0
+KHC,The Kraft Heinz Company,Consumer Staples,Packaged Foods,26633601605.0,United States,1,0
+SYF,Synchrony Financial,Finance,Finance: Consumer Services,26605835257.0,United States,1,0
+HAL,Halliburton Company,Energy,Oilfield Services/Equipment,26560196100.0,United States,1,0
+ATO,Atmos Energy Corporation,Utilities,Oil/Gas Transmission,26426429918.0,United States,1,0
+PBA,Pembina Pipeline Corp.,Energy,Oil & Gas Production,26332810400.0,Canada,0,0
+DG,Dollar General Corporation,Consumer Discretionary,Department/Specialty Retail Stores,26237954835.0,United States,1,0
+SYM,Symbotic Inc.,Industrials,Industrial Machinery/Components,26109289734.0,United States,0,0
+ATI,ATI Inc.,Industrials,Steel/Iron Ore,26027607007.0,United States,0,0
+VRSN,VeriSign Inc.,Technology,EDP Services,25907070000.0,United States,1,0
+FOXA,Fox Corporation,Industrials,Broadcasting,25840159556.0,United States,1,0
+WST,West Pharmaceutical Services Inc.,Health Care,Medical/Dental Instruments,25687856888.0,United States,1,0
+ECHO,EchoStar  Corporation,Consumer Discretionary,Telecommunications Equipment,25664498233.0,United States,1,0
+DTE,DTE Energy Company,Utilities,Electric Utilities: Central,25651016266.0,United States,1,0
+ROIV,Roivant Sciences Ltd.,Health Care,Biotechnology: Pharmaceutical Preparations,25642467033.0,United Kingdom,0,0
+CPAY,Corpay Inc.,Consumer Discretionary,Business Services,25589515518.0,United States,1,0
+WRB,W.R. Berkley Corporation,Finance,Property-Casualty Insurers,25577576748.0,United States,1,0
+DGX,Quest Diagnostics Incorporated,Health Care,Medical Specialities,25506179762.0,United States,1,0
+AWK,American Water Works Company Inc.,Utilities,Water Supply,25409488534.0,United States,1,0
+DOV,Dover Corporation,Industrials,Industrial Machinery/Components,25327963114.0,United States,1,0
+SN,SharkNinja Inc.,Consumer Discretionary,Consumer Electronics/Appliances,25325887619.0,United States,0,0
+CPRT,Copart Inc. (DE),Consumer Discretionary,Retail-Auto Dealers and Gas Stations,25279558035.0,United States,1,0
+FFIV,F5 Inc.,Telecommunications,Computer Communications Equipment,25124348110.0,United States,1,0
+FE,FirstEnergy Corp.,Utilities,Electric Utilities: Central,25107186649.0,United States,1,0
+VICI,VICI Properties Inc.,Real Estate,Real Estate Investment Trusts,25027492984.0,United States,1,0
+CINF,Cincinnati Financial Corporation,Finance,Property-Casualty Insurers,24886464997.0,United States,1,0
+CPNG,Coupang Inc.,Consumer Discretionary,Catalog/Specialty Distribution,24805661488.0,United States,0,0
+LH,Labcorp Holdings Inc.,Health Care,Medical Specialities,24703060000.0,United States,1,0
+HUBB,Hubbell Inc,Technology,Electrical Products,24671754006.0,United States,1,0
+PPL,PPL Corporation,Utilities,Electric Utilities: Central,24653368991.0,United States,1,0
+LPLA,LPL Financial Holdings Inc.,Finance,Investment Bankers/Brokers/Service,24579405824.0,United States,0,0
+OTIS,Otis Worldwide Corporation,Technology,Consumer Electronics/Appliances,24545558979.0,United States,1,0
+CNP,CenterPoint Energy Inc (Holding Co),Utilities,Electric Utilities: Central,24510981916.0,United States,1,0
+UTHR,United Therapeutics Corporation,Health Care,Biotechnology: Pharmaceutical Preparations,24506883595.0,United States,0,0
+TCOM,Trip.com Group Limited,Consumer Discretionary,Business Services,24407374405.0,China,0,0
+EXPD,Expeditors International of Washington Inc.,Industrials,Integrated Freight & Logistics,24404439374.0,United States,1,0
+BNTX,BioNTech SE,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),24329142847.0,Germany,0,0
+ES,Eversource Energy (D/B/A),Utilities,Electric Utilities: Central,24223953430.0,United States,1,0
+ENTG,Entegris Inc.,Industrials,Plastic Products,24215744000.0,United States,0,0
+TW,Tradeweb Markets Inc.,Finance,Investment Bankers/Brokers/Service,24175119465.0,United States,0,0
+FISV,Fiserv Inc.,Consumer Discretionary,Business Services,24131573799.0,United States,1,0
+PFG,Principal Financial Group Inc,Finance,Accident &Health Insurance,24031104906.0,United States,1,0
+RBRK,Rubrik Inc.,Technology,Computer Software: Prepackaged Software,23922931568.0,United States,0,0
+TPR,Tapestry Inc.,Consumer Discretionary,Apparel,23818240319.0,United States,1,0
+AFRM,Affirm Holdings Inc.,Finance,Finance: Consumer Services,23764579060.0,United States,0,0
+LVS,Las Vegas Sands Corp.,Consumer Discretionary,Hotels/Resorts,23764156441.0,United States,1,0
+INCY,Incyte Corp.,Health Care,Biotechnology: Commercial Physical & Biological Resarch,23744013966.0,United States,1,0
+INSM,Insmed Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,23714047411.0,United States,0,0
+XYL,Xylem Inc.,Industrials,Fluid Controls,23554149595.0,United States,1,0
+GH,Guardant Health Inc.,Health Care,Medical Specialities,23450780708.0,United States,0,0
+IOT,Samsara Inc.,Technology,EDP Services,23447632568.0,United States,0,0
+FCNCA,First Citizens BancShares Inc.,Finance,Major Banks,23416284320.0,United States,0,0
+PHG,Koninklijke Philips N.V. NY Registry Shares,Health Care,Medical Electronics,23402486778.0,Netherlands,0,0
+PPG,PPG Industries Inc.,Consumer Discretionary,Paints/Coatings,23268141000.0,United States,1,0
+TPL,Texas Pacific Land Corporation,Energy,Oil & Gas Production,23207221842.0,United States,1,0
+FOX,Fox Corporation,Industrials,Broadcasting,23158315320.0,United States,1,0
+VLTO,Veralto Corp,Industrials,Electrical Products,23062850342.0,United States,1,0
+IHG,Intercontinental Hotels Group,Consumer Discretionary,Hotels/Resorts,23042384637.0,United Kingdom,0,0
+MTSI,MACOM Technology Solutions Holdings Inc.,Technology,Semiconductors,23035763918.0,United States,0,0
+ULTA,Ulta Beauty Inc.,Consumer Discretionary,Other Specialty Stores,22991974881.0,United States,1,0
+RF,Regions Financial Corporation,Finance,Major Banks,22968019482.0,United States,1,0
+FWONK,Liberty Media Corporation Series C,Industrials,Broadcasting,22964897226.0,United States,0,0
+CASY,Casey's General Stores Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,22896823457.0,United States,1,0
+SW,Smurfit WestRock plc,Consumer Discretionary,Containers/Packaging,22575465960.0,Ireland,1,0
+TROW,T. Rowe Price Group Inc.,Finance,Investment Managers,22575216406.0,United States,1,0
+DRI,Darden Restaurants Inc.,Consumer Discretionary,Restaurants,22520131860.0,United States,1,0
+ROKU,Roku Inc.,Telecommunications,Cable & Other Pay Television Services,22449853251.0,United States,0,0
+BSP,Bending Spoons S.p.A.,Technology,Computer Software: Programming Data Processing,22369077250.0,Italy,0,0
+CHD,Church & Dwight Company Inc.,Consumer Discretionary,Package Goods/Cosmetics,22323259688.0,United States,1,0
+AER,AerCap Holdings N.V.,Consumer Discretionary,Diversified Commercial Services,22227119255.0,Netherlands,0,0
+ASTS,AST SpaceMobile Inc.,Consumer Discretionary,Telecommunications Equipment,22198113858.0,United States,0,0
+VRSK,Verisk Analytics Inc.,Technology,EDP Services,21915669301.0,United States,1,0
+PHM,PulteGroup Inc.,Consumer Discretionary,Homebuilding,21810103029.0,United States,1,0
+SNX,TD SYNNEX Corporation,Technology,Retail: Computer Software & Peripheral Equipment,21729590444.0,United States,0,0
+CIB,Grupo Cibest S.A.,Finance,Commercial Banks,21704697899.0,Colombia,0,0
+RL,Ralph Lauren Corporation,Industrials,Garments and Clothing,21608094796.0,United States,1,0
+L,Loews Corporation,Finance,Property-Casualty Insurers,21475131986.0,United States,1,0
+DLTR,Dollar Tree Inc.,Consumer Discretionary,Department/Specialty Retail Stores,21470535115.0,United States,1,0
+KEY,KeyCorp,Finance,Major Banks,21395927508.0,United States,1,0
+MKL,Markel Group Inc.,Finance,Property-Casualty Insurers,21386430403.0,United States,0,0
+RIVN,Rivian Automotive Inc.,Industrials,Auto Manufacturing,21370422899.0,United States,0,0
+JBHT,J.B. Hunt Transport Services Inc.,Industrials,Trucking Freight/Courier Services,21337474141.0,United States,1,0
+PS,Pershing Square Inc.,Finance,Investment Managers,21284000000.0,United States,0,0
+GPN,Global Payments Inc.,Consumer Discretionary,Business Services,21246210533.0,United States,1,0
+IFF,International Flavors & Fragrances Inc.,Industrials,Major Chemicals,21208064925.0,United States,1,0
+CRCL,Circle Internet Group Inc.,Finance,Finance: Consumer Services,21048849294.0,United States,0,0
+XPO,XPO Inc.,Consumer Discretionary,Transportation Services,21043950354.0,United States,0,0
+FWONA,Liberty Media Corporation Series A,Industrials,Broadcasting,20981793110.0,United States,0,0
+EIX,Edison International,Utilities,Electric Utilities: Central,20702992070.0,United States,1,0
+BRO,Brown & Brown Inc.,Finance,Specialty Insurers,20668881752.0,United States,1,0
+OMC,Omnicom Group Inc.,Consumer Discretionary,Advertising,20493643735.0,United States,1,0
+BG,Bunge Limited,Consumer Staples,Packaged Foods,20481819703.0,United States,1,0
+LUV,Southwest Airlines Company,Consumer Discretionary,Air Freight/Delivery Services,20468471130.0,United States,1,0
+PKG,Packaging Corporation of America,Consumer Discretionary,Containers/Packaging,20466770263.0,United States,1,0
+SOFI,SoFi Technologies Inc.,Finance,Finance: Consumer Services,20458473932.0,United States,0,0
+THC,Tenet Healthcare Corporation,Health Care,Hospital/Nursing Management,20449410430.0,United States,0,0
+SITM,SiTime Corporation,Technology,Semiconductors,20414324209.0,United States,0,0
+STE,STERIS plc (Ireland),Health Care,Industrial Specialties,20410673027.0,United States,1,0
+NRG,NRG Energy Inc.,Utilities,Electric Utilities: Central,20375702117.0,United States,1,0
+AMRZ,Amrize Ltd,Industrials,Building Materials,20372980239.0,Switzerland,0,0
+USFD,US Foods Holding Corp.,Consumer Discretionary,Food Distributors,20319944811.0,United States,0,0
+CW,Curtiss-Wright Corporation,Technology,Industrial Machinery/Components,20127055913.0,United States,0,0
+RS,Reliance Inc.,Industrials,Metal Fabrications,20066482297.0,United States,0,0
+VTRS,Viatris Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,20054396485.0,United States,1,0
+DINO,HF Sinclair Corporation,Energy,Natural Gas Distribution,20036239782.0,United States,0,0
+CMS,CMS Energy Corporation,Utilities,Power Generation,19956048935.0,United States,1,0
+DOW,Dow Inc.,Industrials,Major Chemicals,19929380216.0,United States,1,0
+EXE,Expand Energy Corporation,Energy,Oil & Gas Production,19900065702.0,United States,1,0
+WWD,Woodward Inc.,Energy,Industrial Machinery/Components,19850614226.0,United States,0,0
+ARXS,Arxis Inc.,Industrials,Military/Government/Technical,19838382062.0,United States,0,0
+LEN,Lennar Corporation,Consumer Discretionary,Homebuilding,19779900110.0,United States,1,0
+RGLD,Royal Gold Inc.,Industrials,Precious Metals,19684823017.0,United States,0,0
+BCH,Banco De Chile ADS,Finance,Commercial Banks,19683178272.0,Chile,0,0
+YPF,YPF Sociedad Anonima,Energy,Integrated oil Companies,19378521311.0,Argentina,0,0
+NTNX,Nutanix Inc.,Technology,Computer Software: Prepackaged Software,19351179202.0,United States,0,0
+AMCR,Amcor plc,Consumer Discretionary,Miscellaneous manufacturing industries,19330673299.0,United Kingdom,1,0
+STZ,Constellation Brands Inc.,Consumer Staples,Beverages (Production/Distribution),19296255258.0,United States,1,0
+U,Unity Software Inc.,Technology,Computer Software: Prepackaged Software,19192278368.0,United States,0,0
+SNA,Snap-On Incorporated,Consumer Discretionary,Industrial Machinery/Components,19021098037.0,United States,1,0
+CRS,Carpenter Technology Corporation,Industrials,Steel/Iron Ore,19015126189.0,United States,0,0
+NI,NiSource Inc,Utilities,Power Generation,18942623950.0,United States,1,0
+BEKE,KE Holdings Inc,Finance,Real Estate,18800536169.0,China,0,0
+LYB,LyondellBasell Industries NV,Industrials,Major Chemicals,18665132867.0,Netherlands,1,0
+PAAS,Pan American Silver Corp.,Basic Materials,Precious Metals,18649517640.0,Canada,0,0
+BCE,BCE Inc.,Telecommunications,Telecommunications Equipment,18575914275.0,Canada,0,0
+SBS,Companhia de saneamento Basico Do Estado De Sao Paulo - Sabesp,Utilities,Water Supply,18539048972.0,Brazil,0,0
+FSLR,First Solar Inc.,Technology,Semiconductors,18496625213.0,United States,1,0
+SSNC,SS&C Technologies Holdings Inc.,Technology,Computer Software: Prepackaged Software,18406337886.0,United States,0,0
+BBY,Best Buy Co. Inc.,Consumer Discretionary,Consumer Electronics/Video Chains,18393119115.0,United States,1,0
+PR,Permian Resources Corporation,Energy,Oil & Gas Production,18367625646.0,United States,0,0
+MKSI,MKS Inc.,Industrials,Industrial Machinery/Components,18340586432.0,United States,0,0
+WES,Western Midstream Partners LP,Utilities,Natural Gas Distribution,18336688437.0,United States,0,0
+NDSN,Nordson Corporation,Industrials,Industrial Machinery/Components,18326205401.0,United States,1,0
+SQM,Sociedad Quimica y Minera S.A.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),18315096249.0,Chile,0,0
+LSCC,Lattice Semiconductor Corporation,Technology,Semiconductors,18302020850.0,United States,0,0
+ONON,On Holding AG,Consumer Discretionary,Shoe Manufacturing,18223618314.0,,0,0
+BR,Broadridge Financial Solutions Inc.,Consumer Discretionary,Business Services,18193840157.0,United States,1,0
+PKX,POSCO HOLDINGS INC.,Industrials,Steel/Iron Ore,18171066383.0,South Korea,0,0
+EVRG,Evergy Inc.,Utilities,Power Generation,18166387482.0,United States,1,0
+GFL,GFL Environmental Inc. Subordinate voting shares no par value,Utilities,Environmental Services,18156318914.0,Canada,0,0
+VIV,Telefonica Brasil S.A.,Telecommunications,Telecommunications Equipment,18151044079.0,Brazil,0,0
+WCC,WESCO International Inc.,Consumer Discretionary,Telecommunications Equipment,18093534033.0,United States,0,0
+ITT,ITT Inc.,Industrials,Fluid Controls,18070422000.0,United States,0,0
+CDE,Coeur Mining Inc.,Basic Materials,Precious Metals,18050538565.0,United States,0,0
+CHRW,C.H. Robinson Worldwide Inc.,Industrials,Integrated Freight & Logistics,17894601650.0,United States,1,0
+WF,Woori Financial Group Inc.,Finance,Commercial Banks,17812979930.0,South Korea,0,0
+ZBRA,Zebra Technologies Corporation,Industrials,Industrial Machinery/Components,17762787297.0,United States,1,0
+TSN,Tyson Foods Inc.,Consumer Staples,Meat/Poultry/Fish,17755422311.0,United States,1,0
+DD,DuPont de Nemours Inc.,Industrials,Major Chemicals,17447552370.0,United States,1,0
+WIT,Wipro Limited,Technology,EDP Services,17430247643.0,India,0,0
+KSPI,Joint Stock Company Kaspi.kz,Uncategorized,Uncategorized,17422465449.0,Kazakhstan,0,0
+SMTC,Semtech Corporation,Technology,Semiconductors,17413628555.0,United States,0,0
+CF,CF Industries Holdings Inc.,Industrials,Agricultural Chemicals,17334269410.0,United States,1,0
+ESS,Essex Property Trust Inc.,Real Estate,Real Estate Investment Trusts,17320986995.0,United States,1,0
+BURL,Burlington Stores Inc.,Consumer Discretionary,Department/Specialty Retail Stores,17294279487.0,United States,0,0
+APG,APi Group Corporation,Consumer Discretionary,Diversified Commercial Services,17290733483.0,United States,0,0
+GPC,Genuine Parts Company,Consumer Discretionary,Automotive Aftermarket,17249012921.0,United States,1,0
+IP,International Paper Company,Basic Materials,Paper,17221612985.0,United States,1,0
+FTAI,FTAI Aviation Ltd.,Industrials,Misc Corporate Leasing Services,17184950466.0,United States,0,0
+MTZ,MasTec Inc.,Industrials,Water Sewer Pipeline Comm & Power Line Construction,17157955190.0,United States,0,0
+EWBC,East West Bancorp Inc.,Finance,Major Banks,17129222237.0,United States,0,0
+DT,Dynatrace Inc.,Technology,Computer Software: Prepackaged Software,17126266105.0,United States,0,0
+MGA,Magna International Inc.,Consumer Discretionary,Auto Parts:O.E.M.,17111187143.0,Canada,0,0
+FIS,Fidelity National Information Services Inc.,Consumer Discretionary,Business Services,17069865853.0,United States,1,0
+NWS,News Corporation,Consumer Discretionary,Newspapers/Magazines,16997026794.0,United States,1,0
+CDW,CDW Corporation,Consumer Discretionary,Catalog/Specialty Distribution,16981116974.0,United States,1,0
+OVV,Ovintiv Inc. (DE),Energy,Oil & Gas Production,16956346000.0,Canada,0,0
+IEX,IDEX Corporation,Industrials,Fluid Controls,16944518096.0,United States,1,0
+GIS,General Mills Inc.,Consumer Staples,Packaged Foods,16933541850.0,United States,1,0
+TPG,TPG Inc.,Finance,Investment Managers,16904306403.0,United States,0,0
+TOST,Toast Inc.,Technology,EDP Services,16894940000.0,United States,0,0
+FTV,Fortive Corporation,Industrials,Industrial Machinery/Components,16864632184.0,United States,1,0
+ZBH,Zimmer Biomet Holdings Inc.,Health Care,Industrial Specialties,16796360893.0,United States,1,0
+SBAC,SBA Communications Corporation,Real Estate,Real Estate Investment Trusts,16764043142.0,United States,1,0
+IONQ,IonQ Inc.,Technology,EDP Services,16760291793.0,United States,0,0
+PAA,Plains All American Pipeline L.P.,Energy,Natural Gas Distribution,16721925102.0,United States,0,0
+MEDP,Medpace Holdings Inc.,Health Care,Biotechnology: Commercial Physical & Biological Resarch,16693402622.0,United States,0,0
+RVTY,Revvity Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,16633068933.0,United States,1,0
+RCI,Rogers Communication Inc.,Telecommunications,Cable & Other Pay Television Services,16595689820.0,Canada,0,0
+FDXF,FedEx Freight Holding Company Inc.,Consumer Discretionary,Air Freight/Delivery Services,16547171779.0,United States,1,0
+TSCO,Tractor Supply Company,Consumer Discretionary,RETAIL: Building Materials,16532603547.0,United States,1,0
+LNT,Alliant Energy Corporation,Utilities,Power Generation,16519028173.0,United States,1,0
+BEN,Franklin Templeton Inc.,Finance,Investment Managers,16512499575.0,United States,1,0
+CLH,Clean Harbors Inc.,Industrials,Environmental Services,16496542872.0,United States,0,0
+GIB,CGI Inc.,Consumer Discretionary,Professional Services,16459437283.0,Canada,0,0
+DOCN,DigitalOcean Holdings Inc.,Technology,Computer Software: Programming Data Processing,16437621090.0,United States,0,0
+EFX,Equifax Inc.,Finance,Finance: Consumer Services,16416164518.0,United States,1,0
+J,Jacobs Solutions Inc.,Industrials,Military/Government/Technical,16360827432.0,United States,1,0
+NVR,NVR Inc.,Consumer Discretionary,Homebuilding,16325945007.0,United States,1,0
+AEG,Aegon Ltd.,Finance,Life Insurance,16206989830.0,Netherlands,0,0
+FN,Fabrinet,Utilities,Telecommunications Equipment,16177291004.0,Cayman Islands,0,0
+BMNR,BitMine Immersion Technologies Inc.,Finance,Finance: Consumer Services,16124241512.0,United States,0,0
+RBC,RBC Bearings Incorporated,Industrials,Metal Fabrications,16098409490.0,United States,0,0
+IREN,IREN Limited,Finance,Finance: Consumer Services,16018484041.0,Australia,0,0
+RGA,Reinsurance Group of America Incorporated,Finance,Life Insurance,15974093292.0,United States,0,0
+CNH,CNH Industrial N.V.,Industrials,Construction/Ag Equipment/Trucks,15904778560.0,United Kingdom,0,0
+PTC,PTC Inc.,Technology,Computer Software: Prepackaged Software,15892912049.0,United States,1,0
+INVH,Invitation Homes Inc.,Finance,Real Estate,15592453166.0,United States,1,0
+TLN,Talen Energy Corporation,Utilities,Electric Utilities: Central,15480617940.0,United States,0,0
+NWSA,News Corporation,Consumer Discretionary,Newspapers/Magazines,15478373526.0,United States,1,0
+ONTO,Onto Innovation Inc.,Industrials,Industrial Machinery/Components,15452498895.0,United States,0,0
+STRL,Sterling Infrastructure Inc.,Industrials,Military/Government/Technical,15450872212.0,United States,0,0
+HST,Host Hotels & Resorts Inc.,Real Estate,Real Estate Investment Trusts,15422150221.0,United States,1,0
+AKAM,Akamai Technologies Inc.,Consumer Discretionary,Business Services,15367617000.0,United States,1,0
+BSAC,Banco Santander - Chile ADS,Finance,Commercial Banks,15353648181.0,Chile,0,0
+LDOS,Leidos Holdings Inc.,Technology,EDP Services,15306284732.0,United States,1,0
+SUN,Sunoco LP,Energy,Integrated oil Companies,15267627846.0,United States,0,0
+APA,APA Corporation,Energy,Oil & Gas Production,15184234443.0,United States,1,0
+H,Hyatt Hotels Corporation,Consumer Discretionary,Hotels/Resorts,15160805665.0,United States,0,0
+JAZZ,Jazz Pharmaceuticals plc,Health Care,Biotechnology: Pharmaceutical Preparations,15125745587.0,Ireland,0,0
+AS,Amer Sports Inc.,Consumer Discretionary,Apparel,15101632840.0,,0,0
+CRBG,Corebridge Financial Inc.,Finance,Life Insurance,15004703091.0,United States,0,0
+ASND,Ascendis Pharma A/S Ordinary Share,Health Care,Biotechnology: Pharmaceutical Preparations,14976113862.0,Denmark,0,0
+BALL,Ball Corporation,Industrials,Containers/Packaging,14955739671.0,United States,1,0
+SOLV,Solventum Corporation,Health Care,Medical/Dental Instruments,14940536694.0,United States,1,0
+ZTO,ZTO Express (Cayman) Inc.,Industrials,Trucking Freight/Courier Services,14928374437.0,China,0,0
+FUTU,Futu Holdings Limited,Finance,Investment Bankers/Brokers/Service,14918040542.0,Hong Kong,0,0
+KIM,Kimco Realty Corporation (HC),Real Estate,Real Estate Investment Trusts,14898231974.0,United States,1,0
+RBA,RB Global Inc.,Consumer Discretionary,Business Services,14811563280.0,Canada,0,0
+LOGI,Logitech International S.A.,Technology,Computer peripheral equipment,14793502521.0,United States,0,0
+ROL,Rollins Inc.,Consumer Discretionary,Diversified Commercial Services,14708615000.0,United States,1,0
+LECO,Lincoln Electric Holdings Inc.,Industrials,Industrial Machinery/Components,14683850936.0,United States,0,0
+EMA,Emera Incorporated,Utilities,Electric Utilities: Central,14644224000.0,Canada,0,0
+JHX,James Hardie Industries plc.,Industrials,Building Materials,14629166698.0,Ireland,0,0
+VNOM,Viper Energy Inc.,Energy,Oil & Gas Production,14615640196.0,United States,0,0
+LAMR,Lamar Advertising Company,Real Estate,Real Estate Investment Trusts,14556131705.0,United States,0,0
+WPC,W. P. Carey Inc. REIT,Real Estate,Real Estate Investment Trusts,14541551387.0,United States,0,0
+PFGC,Performance Food Group Company,Consumer Discretionary,Food Distributors,14467833659.0,United States,0,0
+SGI,Somnigroup International Inc.,Consumer Discretionary,Home Furnishings,14447509173.0,United States,0,0
+CG,The Carlyle Group Inc.,Finance,Investment Managers,14392281711.0,United States,0,0
+ARMK,Aramark,Consumer Discretionary,Restaurants,14391291152.0,United States,0,0
+EXEL,Exelixis Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),14356471234.0,United States,0,0
+TIGO,Millicom International Cellular S.A.,Telecommunications,Telecommunications Equipment,14343170371.0,Luxembourg,0,0
+NBIX,Neurocrine Biosciences Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),14303056259.0,United States,0,0
+PNFP,Pinnacle Financial Partners Inc. Common stock,Finance,Major Banks,14299789123.0,United States,0,0
+FICO,Fair Isaac Corporation,Consumer Discretionary,Business Services,14292234961.0,United States,1,0
+CX,Cemex S.A.B. de C.V. Sponsored ADR,Industrials,Building Materials,14249611481.0,Mexico,0,0
+VICR,Vicor Corporation,Technology,Industrial Machinery/Components,14228076428.0,United States,0,0
+EQH,Equitable Holdings Inc.,Finance,Specialty Insurers,14184176406.0,United States,0,0
+WMG,Warner Music Group Corp.,Consumer Discretionary,Services-Misc. Amusement & Recreation,14150119251.0,United States,0,0
+EG,Everest Group Ltd.,Finance,Property-Casualty Insurers,14137732880.0,Bermuda,1,0
+JLL,Jones Lang LaSalle Incorporated,Finance,Real Estate,14117838247.0,United States,0,0
+NLY,Annaly Capital Management Inc.,Real Estate,Real Estate Investment Trusts,14094460065.0,United States,0,0
+KEP,Korea Electric Power Corporation,Utilities,Electric Utilities: Central,14084691849.0,South Korea,0,0
+WSE,Wise Group plc,Industrials,Diversified Commercial Services,14040927812.0,United Kingdom,0,0
+YUMC,Yum China Holdings Inc.,Consumer Discretionary,Restaurants,14027085251.0,United States,0,0
+OWL,Blue Owl Capital Inc.,Finance,Investment Managers,13953875396.0,United States,0,0
+UNM,Unum Group,Finance,Accident &Health Insurance,13943662768.0,United States,0,0
+TEM,Tempus AI Inc.,Technology,Computer Software: Programming Data Processing,13889045858.0,United States,0,0
+W,Wayfair Inc.,Consumer Discretionary,Catalog/Specialty Distribution,13884453256.0,United States,0,0
+CACI,CACI International Inc.,Technology,EDP Services,13857773295.0,United States,0,0
+ARCC,Ares Capital Corporation,Finance,Finance: Consumer Services,13757317710.0,United States,0,0
+INIO,INNIO N.V.,Consumer Discretionary,Metal Fabrications,13710000000.0,Germany,0,0
+LTM,LATAM Airlines Group S.A.,Consumer Discretionary,Air Freight/Delivery Services,13706535538.0,Chile,0,0
+OHI,Omega Healthcare Investors Inc.,Real Estate,Real Estate Investment Trusts,13705277990.0,United States,0,0
+CRL,Charles River Laboratories International Inc.,Health Care,Biotechnology: Commercial Physical & Biological Resarch,13692940656.0,United States,1,0
+SKM,SK Telecom Co. Ltd.,Telecommunications,Telecommunications Equipment,13651612200.0,South Korea,0,0
+STLA,Stellantis N.V.,Industrials,Auto Manufacturing,13589196189.0,United Kingdom,0,0
+MLI,Mueller Industries Inc.,Industrials,Metal Fabrications,13562842712.0,United States,0,0
+SWK,Stanley Black & Decker Inc.,Consumer Discretionary,Industrial Machinery/Components,13529580867.0,United States,1,0
+TYL,Tyler Technologies Inc.,Technology,Computer Software: Prepackaged Software,13521621829.0,United States,1,0
+MAA,Mid-America Apartment Communities Inc.,Real Estate,Real Estate Investment Trusts,13502635356.0,United States,1,0
+MAS,Masco Corporation,Industrials,Industrial Specialties,13463957720.0,United States,1,0
+IVZ,Invesco Ltd,Finance,Investment Managers,13430423308.0,United States,1,0
+CET,Central Securities Corporation,Finance,Finance/Investors Services,13429978348.0,United States,0,0
+ULS,UL Solutions Inc.,Health Care,Precision Instruments,13426228505.0,United States,0,0
+RNR,RenaissanceRe Holdings Ltd.,Finance,Property-Casualty Insurers,13420845920.0,Bermuda,0,0
+TRMB,Trimble Inc.,Industrials,Industrial Machinery/Components,13414836655.0,United States,1,0
+DOC,Healthpeak Properties Inc.,Real Estate,Real Estate Investment Trusts,13404409934.0,United States,1,0
+WY,Weyerhaeuser Company,Real Estate,Real Estate Investment Trusts,13398482240.0,United States,1,0
+SUI,Sun Communities Inc.,Real Estate,Real Estate Investment Trusts,13398105270.0,United States,0,0
+FLUT,Flutter Entertainment plc,Technology,Computer Software: Programming Data Processing,13396099788.0,Ireland,0,0
+AGI,Alamos Gold Inc.,Basic Materials,Precious Metals,13392696957.0,Canada,0,0
+EMBJ,Embraer S.A.,Industrials,Aerospace,13387435828.0,Brazil,0,0
+CHKP,Check Point Software Technologies Ltd.,Technology,Computer Software: Prepackaged Software,13347615883.0,Israel,0,0
+TTMI,TTM Technologies Inc.,Technology,Electrical Products,13326631296.0,United States,0,0
+PAG,Penske Automotive Group Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,13319057159.0,United States,0,0
+GEN,Gen Digital Inc.,Technology,Computer Software: Prepackaged Software,13318561462.0,United States,1,0
+SMMT,Summit Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,13314440857.0,United States,0,0
+TXT,Textron Inc.,Industrials,Aerospace,13272230385.0,United States,1,0
+IESC,IES Holdings Inc.,Industrials,Engineering & Construction,13156450754.0,United States,0,0
+REG,Regency Centers Corporation,Real Estate,Real Estate Investment Trusts,13148055275.0,United States,1,0
+AMKR,Amkor Technology Inc.,Technology,Semiconductors,13143135769.0,United States,0,0
+AIZ,Assurant Inc.,Finance,Property-Casualty Insurers,13131959726.0,United States,1,0
+ALLE,Allegion plc,Consumer Discretionary,Diversified Commercial Services,13119475344.0,United States,1,0
+BBIO,BridgeBio Pharma Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,13080066885.0,United States,0,0
+DOCU,DocuSign Inc.,Technology,Computer Software: Prepackaged Software,13034577002.0,United States,0,0
+TU,Telus Corporation,Telecommunications,Telecommunications Equipment,13013910000.0,Canada,0,0
+AVY,Avery Dennison Corporation,Consumer Discretionary,Containers/Packaging,13006760930.0,United States,1,0
+HTHT,H World Group Limited,Consumer Discretionary,Hotels/Resorts,12928301351.0,China,0,0
+CSL,Carlisle Companies Incorporated,Industrials,Specialty Chemicals,12915433193.0,United States,0,0
+GRAB,Grab Holdings Limited,Consumer Discretionary,Business Services,12793503163.0,Singapore,0,0
+CHTR,Charter Communications Inc.,Telecommunications,Cable & Other Pay Television Services,12760495284.0,United States,1,0
+GL,Globe Life Inc.,Finance,Life Insurance,12743943796.0,United States,1,0
+GWRE,Guidewire Software Inc.,Technology,Computer Software: Prepackaged Software,12735101349.0,United States,0,0
+HAS,Hasbro Inc.,Consumer Discretionary,Recreational Games/Products/Toys,12691181141.0,United States,1,0
+RPM,RPM International Inc.,Consumer Discretionary,Paints/Coatings,12674502899.0,United States,0,0
+EQX,Equinox Gold Corp.,Basic Materials,Precious Metals,12631915274.0,Canada,0,0
+GGG,Graco Inc.,Industrials,Fluid Controls,12593529354.0,United States,0,0
+TOL,Toll Brothers Inc.,Consumer Discretionary,Homebuilding,12565164920.0,United States,0,0
+BWXT,BWX Technologies Inc.,Industrials,Industrial Machinery/Components,12532970644.0,United States,0,0
+PEN,Penumbra Inc.,Health Care,Medical/Dental Instruments,12525836196.0,United States,0,0
+SWKS,Skyworks Solutions Inc.,Technology,Semiconductors,12513316551.0,United States,1,0
+QXO,QXO Inc.,Consumer Discretionary,RETAIL: Building Materials,12501763043.0,United States,0,0
+TWST,Twist Bioscience Corporation,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),12467935771.0,United States,0,0
+AIT,Applied Industrial Technologies Inc.,Consumer Discretionary,Industrial Specialties,12467116624.0,United States,0,0
+SEIC,SEI Investments Company,Finance,Investment Bankers/Brokers/Service,12466392434.0,United States,0,0
+LII,Lennox International Inc.,Industrials,Industrial Machinery/Components,12457740911.0,United States,1,0
+COKE,Coca-Cola Consolidated Inc.,Consumer Staples,Beverages (Production/Distribution),12454845050.0,United States,0,0
+FMS,Fresenius Medical Care AG,Health Care,Misc Health and Biotechnology Services,12433941160.0,Germany,0,0
+WSO,Watsco Inc.,Consumer Discretionary,Industrial Machinery/Components,12423098223.0,United States,0,0
+CNA,CNA Financial Corporation,Finance,Property-Casualty Insurers,12415170577.0,United States,0,0
+QNT,Quantinuum Inc.,Technology,EDP Services,12401833636.0,United States,0,0
+ALB,Albemarle Corporation,Industrials,Major Chemicals,12394071137.0,United States,1,0
+ICLR,ICON plc,Health Care,Biotechnology: Commercial Physical & Biological Resarch,12392421551.0,Ireland,0,0
+SJM,The J.M. Smucker Company,Consumer Staples,Packaged Foods,12386148069.0,United States,1,0
+CORT,Corcept Therapeutics Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,12325919718.0,United States,0,0
+BWA,BorgWarner Inc.,Consumer Discretionary,Auto Parts:O.E.M.,12297374455.0,United States,0,0
+NVMI,Nova Ltd.,Technology,Electronic Components,12287296975.0,Israel,0,0
+BNT,Brookfield Wealth Solutions Ltd.,Finance,Property-Casualty Insurers,12286819442.0,,0,0
+GDDY,GoDaddy Inc.,Technology,EDP Services,12282294334.0,United States,1,0
+GNRC,Generac Holdlings Inc.,Consumer Discretionary,Metal Fabrications,12268012516.0,United States,1,0
+DTM,DT Midstream Inc.,Utilities,Natural Gas Distribution,12249996744.0,United States,0,0
+TME,Tencent Music Entertainment Group,Consumer Discretionary,Broadcasting,12229237965.0,United States,0,0
+BAX,Baxter International Inc.,Health Care,Medical/Dental Instruments,12221785416.0,United States,1,0
+MAIR,Madison Air Solutions Corporation,Industrials,Pollution Control Equipment,12196876698.0,United States,0,0
+FIVE,Five Below Inc.,Consumer Discretionary,Department/Specialty Retail Stores,12176300921.0,United States,0,0
+IT,Gartner Inc.,Consumer Discretionary,Other Consumer Services,12175122573.0,United States,1,0
+GME,GameStop Corporation,Consumer Discretionary,Electronics Distribution,12163518869.0,United States,0,0
+HALO,Halozyme Therapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),12137476120.0,United States,0,0
+NXT,Nextpower Inc.,Technology,Semiconductors,12059462250.0,United States,0,0
+FROG,JFrog Ltd.,Technology,Computer Software: Prepackaged Software,12032974940.0,United States,0,0
+WTS,Watts Water Technologies Inc.,Industrials,Metal Fabrications,12000872645.0,United States,0,0
+CR,Crane Company,Industrials,Metal Fabrications,11925369450.0,United States,0,0
+BJ,BJ's Wholesale Club Holdings Inc.,Consumer Discretionary,Department/Specialty Retail Stores,11919054337.0,United States,0,0
+TRU,TransUnion,Finance,Finance: Consumer Services,11913688000.0,United States,0,0
+MANH,Manhattan Associates Inc.,Technology,Computer Software: Prepackaged Software,11902960034.0,United States,0,0
+SANM,Sanmina Corporation,Technology,Electrical Products,11896469138.0,United States,0,0
+MKC,McCormick & Company Incorporated,Consumer Staples,Packaged Foods,11867107505.0,United States,1,0
+UHAL,U-Haul Holding Company,Consumer Discretionary,Rental/Leasing Companies,11856059260.0,United States,0,0
+AHR,American Healthcare REIT Inc.,Real Estate,Real Estate Investment Trusts,11820157788.0,United States,0,0
+DKS,Dick's Sporting Goods Inc,Consumer Discretionary,Other Specialty Stores,11813892965.0,United States,0,0
+ARW,Arrow Electronics Inc.,Technology,Electronic Components,11791223129.0,United States,0,0
+AEIS,Advanced Energy Industries Inc.,Technology,Industrial Machinery/Components,11779235497.0,United States,0,0
+SAIL,SailPoint Inc.,Technology,Computer Software: Prepackaged Software,11749361407.0,United States,0,0
+EHC,Encompass Health Corporation,Health Care,Hospital/Nursing Management,11745671899.0,United States,0,0
+PAC,Grupo Aeroportuario Del Pacifico S.A. B. de C.V. Grupo Aeroportuario Del Pacifico S.A. de C.V. (each representing 10 Series B shares),Consumer Discretionary,Aerospace,11698652830.0,Mexico,0,0
+RMBS,Rambus Inc.,Technology,Semiconductors,11636845386.0,United States,0,0
+JBS,JBS N.V.,Consumer Staples,Meat/Poultry/Fish,11630290971.0,Netherlands,0,0
+HBM,Hudbay Minerals Inc.,Basic Materials,Metal Mining,11627709817.0,Canada,0,0
+FORM,FormFactor Inc. FormFactor Inc.,Technology,Semiconductors,11596240419.0,United States,0,0
+TXG,10x Genomics Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,11564644072.0,United States,0,0
+CCK,Crown Holdings Inc.,Industrials,Containers/Packaging,11549278663.0,United States,0,0
+MDGL,Madrigal Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,11545362803.0,United States,0,0
+FIG,Figma Inc.,Technology,Computer Software: Prepackaged Software,11497022831.0,United States,0,0
+FRO,Frontline Plc,Consumer Discretionary,Marine Transportation,11473983699.0,Bermuda,0,0
+PNW,Pinnacle West Capital Corporation,Utilities,Electric Utilities: Central,11468894253.0,United States,1,0
+ALLY,Ally Financial Inc.,Finance,Major Banks,11453118441.0,United States,0,0
+AFG,American Financial Group Inc.,Finance,Property-Casualty Insurers,11449796025.0,United States,0,0
+HL,Hecla Mining Company,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),11420063327.0,United States,0,0
+FPS,Forgent Power Solutions Inc.,Energy,Industrial Machinery/Components,11364330426.0,United States,0,0
+TECH,Bio-Techne Corp,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),11353640431.0,United States,1,0
+BTSG,BrightSpring Health Services Inc.,Health Care,Medical/Nursing Services,11329706440.0,United States,0,0
+BMRN,BioMarin Pharmaceutical Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,11312450476.0,United States,0,0
+DVA,DaVita Inc.,Health Care,Misc Health and Biotechnology Services,11251130000.0,United States,1,0
+CSGP,CoStar Group Inc.,Finance,Real Estate,11232077139.0,United States,1,0
+ELS,Equity Lifestyle Properties Inc.,Real Estate,Real Estate Investment Trusts,11182003347.0,United States,0,0
+SNN,Smith & Nephew SNATS Inc.,Health Care,Industrial Specialties,11129273631.0,United Kingdom,0,0
+AA,Alcoa Corporation,Industrials,Aluminum,11100031257.0,United States,0,0
+AUR,Aurora Innovation Inc.,Technology,EDP Services,11062937079.0,United States,0,0
+LFUS,Littelfuse Inc.,Energy,Electrical Products,11062424256.0,United States,0,0
+FRHC,Freedom Holding Corp.,Finance,Investment Bankers/Brokers/Service,11061419161.0,Kazakhstan,0,0
+VIAV,Viavi Solutions Inc.,Technology,Semiconductors,11049457298.0,United States,0,0
+PINS,Pinterest Inc.,Technology,Computer Software: Programming Data Processing,11020451505.0,United States,0,0
+HRL,Hormel Foods Corporation,Consumer Staples,Meat/Poultry/Fish,10985001968.0,United States,1,0
+WTRG,Essential Utilities Inc.,Utilities,Water Supply,10973718655.0,United States,0,0
+XP,XP Inc.,Finance,Investment Bankers/Brokers/Service,10972663749.0,Brazil,0,0
+AMH,American Homes 4 Rent,Real Estate,Real Estate Investment Trusts,10965763690.0,United States,0,0
+GLPI,Gaming and Leisure Properties Inc.,Real Estate,Real Estate Investment Trusts,10935684416.0,United States,0,0
+FHN,First Horizon Corporation,Finance,Major Banks,10920563492.0,United States,0,0
+COO,The Cooper Companies Inc.,Health Care,Ophthalmic Goods,10916815429.0,United States,1,0
+ELAN,Elanco Animal Health Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,10876767239.0,United States,0,0
+TX,Ternium S.A. Ternium S.A.,Industrials,Steel/Iron Ore,10855814593.0,Luxembourg,0,0
+DECK,Deckers Outdoor Corporation,Consumer Discretionary,Shoe Manufacturing,10854480042.0,United States,1,0
+HUBS,HubSpot Inc.,Technology,Computer Software: Prepackaged Software,10843405407.0,United States,0,0
+UDR,UDR Inc.,Real Estate,Real Estate Investment Trusts,10820178997.0,United States,1,0
+HII,Huntington Ingalls Industries Inc.,Industrials,Marine Transportation,10809863369.0,United States,1,0
+GSAT,Globalstar Inc.,Consumer Discretionary,Telecommunications Equipment,10738213763.0,United States,0,0
+BEPC,Brookfield Renewable Corporation Brookfield Renewable Corporation,Utilities,Electric Utilities: Central,10737488807.0,United States,0,0
+KNX,Knight-Swift Transportation Holdings Inc.,Industrials,Trucking Freight/Courier Services,10645869960.0,United States,0,0
+HUT,Hut 8 Corp.,Finance,Finance: Consumer Services,10644687656.0,United States,0,0
+AES,The AES Corporation,Industrials,Electric Utilities: Central,10644504360.0,United States,1,0
+SF,Stifel Financial Corporation,Finance,Investment Bankers/Brokers/Service,10621461970.0,United States,0,0
+AGNC,AGNC Investment Corp.,Real Estate,Real Estate Investment Trusts,10610058951.0,United States,0,0
+MICC,The Magnum Ice Cream Company N.V.,Consumer Staples,Specialty Foods,10518622316.0,,0,0
+SUZ,Suzano S.A.,Basic Materials,Paper,10492176205.0,Brazil,0,0
+FNF,Fidelity National Financial Inc.,Finance,Specialty Insurers,10489021464.0,United States,0,0
+PSKY,Paramount Skydance Corporation,Industrials,Broadcasting,10478973576.0,United States,1,0
+EGP,EastGroup Properties Inc.,Real Estate,Real Estate Investment Trusts,10477193084.0,United States,0,0
+IAG,Iamgold Corporation,Basic Materials,Precious Metals,10472140000.0,Canada,0,0
+CART,Maplebear Inc.,Consumer Discretionary,Business Services,10468776274.0,United States,0,0
+CGNX,Cognex Corporation,Industrials,Industrial Machinery/Components,10466887449.0,United States,0,0
+AR,Antero Resources Corporation,Energy,Oil & Gas Production,10462149170.0,United States,0,0
+SCI,Service Corporation International,Consumer Discretionary,Other Consumer Services,10451389761.0,United States,0,0
+RRX,Regal Rexnord Corporation,Industrials,Industrial Machinery/Components,10426288616.0,United States,0,0
+ALGN,Align Technology Inc.,Health Care,Industrial Specialties,10325287289.0,United States,1,0
+UHS,Universal Health Services Inc.,Health Care,Hospital/Nursing Management,10318015681.0,United States,1,0
+TXRH,Texas Roadhouse Inc.,Consumer Discretionary,Restaurants,10285933104.0,United States,0,0
+ERIE,Erie Indemnity Company,Finance,Specialty Insurers,10259053893.0,United States,1,0
+PAYC,Paycom Software Inc.,Technology,Computer Software: Prepackaged Software,10252441174.0,United States,0,0
+PAYP,PayPay Corporation,Consumer Discretionary,Business Services,10251947064.0,Japan,0,0
+NYT,New York Times Company (The),Consumer Discretionary,Newspapers/Magazines,10225637338.0,United States,0,0
+RDY,Dr. Reddy's Laboratories Ltd,Health Care,Biotechnology: Pharmaceutical Preparations,10224547883.0,India,0,0
+DCI,Donaldson Company Inc.,Industrials,Pollution Control Equipment,10172272921.0,United States,0,0
+AVTR,Avantor Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,10165673365.0,United States,0,0
+CHYM,Chime Financial Inc.,Finance,Finance: Consumer Services,10163117305.0,United States,0,0
+LULU,lululemon athletica inc.,Consumer Discretionary,Apparel,10122246975.0,Canada,1,0
+LI,Li Auto Inc.,Industrials,Auto Manufacturing,10109887612.0,China,0,0
+DDS,Dillard's Inc.,Consumer Discretionary,Department/Specialty Retail Stores,10095632154.0,United States,0,0
+JKHY,Jack Henry & Associates Inc.,Technology,EDP Services,10084997535.0,United States,1,0
+MOD,Modine Manufacturing Company,Consumer Discretionary,Auto Parts:O.E.M.,10049455481.0,United States,0,0
+GMED,Globus Medical Inc.,Health Care,Medical/Dental Instruments,9990429021.0,United States,0,0
+RTO,Rentokil Initial plc,Consumer Discretionary,Other Consumer Services,9987120000.0,United States,0,0
+BPOP,Popular Inc.,Finance,Major Banks,9982610977.0,United States,0,0
+EVR,Evercore Inc.,Finance,Investment Managers,9960564502.0,United States,0,0
+TFII,TFI International Inc.,Industrials,Trucking Freight/Courier Services,9908008237.0,Canada,0,0
+QRVO,Qorvo Inc.,Technology,Semiconductors,9899349439.0,United States,0,0
+BSY,Bentley Systems Incorporated,Technology,Computer Software: Prepackaged Software,9893542115.0,United States,0,0
+ENSG,The Ensign Group Inc.,Health Care,Hospital/Nursing Management,9886449279.0,United States,0,0
+FDS,FactSet Research Systems Inc.,Technology,Computer Software: Programming Data Processing,9873350392.0,United States,1,0
+UMBF,UMB Financial Corporation,Finance,Major Banks,9857554394.0,United States,0,0
+IBRX,ImmunityBio Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),9835280613.0,United States,0,0
+EGO,Eldorado Gold Corporation,Basic Materials,Precious Metals,9828240047.0,Canada,0,0
+RYAN,Ryan Specialty Holdings Inc.,Finance,Specialty Insurers,9820729596.0,United States,0,0
+DRS,Leonardo DRS Inc.,Industrials,Industrial Machinery/Components,9810932091.0,Israel,0,0
+PBF,PBF Energy Inc.,Energy,Integrated oil Companies,9760323241.0,United States,0,0
+DPZ,Domino's Pizza Inc,Consumer Discretionary,Food Distributors,9759111825.0,United States,1,0
+SSB,SouthState Bank Corporation,Finance,Major Banks,9756607866.0,United States,0,0
+CLX,Clorox Company (The),Consumer Discretionary,Specialty Chemicals,9753085553.0,United States,1,0
+DAR,Darling Ingredients Inc.,Consumer Staples,Packaged Foods,9726971742.0,United States,0,0
+PSO,Pearson Plc,Consumer Discretionary,Books,9723793471.0,United Kingdom,0,0
+CPT,Camden Property Trust,Real Estate,Real Estate Investment Trusts,9714111997.0,United States,1,0
+ESTC,Elastic N.V.,Technology,Computer Software: Prepackaged Software,9691745057.0,United States,0,0
+VSAT,ViaSat Inc.,Consumer Discretionary,Telecommunications Equipment,9691121234.0,United States,0,0
+WTFC,Wintrust Financial Corporation,Finance,Major Banks,9684739563.0,United States,0,0
+KRYS,Krystal Biotech Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),9628797339.0,United States,0,0
+GKOS,Glaukos Corporation,Health Care,Medical/Dental Instruments,9624409000.0,United States,0,0
+AMG,Affiliated Managers Group Inc.,Finance,Investment Managers,9618602079.0,United States,0,0
+BXP,BXP Inc.,Real Estate,Real Estate Investment Trusts,9618012133.0,United States,1,0
+AM,Antero Midstream Corporation,Utilities,Natural Gas Distribution,9616895240.0,United States,0,0
+MSGS,Madison Square Garden Sports Corp.,Consumer Discretionary,Services-Misc. Amusement & Recreation,9612471648.0,United States,0,0
+DKNG,DraftKings Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,9606385829.0,United States,0,0
+ALSN,Allison Transmission Holdings Inc.,Consumer Discretionary,Auto Parts:O.E.M.,9602174259.0,United States,0,0
+WMS,Advanced Drainage Systems Inc.,Consumer Discretionary,Containers/Packaging,9565921686.0,United States,0,0
+ONB,Old National Bancorp,Finance,Major Banks,9556598600.0,United States,0,0
+SNAP,Snap Inc.,Technology,Computer Software: Programming Data Processing,9555267073.0,United States,0,0
+CFR,Cullen/Frost Bankers Inc.,Finance,Major Banks,9538595522.0,United States,0,0
+AXSM,Axsome Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,9536975533.0,United States,0,0
+GGB,Gerdau S.A.,Industrials,Steel/Iron Ore,9514266816.0,Brazil,0,0
+BIO,Bio-Rad Laboratories Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,9507292885.0,United States,0,0
+HSIC,Henry Schein Inc.,Health Care,Medical Specialities,9465154812.0,United States,1,0
+MOH,Molina Healthcare Inc,Health Care,Medical Specialities,9440370000.0,United States,0,0
+BRKR,Bruker Corporation,Industrials,Biotechnology: Laboratory Analytical Instruments,9437136033.0,United States,0,0
+OGE,OGE Energy Corp,Utilities,Electric Utilities: Central,9434567377.0,United States,0,0
+MUSA,Murphy USA Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,9399158045.0,United States,0,0
+FRT,Federal Realty Investment Trust,Real Estate,Real Estate Investment Trusts,9386633038.0,United States,1,0
+SIMO,Silicon Motion Technology Corporation,Technology,Semiconductors,9332902601.0,Taiwan,0,0
+FLS,Flowserve Corporation,Industrials,Fluid Controls,9286859707.0,United States,0,0
+TTC,Toro Company (The),Consumer Discretionary,Tools/Hardware,9257131735.0,United States,0,0
+OC,Owens Corning Inc,Industrials,Industrial Machinery/Components,9255810292.0,United States,0,0
+OSCR,Oscar Health Inc.,Health Care,Medical Specialities,9228485500.0,United States,0,0
+ELPC,Companhia Paranaense de Energia (COPEL),Utilities,Electric Utilities: Central,9224341756.0,Brazil,0,0
+MTCH,Match Group Inc.,Technology,Computer Software: Programming Data Processing,9211881028.0,United States,0,0
+SAIA,Saia Inc.,Industrials,Trucking Freight/Courier Services,9186215967.0,United States,0,0
+KYMR,Kymera Therapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),9156546054.0,United States,0,0
+ARWR,Arrowhead Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,9151876917.0,United States,0,0
+ZION,Zions Bancorporation N.A.,Finance,Major Banks,9143977691.0,United States,0,0
+APTV,Aptiv PLC,Consumer Discretionary,Auto Parts:O.E.M.,9129637564.0,United Kingdom,1,0
+CYTK,Cytokinetics Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,9122716689.0,United States,0,0
+AAOI,Applied Optoelectronics Inc.,Technology,Semiconductors,9112142935.0,United States,0,0
+ENLT,Enlight Renewable Energy Ltd.,Utilities,Electric Utilities: Central,9105697118.0,Israel,0,0
+PODD,Insulet Corporation,Health Care,Medical/Dental Instruments,9070835687.0,United States,1,0
+ORI,Old Republic International Corporation,Finance,Property-Casualty Insurers,9051320246.0,United States,0,0
+SOLS,Solstice Advanced Materials Inc.,Industrials,Major Chemicals,9051123086.0,United States,0,0
+SSL,Sasol Ltd.,Energy,Oil & Gas Production,9042752913.0,South Africa,0,0
+VMI,Valmont Industries Inc.,Industrials,Metal Fabrications,9040078904.0,United States,0,0
+FCFS,FirstCash Holdings Inc.,Consumer Discretionary,Other Specialty Stores,9027840170.0,United States,0,0
+XPEV,XPeng Inc. American depositary shares each representing two,Industrials,Auto Manufacturing,9025021001.0,China,0,0
+KT,KT Corporation,Telecommunications,Telecommunications Equipment,9021777257.0,South Korea,0,0
+LTH,Life Time Group Holdings Inc.,Consumer Discretionary,Hotels/Resorts,9018924221.0,United States,0,0
+PTGX,Protagonist Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,9006746189.0,United States,0,0
+GLXY,Galaxy Digital Inc.,Finance,Investment Bankers/Brokers/Service,8998266852.0,United States,0,0
+HLI,Houlihan Lokey Inc.,Finance,Investment Managers,8972028870.0,United States,0,0
+AYI,Acuity Inc.,Consumer Discretionary,Building Products,8959110506.0,United States,0,0
+JAN,Janus Living Inc.,Real Estate,Real Estate Investment Trusts,8917756902.0,United States,0,0
+R,Ryder System Inc.,Consumer Discretionary,Rental/Leasing Companies,8855058759.0,United States,0,0
+ESI,Element Solutions Inc.,Industrials,Major Chemicals,8853290906.0,United States,0,0
+LLYVK,Liberty Live Holdings Inc. Series C Liberty Live Group,Consumer Discretionary,Services-Misc. Amusement & Recreation,8842176660.0,United States,0,0
+RRC,Range Resources Corporation,Energy,Oil & Gas Production,8786349764.0,United States,0,0
+KLAR,Klarna Group plc,Finance,Finance: Consumer Services,8785274013.0,,0,0
+IDCC,InterDigital Inc.,Miscellaneous,Multi-Sector Companies,8772235960.0,United States,0,0
+JXN,Jackson Financial Inc.,Finance,Life Insurance,8769517773.0,United States,0,0
+JEF,Jefferies Financial Group Inc.,Finance,Investment Bankers/Brokers/Service,8766856723.0,United States,0,0
+AG,First Majestic Silver Corp.,Basic Materials,Precious Metals,8704726724.0,Canada,0,0
+AAL,American Airlines Group Inc.,Consumer Discretionary,Air Freight/Delivery Services,8691665457.0,United States,0,0
+RGEN,Repligen Corporation,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),8670682308.0,United States,0,0
+QGEN,Qiagen N.V.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),8663382616.0,Netherlands,0,0
+SIRI,SiriusXM Holdings Inc.,Consumer Discretionary,Broadcasting,8642395085.0,United States,0,0
+VOYA,Voya Financial Inc.,Finance,Life Insurance,8641079768.0,United States,0,0
+TTEK,Tetra Tech Inc.,Consumer Discretionary,Military/Government/Technical,8633818112.0,United States,0,0
+VIRT,Virtu Financial Inc.,Finance,Investment Bankers/Brokers/Service,8632236626.0,United States,0,0
+EDU,New Oriental Education & Technology Group Inc. Sponsored ADR representing 10 Ordinary Share (Cayman Islands),Real Estate,Other Consumer Services,8624295535.0,China,0,0
+LLYVA,Liberty Live Holdings Inc. Series A Liberty Live Group,Consumer Discretionary,Services-Misc. Amusement & Recreation,8612623247.0,United States,0,0
+S,SentinelOne Inc.,Technology,Computer Software: Prepackaged Software,8586371716.0,United States,0,0
+NIO,NIO Inc. American depositary shares each  representing one,Industrials,Auto Manufacturing,8519267875.0,United States,0,0
+SPXC,SPX Technologies Inc.,Industrials,Industrial Machinery/Components,8500071301.0,United States,0,0
+CTRE,CareTrust REIT Inc.,Real Estate,Real Estate Investment Trusts,8485288776.0,United States,0,0
+YMM,Full Truck Alliance Co. Ltd.,Technology,Computer Software: Prepackaged Software,8476737168.0,China,0,0
+BAH,Booz Allen Hamilton Holding Corporation,Consumer Discretionary,Professional Services,8476482047.0,United States,0,0
+MHK,Mohawk Industries Inc.,Consumer Discretionary,Home Furnishings,8475396702.0,United States,0,0
+NEU,NewMarket Corp,Industrials,Major Chemicals,8471177423.0,United States,0,0
+BRX,Brixmor Property Group Inc.,Real Estate,Real Estate Investment Trusts,8460469752.0,United States,0,0
+PRI,Primerica Inc.,Finance,Life Insurance,8455153592.0,United States,0,0
+CUBE,CubeSmart,Real Estate,Real Estate Investment Trusts,8450339355.0,United States,0,0
+PNR,Pentair plc. Ordinary Share,Industrials,Industrial Machinery/Components,8441654796.0,Switzerland,1,0
+AVT,Avnet Inc.,Technology,Electronic Components,8391141373.0,United States,0,0
+CTVA,Corteva Inc.,Consumer Staples,Farming/Seeds/Milling,8386653720.0,United States,1,0
+MXL,MaxLinear Inc.,Technology,Semiconductors,8354656755.0,United States,0,0
+TIMB,TIM S.A.,Telecommunications,Telecommunications Equipment,8353303608.0,Brazil,0,0
+RHP,Ryman Hospitality Properties Inc. (REIT),Real Estate,Real Estate Investment Trusts,8342846954.0,United States,0,0
+PCVX,Vaxcyte Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),8340535832.0,United States,0,0
+SM,SM Energy Company,Energy,Oil & Gas Production,8339163624.0,United States,0,0
+GTLB,GitLab Inc.,Technology,Computer Software: Prepackaged Software,8321670000.0,United States,0,0
+ABVX,Abivax SA,Health Care,Biotechnology: Pharmaceutical Preparations,8297836095.0,France,0,0
+KNTK,Kinetik Holdings Inc.,Utilities,Natural Gas Distribution,8282959370.0,United States,0,0
+ALV,Autoliv Inc.,Consumer Discretionary,Auto Parts:O.E.M.,8280932126.0,Sweden,0,0
+WAL,Western Alliance Bancorporation,Finance,Major Banks,8258935405.0,United States,0,0
+TKR,Timken Company (The),Industrials,Metal Fabrications,8245630873.0,United States,0,0
+MP,MP Materials Corp.,Basic Materials,Metal Mining,8208702191.0,United States,0,0
+TGTX,TG Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,8207562622.0,United States,0,0
+ARE,Alexandria Real Estate Equities Inc.,Real Estate,Real Estate Investment Trusts,8194863217.0,United States,1,0
+UGP,Ultrapar Participacoes S.A. (New),Utilities,Oil/Gas Transmission,8168026809.0,Brazil,0,0
+DY,Dycom Industries Inc.,Industrials,Water Sewer Pipeline Comm & Power Line Construction,8142251952.0,United States,0,0
+EAT,Brinker International Inc.,Consumer Discretionary,Restaurants,8138785256.0,United States,0,0
+ZETA,Zeta Global Holdings Corp.,Technology,Computer Software: Prepackaged Software,8132840802.0,United States,0,0
+COLB,Columbia Banking System Inc.,Finance,Major Banks,8127782160.0,United States,0,0
+ADC,Agree Realty Corporation,Real Estate,Real Estate Investment Trusts,8088386529.0,United States,0,0
+OSK,Oshkosh Corporation (Holding Company)Common Stock,Industrials,Auto Manufacturing,8076793964.0,United States,0,0
+KTOS,Kratos Defense & Security Solutions Inc.,Industrials,Military/Government/Technical,8038227222.0,United States,0,0
+REXR,Rexford Industrial Realty Inc.,Real Estate,Real Estate Investment Trusts,8032032226.0,United States,0,0
+PB,Prosperity Bancshares Inc.,Finance,Major Banks,8027808303.0,United States,0,0
+CAI,Caris Life Sciences Inc.,Health Care,Medical Specialities,8011573523.0,United States,0,0
+PRAX,Praxis Precision Medicines Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,8010523757.0,United States,0,0
+BVN,Buenaventura Mining Company Inc.,Basic Materials,Metal Mining,7998046442.0,Peru,0,0
+GAP,Gap Inc. (The),Consumer Discretionary,Clothing/Shoe/Accessory Stores,7984370214.0,United States,0,0
+WLK,Westlake Corporation,Industrials,Major Chemicals,7983450354.0,United States,0,0
+WYNN,Wynn Resorts Limited Common stock,Consumer Discretionary,Hotels/Resorts,7959881774.0,United States,1,0
+KMX,CarMax Inc,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,7933183483.0,United States,0,0
+SYRE,Spyre Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,7929466417.0,United States,0,0
+HNGE,Hinge Health Inc.,Technology,EDP Services,7903211201.0,United States,0,0
+SNEX,StoneX Group Inc.,Finance,Investment Bankers/Brokers/Service,7888334469.0,United States,0,0
+CNM,Core & Main Inc.,Consumer Discretionary,Durable Goods,7882643789.0,United States,0,0
+MGM,MGM Resorts International,Consumer Discretionary,Hotels/Resorts,7871106167.0,United States,1,0
+CBSH,Commerce Bancshares Inc.,Finance,Major Banks,7864386320.0,United States,0,0
+PCOR,Procore Technologies Inc.,Technology,Computer Software: Prepackaged Software,7850012761.0,United States,0,0
+RAL,Ralliant Corporation,Industrials,Industrial Machinery/Components,7833312566.0,United States,0,0
+AGCO,AGCO Corporation,Industrials,Industrial Machinery/Components,7830247619.0,United States,0,0
+ZWS,Zurn Elkay Water Solutions Corporation,Industrials,Industrial Machinery/Components,7828785378.0,United States,0,0
+FR,First Industrial Realty Trust Inc.,Real Estate,Real Estate Investment Trusts,7804569331.0,United States,0,0
+UGI,UGI Corporation,Utilities,Natural Gas Distribution,7799037000.0,United States,0,0
+PCTY,Paylocity Holding Corporation,Technology,Computer Software: Prepackaged Software,7778150776.0,United States,0,0
+GIL,Gildan Activewear Inc.,Consumer Discretionary,Apparel,7763242268.0,Canada,0,0
+LINE,Lineage Inc.,Real Estate,Real Estate Investment Trusts,7735309108.0,United States,0,0
+CAE,CAE Inc.,Miscellaneous,Industrial Machinery/Components,7729068186.0,Canada,0,0
+NNN,NNN REIT Inc.,Real Estate,Real Estate Investment Trusts,7715642280.0,United States,0,0
+AOS,A.O. Smith Corporation,Consumer Discretionary,Consumer Electronics/Appliances,7701938832.0,United States,1,0
+DBX,Dropbox Inc.,Technology,Computer Software: Prepackaged Software,7692172433.0,United States,0,0
+ATR,AptarGroup Inc.,Industrials,Plastic Products,7685051062.0,United States,0,0
+BOKF,BOK Financial Corporation,Finance,Major Banks,7683362663.0,United States,0,0
+ACM,AECOM,Consumer Discretionary,Military/Government/Technical,7670306930.0,United States,0,0
+LEVI,Levi Strauss & Co,Consumer Discretionary,Apparel,7666223195.0,United States,0,0
+IDA,IDACORP Inc.,Utilities,Electric Utilities: Central,7627051790.0,United States,0,0
+KNSL,Kinsale Capital Group Inc.,Finance,Property-Casualty Insurers,7620066515.0,United States,0,0
+LNC,Lincoln National Corporation,Finance,Life Insurance,7606202659.0,United States,0,0
+CBC,Central Bancompany Inc.,Finance,Major Banks,7553991895.0,United States,0,0
+THG,Hanover Insurance Group Inc,Finance,Property-Casualty Insurers,7553898744.0,United States,0,0
+STN,Stantec Inc,Consumer Discretionary,Military/Government/Technical,7546516059.0,Canada,0,0
+CHRD,Chord Energy Corporation,Energy,Oil & Gas Production,7485403783.0,United States,0,0
+WULF,TeraWulf Inc.,Finance,Finance: Consumer Services,7439622974.0,United States,0,0
+SLAB,Silicon Laboratories Inc.,Technology,Semiconductors,7424437990.0,United States,0,0
+HQY,HealthEquity Inc.,Consumer Discretionary,Business Services,7392266004.0,United States,0,0
+RIOT,Riot Platforms Inc.,Finance,Finance: Consumer Services,7358827715.0,United States,0,0
+EMN,Eastman Chemical Company,Industrials,Major Chemicals,7325873815.0,United States,0,0
+SFD,Smithfield Foods Inc.,Consumer Staples,Meat/Poultry/Fish,7316198868.0,United States,0,0
+IONS,Ionis Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,7312110168.0,United States,0,0
+NTSK,Netskope Inc.,Technology,Computer Software: Prepackaged Software,7293291302.0,United States,0,0
+NFG,National Fuel Gas Company,Utilities,Oil/Gas Transmission,7248139250.0,United States,0,0
+APPF,AppFolio Inc.,Technology,Computer Software: Prepackaged Software,7233566446.0,United States,0,0
+APLD,Applied Digital Corporation,Technology,EDP Services,7226120052.0,United States,0,0
+PLXS,Plexus Corp.,Technology,Electrical Products,7203262797.0,United States,0,0
+VIST,Vista Energy S.A.B. de C.V.,Energy,Oil & Gas Production,7194443691.0,Mexico,0,0
+ACA,Arcosa Inc.,Industrials,Metal Fabrications,7194147519.0,United States,0,0
+MSM,MSC Industrial Direct Company Inc.,Industrials,Industrial Machinery/Components,7176249293.0,United States,0,0
+MORN,Morningstar Inc.,Finance,Investment Managers,7172969911.0,United States,0,0
+VFS,VinFast Auto Ltd.,Industrials,Auto Manufacturing,7158980191.0,Singapore,0,0
+CAMT,Camtek Ltd.,Technology,Electronic Components,7158710271.0,Israel,0,0
+AVAV,AeroVironment Inc.,Industrials,Aerospace,7130652698.0,United States,0,0
+CHWY,Chewy Inc.,Consumer Discretionary,Catalog/Specialty Distribution,7122150852.0,United States,0,0
+SBSW,D/B/A Sibanye-Stillwater Limited ADS,Basic Materials,Precious Metals,7083494578.0,South Africa,0,0
+SSD,Simpson Manufacturing Company Inc.,Consumer Discretionary,Industrial Machinery/Components,7073546266.0,United States,0,0
+VSXY,Victorias Secret & Co.,Consumer Discretionary,Clothing/Shoe/Accessory Stores,7059915092.0,United States,0,0
+KEX,Kirby Corporation,Consumer Discretionary,Marine Transportation,7046688000.0,United States,0,0
+SARO,StandardAero Inc.,Industrials,Aerospace,7005564354.0,United States,0,0
+VLY,Valley National Bancorp,Finance,Major Banks,7001508213.0,United States,0,0
+ESE,ESCO Technologies Inc.,Telecommunications,Telecommunications Equipment,6992970485.0,United States,0,0
+MAAS,Maase Inc.,Finance,Investment Managers,6990795888.0,China,0,0
+AMRX,Amneal Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,6990301061.0,United States,0,0
+SOBO,South Bow Corporation,Energy,Natural Gas Distribution,6989670851.0,Canada,0,0
+TRNO,Terreno Realty Corporation,Finance,Real Estate,6971920434.0,United States,0,0
+AXS,Axis Capital Holdings Limited,Finance,Property-Casualty Insurers,6969012937.0,Bermuda,0,0
+IMVT,Immunovant Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),6950497749.0,United States,0,0
+DSGX,Descartes Systems Group Inc. (The),Technology,Computer Software: Prepackaged Software,6945687018.0,Canada,0,0
+POWL,Powell Industries Inc.,Energy,Electrical Products,6944046698.0,United States,0,0
+PATH,UiPath Inc.,Technology,Computer Software: Prepackaged Software,6941790048.0,United States,0,0
+ASR,Grupo Aeroportuario del Sureste S.A. de C.V.,Consumer Discretionary,Aerospace,6941700000.0,Mexico,0,0
+CMC,Commercial Metals Company,Industrials,Steel/Iron Ore,6938358291.0,United States,0,0
+CELH,Celsius Holdings Inc.,Consumer Staples,Beverages (Production/Distribution),6935690638.0,United States,0,0
+NICE,NICE Ltd,Technology,Computer Software: Prepackaged Software,6919328998.0,Israel,0,0
+TAP,Molson Coors Beverage Company,Consumer Staples,Beverages (Production/Distribution),6919305454.0,Canada,0,0
+BZ,KANZHUN LIMITED,Technology,Computer Software: Programming Data Processing,6918945260.0,China,0,0
+COMP,Compass Inc.,Finance,Real Estate,6908602437.0,United States,0,0
+MSA,MSA Safety Incorporated,Health Care,Industrial Specialties,6906671080.0,United States,0,0
+PRMB,Primo Brands Corporation,Consumer Staples,Beverages (Production/Distribution),6902844557.0,United States,0,0
+STAG,Stag Industrial Inc.,Real Estate,Real Estate Investment Trusts,6887113512.0,United States,0,0
+AWI,Armstrong World Industries Inc,Industrials,Plastic Products,6875316534.0,United States,0,0
+VCTR,Victory Capital Holdings Inc.,Finance,Investment Managers,6873079575.0,United States,0,0
+DUOL,Duolingo Inc.,Technology,Computer Software: Prepackaged Software,6857463447.0,United States,0,0
+MOS,Mosaic Company (The),Industrials,Agricultural Chemicals,6850651171.0,United States,1,0
+FSS,Federal Signal Corporation,Industrials,Auto Manufacturing,6847037506.0,United States,0,0
+ENS,EnerSys,Miscellaneous,Industrial Machinery/Components,6837605818.0,United States,0,0
+HIMS,Hims & Hers Health Inc.,Health Care,Medical/Nursing Services,6836083001.0,United States,0,0
+BTG,B2Gold Corp Common shares (Canada),Basic Materials,Precious Metals,6829935840.0,Canada,0,0
+AXTA,Axalta Coating Systems Ltd.,Consumer Discretionary,Paints/Coatings,6816536904.0,United States,0,0
+SSRM,SSR Mining Inc.,Industrials,Precious Metals,6814649207.0,Canada,0,0
+ALKS,Alkermes plc,Health Care,Biotechnology: Pharmaceutical Preparations,6801123047.0,Ireland,0,0
+AAON,AAON Inc.,Industrials,Industrial Machinery/Components,6784285417.0,United States,0,0
+ALGM,Allegro MicroSystems Inc.,Technology,Semiconductors,6781306433.0,United States,0,0
+URBN,Urban Outfitters Inc.,Consumer Discretionary,Clothing/Shoe/Accessory Stores,6747452457.0,United States,0,0
+TAL,TAL Education Group,Real Estate,Other Consumer Services,6745167249.0,China,0,0
+BROS,Dutch Bros Inc.,Consumer Discretionary,Restaurants,6744461055.0,United States,0,0
+MATX,Matson Inc.,Consumer Discretionary,Marine Transportation,6743229779.0,United States,0,0
+NOV,NOV Inc.,Consumer Discretionary,Oil and Gas Field Machinery,6741001344.0,United States,0,0
+GLBE,Global-E Online Ltd.,Technology,Computer Software: Prepackaged Software,6737920860.0,Israel,0,0
+LAD,Lithia Motors Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,6728372314.0,United States,0,0
+OKLO,Oklo Inc.,Utilities,Electric Utilities: Central,6722677871.0,United States,0,0
+NCLH,Norwegian Cruise Line Holdings Ltd.,Consumer Discretionary,Marine Transportation,6722510065.0,United States,1,0
+GTES,Gates Industrial Corporation Ltd.,Industrials,Industrial Machinery/Components,6708506005.0,United Kingdom,0,0
+NPO,Enpro Inc.,Industrials,Metal Fabrications,6687082105.0,United States,0,0
+ETSY,Etsy Inc.,Consumer Discretionary,Business Services,6685382524.0,United States,0,0
+NE,Noble Corporation plc A,Energy,Oil & Gas Production,6660273335.0,United States,0,0
+AUGO,Aura Minerals Inc.,Basic Materials,Metal Mining,6606780234.0,United States,0,0
+FLR,Fluor Corporation,Industrials,Military/Government/Technical,6597446835.0,United States,0,0
+CHE,Chemed Corp,Health Care,Medical/Nursing Services,6572883387.0,United States,0,0
+BLTE,Belite Bio Inc,Health Care,Biotechnology: Pharmaceutical Preparations,6563554029.0,United States,0,0
+HXL,Hexcel Corporation,Industrials,Major Chemicals,6559578226.0,United States,0,0
+MTDR,Matador Resources Company,Energy,Oil & Gas Production,6554023279.0,United States,0,0
+CLF,Cleveland-Cliffs Inc.,Basic Materials,Metal Mining,6544094339.0,United States,0,0
+RNG,RingCentral Inc.,Technology,EDP Services,6539367546.0,United States,0,0
+LNTH,Lantheus Holdings Inc.,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances,6504391571.0,United States,0,0
+PACS,PACS Group Inc.,Health Care,Hospital/Nursing Management,6496510160.0,United States,0,0
+TTAN,ServiceTitan Inc.,Technology,Computer Software: Prepackaged Software,6496148588.0,United States,0,0
+QLYS,Qualys Inc.,Technology,Computer Software: Prepackaged Software,6484141037.0,United States,0,0
+ANDG,Andersen Group Inc.,Consumer Discretionary,Business Services,6481017664.0,United States,0,0
+MGY,Magnolia Oil & Gas Corporation,Energy,Oil & Gas Production,6450912171.0,United States,0,0
+IOVA,Iovance Biotherapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),6445783477.0,United States,0,0
+TXNM,TXNM Energy Inc.,Utilities,Electric Utilities: Central,6445660557.0,United States,0,0
+RYTM,Rhythm Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,6431472980.0,United States,0,0
+OMF,OneMain Holdings Inc.,Finance,Finance: Consumer Services,6427366873.0,United States,0,0
+CIFR,Cipher Digital Inc.,Finance,Finance: Consumer Services,6416374962.0,United States,0,0
+ICL,ICL Group Ltd.,Industrials,Agricultural Chemicals,6414643463.0,Israel,0,0
+INGM,Ingram Micro Holding Corporation,Technology,Retail: Computer Software & Peripheral Equipment,6410094312.0,United States,0,0
+FIGR,Figure Technology Solutions Inc.,Finance,Finance: Consumer Services,6403744467.0,U.S. Virgin Islands,0,0
+MAC,Macerich Company (The),Real Estate,Real Estate Investment Trusts,6391428313.0,United States,0,0
+ZG,Zillow Group Inc.,Consumer Discretionary,Business Services,6388697443.0,United States,0,0
+OR,OR Royalties Inc.,Basic Materials,Precious Metals,6371109459.0,Canada,0,0
+CAVA,CAVA Group Inc.,Consumer Discretionary,Restaurants,6354257171.0,United States,0,0
+RUSHB,Rush Enterprises Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,6341960296.0,United States,0,0
+UBSI,United Bankshares Inc.,Finance,Major Banks,6320263294.0,United States,0,0
+CAG,ConAgra Brands Inc.,Consumer Staples,Packaged Foods,6301832024.0,United States,0,0
+DOX,Amdocs Limited,Technology,EDP Services,6299935096.0,Guernsey,0,0
+DPC,DPC Holdings PLC,Telecommunications,Metal Fabrications,6299903485.0,,0,0
+TFPM,Triple Flag Precious Metals Corp.,Industrials,Precious Metals,6289023081.0,Canada,0,0
+QBTS,D-Wave Quantum Inc.,Technology,EDP Services,6286616960.0,United States,0,0
+FAF,First American Corporation (New),Finance,Specialty Insurers,6280171000.0,United States,0,0
+TEX,Terex Corporation,Industrials,Construction/Ag Equipment/Trucks,6279642000.0,United States,0,0
+VNO,Vornado Realty Trust,Real Estate,Real Estate Investment Trusts,6266341020.0,United States,0,0
+MBLY,Mobileye Global Inc.,Technology,Computer Software: Prepackaged Software,6248878845.0,Israel,0,0
+Z,Zillow Group Inc.,Consumer Discretionary,Business Services,6240279974.0,United States,0,0
+LB,LandBridge Company LLC,Energy,Oil & Gas Production,6226188727.0,,0,0
+CMBT,CMB.TECH NV,Consumer Discretionary,Marine Transportation,6196321658.0,,0,0
+KOD,Kodiak Sciences Inc,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),6188157536.0,United States,0,0
+BLDR,Builders FirstSource Inc.,Consumer Discretionary,RETAIL: Building Materials,6170656809.0,United States,0,0
+ST,Sensata Technologies Holding plc,Industrials,Industrial Machinery/Components,6163443756.0,Netherlands,0,0
+BILI,Bilibili Inc.,Technology,EDP Services,6157697503.0,China,0,0
+TBBB,BBB Foods Inc.,Consumer Staples,Food Chains,6152143178.0,Mexico,0,0
+ELF,e.l.f. Beauty Inc.,Consumer Discretionary,Package Goods/Cosmetics,6142142304.0,United States,0,0
+CVLT,Commvault Systems Inc.,Technology,Computer Software: Prepackaged Software,6124263222.0,United States,0,0
+ECG,Everus Construction Group Inc.,Consumer Discretionary,Homebuilding,6108766701.0,United States,0,0
+FNB,F.N.B. Corporation,Finance,Major Banks,6085736757.0,United States,0,0
+ACT,Enact Holdings Inc.,Finance,Specialty Insurers,6069904075.0,United States,0,0
+CGON,CG Oncology Inc. Common stock,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),6058569631.0,United States,0,0
+OGC,OceanaGold Corporation,Uncategorized,Uncategorized,6053886621.0,,0,0
+BLCO,Bausch + Lomb Corporation,Health Care,Ophthalmic Goods,6050379267.0,,0,0
+LGND,Ligand Pharmaceuticals Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,6035306269.0,United States,0,0
+CZR,Caesars Entertainment Inc.,Consumer Discretionary,Hotels/Resorts,6034197419.0,United States,0,0
+CRUS,Cirrus Logic Inc.,Technology,Semiconductors,6022627305.0,United States,0,0
+SFM,Sprouts Farmers Market Inc.,Consumer Staples,Food Chains,6012606860.0,United States,0,0
+CIG,Comp En De Mn Cemig ADS,Utilities,Electric Utilities: Central,6009741980.0,Brazil,0,0
+PPC,Pilgrim's Pride Corporation,Consumer Staples,Meat/Poultry/Fish,6000334805.0,United States,0,0
+LEA,Lear Corporation,Consumer Discretionary,Auto Parts:O.E.M.,5986546607.0,United States,0,0
+INGR,Ingredion Incorporated,Consumer Staples,Packaged Foods,5985402247.0,United States,0,0
+IFS,Intercorp Financial Services Inc.,Finance,Commercial Banks,5983555611.0,,0,0
+XMTR,Xometry Inc.,Consumer Discretionary,Business Services,5974836014.0,United States,0,0
+VIPS,Vipshop Holdings Limited,Consumer Discretionary,Catalog/Specialty Distribution,5974565518.0,China,0,0
+HR,Healthcare Realty Trust Incorporated,Real Estate,Real Estate Investment Trusts,5973605417.0,United States,0,0
+GDS,GDS Holdings Limited ADS,Technology,Computer Software: Programming Data Processing,5971252867.0,China,0,0
+GATX,GATX Corporation,Consumer Discretionary,Transportation Services,5961464000.0,United States,0,0
+NXE,Nexgen Energy Ltd.,Basic Materials,Other Metals and Minerals,5947389116.0,Canada,0,0
+M,Macy's Inc,Consumer Discretionary,Department/Specialty Retail Stores,5944380463.0,United States,0,0
+MTRN,Materion Corporation,Industrials,Industrial Specialties,5940528347.0,United States,0,0
+JOBY,Joby Aviation Inc.,Industrials,Aerospace,5923491692.0,United States,0,0
+SWX,Southwest Gas Holdings Inc.,Utilities,Oil & Gas Production,5923172941.0,United States,0,0
+GRAL,GRAIL Inc.,Health Care,Medical Specialities,5920955979.0,United States,0,0
+EPAM,EPAM Systems Inc.,Technology,EDP Services,5898971277.0,United States,0,0
+PL,Planet Labs PBC,Technology,Radio And Television Broadcasting And Communications Equipment,5872506542.0,United States,0,0
+KNSA,Kiniksa Pharmaceuticals International plc,Health Care,Biotechnology: Pharmaceutical Preparations,5868966258.0,United States,0,0
+RIG,Transocean Ltd (Switzerland),Energy,Oil & Gas Production,5852451645.0,Switzerland,0,0
+POOL,Pool Corporation,Consumer Discretionary,Industrial Specialties,5838867820.0,United States,0,0
+G,Genpact Limited,Consumer Discretionary,Professional Services,5830793923.0,Bermuda,0,0
+ACMR,ACM Research Inc.,Technology,Industrial Machinery/Components,5821279802.0,United States,0,0
+CPB,The Campbell's Company,Consumer Staples,Packaged Foods,5812594167.0,United States,0,0
+LOAR,Loar Holdings Inc.,Industrials,Military/Government/Technical,5801190124.0,United States,0,0
+GGAL,Grupo Financiero Galicia S.A.,Finance,Commercial Banks,5793757204.0,Argentina,0,0
+ANF,Abercrombie & Fitch Company,Consumer Discretionary,Clothing/Shoe/Accessory Stores,5786351648.0,United States,0,0
+MKTX,MarketAxess Holdings Inc.,Finance,Investment Bankers/Brokers/Service,5779376560.0,United States,0,0
+LSTR,Landstar System Inc.,Industrials,Trucking Freight/Courier Services,5774028420.0,United States,0,0
+SGHC,Super Group (SGHC) Limited,Consumer Discretionary,Services-Misc. Amusement & Recreation,5771752312.0,,0,0
+HWC,Hancock Whitney Corporation,Finance,Major Banks,5770444562.0,United States,0,0
+LUMN,Lumen Technologies Inc.,Telecommunications,Telecommunications Equipment,5765779808.0,United States,0,0
+LKQ,LKQ Corporation,Consumer Discretionary,Motor Vehicles,5763387519.0,United States,0,0
+LYFT,Lyft Inc.,Consumer Discretionary,Business Services,5757597187.0,United States,0,0
+PJT,PJT Partners Inc.,Finance,Investment Managers,5753928743.0,United States,0,0
+WEX,WEX Inc. common stock,Consumer Discretionary,Business Services,5748204511.0,United States,0,0
+TTD,The Trade Desk Inc.,Technology,Computer Software: Programming Data Processing,5720820758.0,United States,0,0
+CROX,Crocs Inc.,Consumer Discretionary,Shoe Manufacturing,5716970743.0,United States,0,0
+HOMB,Home BancShares Inc.,Finance,Major Banks,5713417433.0,United States,0,0
+ENIC,Enel Chile S.A.,Utilities,Electric Utilities: Central,5713157625.0,Chile,0,0
+ACI,Albertsons Companies Inc.,Consumer Staples,Food Chains,5688017005.0,United States,0,0
+INSW,International Seaways Inc.,Consumer Discretionary,Marine Transportation,5676288241.0,United States,0,0
+XE,X-Energy Inc.,Industrials,Metal Fabrications,5668807207.0,United States,0,0
+VFC,V.F. Corporation,Industrials,Garments and Clothing,5665069154.0,United States,0,0
+SNDR,Schneider National Inc.,Industrials,Trucking Freight/Courier Services,5663972047.0,United States,0,0
+LW,Lamb Weston Holdings Inc.,Consumer Staples,Packaged Foods,5661468033.0,United States,0,0
+PEGA,Pegasystems Inc.,Technology,EDP Services,5660462256.0,United States,0,0
+GBCI,Glacier Bancorp Inc.,Finance,Major Banks,5652500880.0,United States,0,0
+YOU,Clear Secure Inc.,Technology,Computer Software: Prepackaged Software,5646924543.0,United States,0,0
+SRRK,Scholar Rock Holding Corporation,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),5621608617.0,United States,0,0
+PI,Impinj Inc.,Technology,Industrial Machinery/Components,5618039918.0,United States,0,0
+OTEX,Open Text Corporation,Technology,EDP Services,5613502205.0,Canada,0,0
+FSV,FirstService Corporation,Finance,Real Estate,5612002143.0,Canada,0,0
+WFRD,Weatherford International plc,Consumer Discretionary,Oil and Gas Field Machinery,5609409438.0,United States,0,0
+NAVN,Navan Inc.,Technology,Computer Software: Prepackaged Software,5598825600.0,United States,0,0
+LGN,Legence Corp.,Consumer Discretionary,Engineering & Construction,5584260052.0,United States,0,0
+BLSH,Bullish,Finance,Finance: Consumer Services,5553918113.0,Cayman Islands,0,0
+MCY,Mercury General Corporation,Finance,Property-Casualty Insurers,5553817629.0,United States,0,0
+KOF,Coca Cola Femsa S.A.B. de C.V.,Consumer Staples,Beverages (Production/Distribution),5543571179.0,Mexico,0,0
+JBTM,JBT Marel Corporation,Industrials,Industrial Machinery/Components,5543556665.0,United States,0,0
+EPRT,Essential Properties Realty Trust Inc.,Real Estate,Real Estate Investment Trusts,5536588902.0,United States,0,0
+DLB,Dolby Laboratories,Miscellaneous,Multi-Sector Companies,5532079033.0,United States,0,0
+EXLS,ExlService Holdings Inc.,Consumer Discretionary,Business Services,5530823964.0,United States,0,0
+BGC,BGC Group Inc.,Finance,Investment Bankers/Brokers/Service,5524920986.0,United States,0,0
+VAL,Valaris Limited,Energy,Oil & Gas Production,5524312805.0,United States,0,0
+ORKA,Oruka Therapeutics Inc.,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances,5523213091.0,United States,0,0
+MMED,MiniMed Group Inc.,Health Care,Medical/Dental Instruments,5514458648.0,United States,0,0
+ORA,Ormat Technologies Inc.,Utilities,Electric Utilities: Central,5513815730.0,United States,0,0
+AUB,Atlantic Union Bankshares Corporation,Finance,Major Banks,5494089049.0,United States,0,0
+COGT,Cogent Biosciences Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,5481654181.0,United States,0,0
+SXT,Sensient Technologies Corporation,Industrials,Major Chemicals,5465916189.0,United States,0,0
+SEI,Solaris Energy Infrastructure Inc.,Consumer Discretionary,Oil and Gas Field Machinery,5465309061.0,United States,0,0
+CVI,CVR Energy Inc.,Energy,Integrated oil Companies,5464843362.0,United States,0,0
+AN,AutoNation Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,5454702382.0,United States,0,0
+STVN,Stevanato Group S.p.A.,Health Care,Medical/Dental Instruments,5454613806.0,Italy,0,0
+CPA,Copa Holdings S.A.,Consumer Discretionary,Air Freight/Delivery Services,5451681044.0,Panama,0,0
+VRNS,Varonis Systems Inc.,Technology,Computer Software: Prepackaged Software,5450130013.0,United States,0,0
+MIRM,Mirum Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,5449110476.0,United States,0,0
+BIRK,Birkenstock Holding plc,Consumer Discretionary,Shoe Manufacturing,5444210946.0,,0,0
+WPP,WPP plc,Consumer Discretionary,Advertising,5441479104.0,Ireland,0,0
+ACCV,Accelevation Holdings Corp.,Energy,Industrial Machinery/Components,5436763679.0,United States,0,0
+NOVT,Novanta Inc.,Miscellaneous,Industrial Machinery/Components,5429875417.0,United States,0,0
+KGS,Kodiak Gas Services Inc.,Utilities,Natural Gas Distribution,5429777561.0,United States,0,0
+ASB,Associated Banc-Corp,Finance,Major Banks,5423762206.0,United States,0,0
+RYN,Rayonier Inc. REIT,Real Estate,Real Estate Investment Trusts,5421676042.0,United States,0,0
+MTG,MGIC Investment Corporation,Finance,Property-Casualty Insurers,5409142031.0,United States,0,0
+STEP,StepStone Group Inc.,Finance,Investment Managers,5395453826.0,United States,0,0
+RUSHA,Rush Enterprises Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,5391775190.0,United States,0,0
+BB,BlackBerry Limited,Technology,Computer Software: Prepackaged Software,5388956321.0,Canada,0,0
+ABCB,Ameris Bancorp,Finance,Major Banks,5384684857.0,United States,0,0
+MUR,Murphy Oil Corporation,Energy,Oil & Gas Production,5372490754.0,United States,0,0
+CAKE,Cheesecake Factory Incorporated (The),Consumer Discretionary,Restaurants,5371660440.0,United States,0,0
+AXTI,AXT Inc,Technology,Semiconductors,5364544474.0,United States,0,0
+CRSP,CRISPR Therapeutics AG,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),5360640682.0,Switzerland,0,0
+TVTX,Travere Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,5358742512.0,United States,0,0
+PTCT,PTC Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,5352341232.0,United States,0,0
+BKH,Black Hills Corporation,Utilities,Electric Utilities: Central,5348395310.0,United States,0,0
+TFX,Teleflex Incorporated,Health Care,Medical/Dental Instruments,5343582986.0,United States,0,0
+AROC,Archrock Inc.,Utilities,Natural Gas Distribution,5333787588.0,United States,0,0
+RDNT,RadNet Inc.,Health Care,Medical Specialities,5327804299.0,United States,0,0
+JMKE,Jersey Mike's Subs Inc.,Consumer Discretionary,Restaurants,5326804353.0,,0,0
+AGX,Argan Inc.,Consumer Discretionary,Engineering & Construction,5325447426.0,United States,0,0
+CACC,Credit Acceptance Corporation,Finance,Finance: Consumer Services,5314337931.0,United States,0,0
+EXP,Eagle Materials Inc,Industrials,Building Materials,5308978498.0,United States,0,0
+WH,Wyndham Hotels & Resorts Inc.,Consumer Discretionary,Hotels/Resorts,5305353112.0,United States,0,0
+SAIC,Science Applications International Corporation,Technology,EDP Services,5291671301.0,United States,0,0
+ESNT,Essent Group Ltd.,Finance,Property-Casualty Insurers,5290130378.0,Bermuda,0,0
+BBUC,Brookfield Business Corporation,Consumer Discretionary,Engineering & Construction,5282739000.0,,0,0
+GXO,GXO Logistics Inc.,Consumer Discretionary,Transportation Services,5270903251.0,United States,0,0
+POR,Portland General Electric Co,Utilities,Electric Utilities: Central,5264122442.0,United States,0,0
+MRX,Marex Group Limited,Finance,Investment Bankers/Brokers/Service,5260466114.0,United Kingdom,0,0
+VSH,Vishay Intertechnology Inc.,Technology,Electrical Products,5256304053.0,United States,0,0
+CORZ,Core Scientific Inc.,Finance,Finance: Consumer Services,5253916210.0,United States,0,0
+WFG,West Fraser Timber Co. Ltd Common stock,Basic Materials,Forest Products,5245573036.0,Canada,0,0
+OZK,Bank OZK,Finance,Major Banks,5242728357.0,United States,0,0
+LAUR,Laureate Education Inc.,Real Estate,Other Consumer Services,5234475680.0,United States,0,0
+OLLI,Ollie's Bargain Outlet Holdings Inc.,Consumer Discretionary,Department/Specialty Retail Stores,5222065248.0,United States,0,0
+MBGL,Mobility Global Inc.,Consumer Discretionary,Business Services,5221285577.0,United States,0,0
+BCPC,Balchem Corporation,Industrials,Major Chemicals,5218113257.0,United States,0,0
+CHDN,Churchill Downs Incorporated,Consumer Discretionary,Services-Misc. Amusement & Recreation,5214972181.0,United States,0,0
+RGTI,Rigetti Computing Inc.,Technology,EDP Services,5213467828.0,United States,0,0
+MAIN,Main Street Capital Corporation,Finance,Finance/Investors Services,5204680939.0,United States,0,0
+FTDR,Frontdoor Inc.,Consumer Discretionary,Diversified Commercial Services,5198000692.0,United States,0,0
+NJR,NewJersey Resources Corporation,Utilities,Oil/Gas Transmission,5190085438.0,United States,0,0
+HRB,H&R Block Inc.,Consumer Discretionary,Other Consumer Services,5186614948.0,United States,0,0
+USAR,USA Rare Earth Inc.,Basic Materials,Metal Mining,5176056625.0,United States,0,0
+PSMT,PriceSmart Inc.,Consumer Discretionary,Department/Specialty Retail Stores,5173458243.0,United States,0,0
+ROAD,Construction Partners Inc.,Industrials,Military/Government/Technical,5172316133.0,United States,0,0
+SHC,Sotera Health Company,Health Care,Misc Health and Biotechnology Services,5170991285.0,United States,0,0
+RLI,RLI Corp.,Finance,Property-Casualty Insurers,5155805455.0,United States,0,0
+OBDC,Blue Owl Capital Corporation,Finance,Diversified Financial Services,5148408420.0,United States,0,0
+MMSI,Merit Medical Systems Inc.,Health Care,Medical/Dental Instruments,5144052683.0,United States,0,0
+RRR,Red Rock Resorts Inc.,Consumer Discretionary,Hotels/Resorts,5138442128.0,United States,0,0
+PAGP,Plains GP Holdings L.P.,Energy,Natural Gas Distribution,5131653935.0,United States,0,0
+IBP,Installed Building Products Inc.,Consumer Discretionary,Homebuilding,5121807408.0,United States,0,0
+MRCY,Mercury Systems Inc,Technology,Electrical Products,5116801675.0,United States,0,0
+OCTV,Octave Intelligence plc,Technology,Computer Software: Prepackaged Software,5116424239.0,United States,0,0
+GVA,Granite Construction Incorporated,Industrials,Military/Government/Technical,5113882994.0,United States,0,0
+ERAS,Erasca Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,5099530470.0,United States,0,0
+VEON,VEON Ltd. ADS,Telecommunications,Telecommunications Equipment,5090219534.0,Netherlands,0,0
+NIQ,NIQ Global Intelligence plc,Technology,Computer Software: Programming Data Processing,5085039095.0,United States,0,0
+BETA,Beta Technologies Inc.,Industrials,Aerospace,5083539234.0,United States,0,0
+DOCS,Doximity Inc.,Technology,EDP Services,5080010430.0,United States,0,0
+IRDM,Iridium Communications Inc,Consumer Discretionary,Telecommunications Equipment,5072323534.0,United States,0,0
+SIGI,Selective Insurance Group Inc.,Finance,Property-Casualty Insurers,5057418203.0,United States,0,0
+DFTX,Definium Therapeutics Inc.,Health Care,Medicinal Chemicals and Botanical Products,5052197320.0,United States,0,0
+HAFN,Hafnia Limited,Consumer Discretionary,Transportation Services,5033411750.0,,0,0
+KLIC,Kulicke and Soffa Industries Inc.,Technology,Semiconductors,5025164913.0,Singapore,0,0
+GRFS,Grifols S.A.,Health Care,Biotechnology: Pharmaceutical Preparations,5019150828.0,Spain,0,0
+ACIW,ACI Worldwide Inc.,Technology,Computer Software: Prepackaged Software,5016465925.0,United States,0,0
+BLLN,BillionToOne Inc.,Health Care,Medical Specialities,4990501139.0,United States,0,0
+WHD,Cactus Inc.,Consumer Discretionary,Oil and Gas Field Machinery,4986357943.0,United States,0,0
+MWH,SOLV Energy Inc.,Industrials,Military/Government/Technical,4984784963.0,United States,0,0
+AX,Axos Financial Inc.,Finance,Savings Institutions,4981329643.0,United States,0,0
+CWST,Casella Waste Systems Inc.,Utilities,Environmental Services,4968378391.0,United States,0,0
+MTN,Vail Resorts Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,4952950069.0,United States,0,0
+OUT,OUTFRONT Media Inc.,Real Estate,Real Estate Investment Trusts,4940593791.0,United States,0,0
+DNTH,Dianthus Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,4940124265.0,United States,0,0
+CNO,CNO Financial Group Inc.,Finance,Accident &Health Insurance,4911034373.0,United States,0,0
+GLNG,Golar Lng Ltd,Consumer Discretionary,Marine Transportation,4906761644.0,Bermuda,0,0
+SBRA,Sabra Health Care REIT Inc.,Real Estate,Real Estate Investment Trusts,4904884915.0,United States,0,0
+FND,Floor & Decor Holdings Inc.,Consumer Discretionary,RETAIL: Building Materials,4901733089.0,United States,0,0
+MANE,Veradermics Incorporated,Health Care,Biotechnology: Pharmaceutical Preparations,4897467542.0,United States,0,0
+KRG,Kite Realty Group Trust,Real Estate,Real Estate Investment Trusts,4896479043.0,United States,0,0
+GTX,Garrett Motion Inc.,Consumer Discretionary,Auto Parts:O.E.M.,4895452118.0,Switzerland,0,0
+NXST,Nexstar Media Group Inc.,Industrials,Broadcasting,4886504622.0,United States,0,0
+RITM,Rithm Capital Corp.,Real Estate,Real Estate Investment Trusts,4886061521.0,United States,0,0
+HESM,Hess Midstream LP,Energy,Oil & Gas Production,4883751022.0,United States,0,0
+HLNE,Hamilton Lane Incorporated,Finance,Investment Managers,4881149208.0,United States,0,0
+STWD,STARWOOD PROPERTY TRUST INC. Starwood Property Trust Inc.,Real Estate,Real Estate Investment Trusts,4878826761.0,United States,0,0
+GHC,Graham Holdings Company,Real Estate,Other Consumer Services,4875630257.0,United States,0,0
+HGTY,Hagerty Inc.,Finance,Specialty Insurers,4873820101.0,United States,0,0
+GOLF,Acushnet Holdings Corp.,Consumer Discretionary,Recreational Games/Products/Toys,4871564720.0,United States,0,0
+WAY,Waystar Holding Corp.,Technology,EDP Services,4860822346.0,United States,0,0
+FLG,Flagstar Bank N.A.,Finance,Banks,4852435253.0,United States,0,0
+CE,Celanese Corporation,Industrials,Major Chemicals,4850902529.0,United States,0,0
+PECO,Phillips Edison & Company Inc.,Real Estate,Real Estate Investment Trusts,4824963000.0,United States,0,0
+EBC,Eastern Bankshares Inc.,Finance,Savings Institutions,4817023516.0,United States,0,0
+IEP,Icahn Enterprises L.P.,Energy,Integrated oil Companies,4812895180.0,United States,0,0
+WTM,White Mountains Insurance Group Ltd.,Finance,Property-Casualty Insurers,4804564842.0,United States,0,0
+BYD,Boyd Gaming Corporation,Consumer Discretionary,Hotels/Resorts,4800343203.0,United States,0,0
+SON,Sonoco Products Company,Consumer Discretionary,Containers/Packaging,4795437646.0,United States,0,0
+CWEN,Clearway Energy Inc.,Utilities,Electric Utilities: Central,4776445509.0,United States,0,0
+CSW,CSW Industrials Inc.,Industrials,Home Furnishings,4763889729.0,United States,0,0
+HAE,Haemonetics Corporation,Health Care,Medical/Dental Instruments,4748527213.0,United States,0,0
+SKY,Champion Homes Inc.,Consumer Discretionary,Homebuilding,4748426122.0,United States,0,0
+BOX,Box Inc.,Technology,Computer Software: Prepackaged Software,4747146746.0,United States,0,0
+NSIT,Insight Enterprises Inc.,Consumer Discretionary,Catalog/Specialty Distribution,4734849971.0,United States,0,0
+CLMT,Calumet Inc.,Energy,Integrated oil Companies,4721893130.0,United States,0,0
+HCC,Warrior Met Coal Inc.,Energy,Coal Mining,4703609910.0,United States,0,0
+MDA,MDA Space Ltd.,Consumer Discretionary,Electronic Components,4696929189.0,,0,0
+CIGI,Colliers International Group Inc. Subordinate Voting Shares,Finance,Real Estate,4674466507.0,Canada,0,0
+CNX,CNX Resources Corporation,Energy,Oil & Gas Production,4663183438.0,United States,0,0
+PIPR,Piper Sandler Companies,Finance,Investment Bankers/Brokers/Service,4648691742.0,United States,0,0
+SIM,Grupo Simec S.A.B. de C.V.,Industrials,Steel/Iron Ore,4645285988.0,Mexico,0,0
+MIDD,Middleby Corporation (The),Industrials,Industrial Machinery/Components,4643883019.0,United States,0,0
+UEC,Uranium Energy Corp.,Basic Materials,Other Metals and Minerals,4638672464.0,Canada,0,0
+MYRG,MYR Group Inc.,Industrials,Water Sewer Pipeline Comm & Power Line Construction,4638390960.0,United States,0,0
+HASI,HA Sustainable Infrastructure Capital Inc.,Finance,Finance/Investors Services,4629703314.0,United States,0,0
+REYN,Reynolds Consumer Products Inc.,Consumer Discretionary,Containers/Packaging,4624754145.0,United States,0,0
+GNTX,Gentex Corporation,Consumer Discretionary,Auto Parts:O.E.M.,4624499115.0,United States,0,0
+RSI,Rush Street Interactive Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,4623878492.0,United States,0,0
+CHH,Choice Hotels International Inc.,Consumer Discretionary,Hotels/Resorts,4622308506.0,United States,0,0
+SPHR,Sphere Entertainment Co.,Consumer Discretionary,Services-Misc. Amusement & Recreation,4616694180.0,United States,0,0
+TFSL,TFS Financial Corporation,Finance,Savings Institutions,4610478892.0,United States,0,0
+KVYO,Klaviyo Inc. Series A,Technology,Computer Software: Prepackaged Software,4609737205.0,United States,0,0
+FBIN,Fortune Brands Innovations Inc.,Basic Materials,Forest Products,4598189294.0,United States,0,0
+CHEF,The Chefs' Warehouse Inc.,Consumer Discretionary,Food Distributors,4592007102.0,United States,0,0
+CRC,California Resources Corporation,Energy,Oil & Gas Production,4588435672.0,United States,0,0
+UNF,Unifirst Corporation,Consumer Discretionary,Other Consumer Services,4562998531.0,United States,0,0
+DK,Delek US Holdings Inc.,Energy,Integrated oil Companies,4551999815.0,United States,0,0
+LFST,LifeStance Health Group Inc.,Health Care,Medical/Nursing Services,4551455891.0,United States,0,0
+ADT,ADT Inc.,Consumer Discretionary,Diversified Commercial Services,4551384115.0,United States,0,0
+FFIN,First Financial Bankshares Inc.,Finance,Major Banks,4550648347.0,United States,0,0
+CUZ,Cousins Properties Incorporated,Real Estate,Real Estate Investment Trusts,4547954863.0,United States,0,0
+RELY,Remitly Global Inc.,Consumer Discretionary,Business Services,4546973480.0,United States,0,0
+OMAB,Grupo Aeroportuario del Centro Norte S.A.B. de C.V. ADS,Consumer Discretionary,Aerospace,4546179544.0,Mexico,0,0
+MEOH,Methanex Corporation,Industrials,Major Chemicals,4529677599.0,Canada,0,0
+SR,Spire Inc.,Utilities,Oil/Gas Transmission,4518582967.0,United States,0,0
+AMTM,Amentum Holdings Inc.,Consumer Discretionary,Business Services,4518478512.0,United States,0,0
+LPX,Louisiana-Pacific Corporation,Basic Materials,Forest Products,4513556116.0,United States,0,0
+VSEC,VSE Corporation,Consumer Discretionary,Military/Government/Technical,4511724899.0,United States,0,0
+OGS,ONE Gas Inc.,Utilities,Oil/Gas Transmission,4507423122.0,United States,0,0
+ABCL,AbCellera Biologics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,4505525908.0,Canada,0,0
+MMYT,MakeMyTrip Limited,Consumer Discretionary,Transportation Services,4491301111.0,India,0,0
+DIOD,Diodes Incorporated,Technology,Semiconductors,4489580720.0,United States,0,0
+OTF,Blue Owl Technology Finance Corp.,Uncategorized,Uncategorized,4467307543.0,United States,0,0
+CON,Concentra Group Holdings Parent Inc.,Health Care,Medical Specialities,4459295228.0,United States,0,0
+MC,Moelis & Company,Finance,Investment Managers,4457423423.0,United States,0,0
+PRM,Perimeter Solutions SA,Industrials,Major Chemicals,4452284306.0,Luxembourg,0,0
+STNG,Scorpio Tankers Inc.,Consumer Discretionary,Marine Transportation,4440729754.0,Monaco,0,0
+GMAB,Genmab A/S ADS,Health Care,Biotechnology: Pharmaceutical Preparations,4438873993.0,Denmark,0,0
+CVCO,Cavco Industries Inc.,Consumer Discretionary,Homebuilding,4438322834.0,United States,0,0
+BWIN,The Baldwin Insurance Group Inc.,Finance,Specialty Insurers,4431862071.0,United States,0,0
+TREX,Trex Company Inc.,Basic Materials,Forest Products,4431135765.0,United States,0,0
+EQPT,EquipmentShare.com Inc,Consumer Discretionary,Diversified Commercial Services,4429011833.0,United States,0,0
+NNI,Nelnet Inc.,Finance,Finance: Consumer Services,4421265154.0,United States,0,0
+BIPC,Brookfield Infrastructure Corporation Brookfield Infrastructure Corporation,Consumer Discretionary,Marine Transportation,4418720244.0,Canada,0,0
+KBR,KBR Inc.,Industrials,Military/Government/Technical,4418674813.0,United States,0,0
+TKC,Turkcell Iletisim Hizmetleri AS,Telecommunications,Telecommunications Equipment,4417600000.0,Turkey,0,0
+OII,Oceaneering International Inc.,Energy,Oilfield Services/Equipment,4415135052.0,United States,0,0
+HRI,Herc Holdings Inc.,Industrials,Misc Corporate Leasing Services,4408270206.0,United States,0,0
+ALK,Alaska Air Group Inc.,Consumer Discretionary,Air Freight/Delivery Services,4407207209.0,United States,0,0
+EWTX,Edgewise Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,4396295142.0,United States,0,0
+ATAT,Atour Lifestyle Holdings Limited,Consumer Discretionary,Hotels/Resorts,4392834799.0,China,0,0
+CRGY,Crescent Energy Company,Energy,Oil & Gas Production,4384457046.0,United States,0,0
+PSN,Parsons Corporation,Technology,EDP Services,4380089208.0,United States,0,0
+TPC,Tutor Perini Corporation,Consumer Discretionary,General Bldg Contractors - Nonresidential Bldgs,4376904681.0,United States,0,0
+ADPT,Adaptive Biotechnologies Corporation,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),4368138196.0,United States,0,0
+CNR,Core Natural Resources Inc.,Energy,Coal Mining,4348136113.0,United States,0,0
+SFBS,ServisFirst Bancshares Inc.,Finance,Major Banks,4346464545.0,United States,0,0
+ENPH,Enphase Energy Inc.,Technology,Semiconductors,4336987347.0,United States,0,0
+DAVE,Dave Inc.,Finance,Finance: Consumer Services,4331642622.0,United States,0,0
+MARA,MARA Holdings Inc.,Finance,Finance: Consumer Services,4330415119.0,United States,0,0
+PARR,Par Pacific Holdings Inc.,Energy,Oil & Gas Production,4319088844.0,United States,0,0
+FULT,Fulton Financial Corporation,Finance,Major Banks,4312759978.0,United States,0,0
+PTEN,Patterson-UTI Energy Inc.,Energy,Oil & Gas Production,4309649076.0,United States,0,0
+HHH,Howard Hughes Holdings Inc.,Real Estate,Real Estate Investment Trusts,4303497854.0,United States,0,0
+CGAU,Centerra Gold Inc.,Basic Materials,Precious Metals,4301760314.0,Canada,0,0
+IBOC,International Bancshares Corporation,Finance,Major Banks,4298677448.0,United States,0,0
+ITGR,Integer Holdings Corporation,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus,4297274708.0,United States,0,0
+MAT,Mattel Inc.,Consumer Discretionary,Recreational Games/Products/Toys,4296928000.0,United States,0,0
+ARX,Accelerant Holdings,Finance,Specialty Insurers,4285130131.0,Cayman Islands,0,0
+VNT,Vontier Corporation,Industrials,Industrial Machinery/Components,4284488000.0,United States,0,0
+VSNT,Versant Media Group Inc.,Industrials,Broadcasting,4280354625.0,United States,0,0
+ENVA,Enova International Inc.,Finance,Finance: Consumer Services,4269821643.0,United States,0,0
+FELE,Franklin Electric Co. Inc.,Consumer Discretionary,Metal Fabrications,4265079932.0,United States,0,0
+FRVO,Fervo Energy Company,Utilities,Electric Utilities: Central,4262275858.0,United States,0,0
+OPLN,OPENLANE Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,4256576193.0,United States,0,0
+HTFL,Heartflow Inc.,Health Care,Medical/Dental Instruments,4252901897.0,United States,0,0
+UFPI,UFP Industries Inc.,Basic Materials,Forest Products,4251847726.0,United States,0,0
+EPR,EPR Properties,Real Estate,Real Estate Investment Trusts,4251029082.0,United States,0,0
+SLM,SLM Corporation,Finance,Finance: Consumer Services,4249480720.0,United States,0,0
+LBTYB,Liberty Global Ltd.,Telecommunications,Cable & Other Pay Television Services,4236307570.0,United Kingdom,0,0
+BDC,Belden Inc,Industrials,Telecommunications Equipment,4231386521.0,United States,0,0
+KRMN,Karman Holdings Inc.,Industrials,Military/Government/Technical,4226499948.0,United States,0,0
+ACLS,Axcelis Technologies Inc.,Technology,Industrial Machinery/Components,4221808361.0,United States,0,0
+ALH,Alliance Laundry Holdings Inc.,Industrials,Industrial Machinery/Components,4220292508.0,United States,0,0
+GFF,Griffon Corporation,Industrials,Building Products,4219202795.0,United States,0,0
+NWE,NorthWestern Energy Group Inc.,Utilities,Power Generation,4215818261.0,United States,0,0
+SYNA,Synaptics Incorporated,Technology,Semiconductors,4213349640.0,United States,0,0
+CECO,CECO Environmental Corp.,Industrials,Pollution Control Equipment,4209413682.0,United States,0,0
+FSLY,Fastly Inc.,Technology,Computer Software: Prepackaged Software,4203927000.0,United States,0,0
+CVSA,Covista Inc.,Real Estate,Other Consumer Services,4197667282.0,United States,0,0
+MTH,Meritage Homes Corporation,Consumer Discretionary,Homebuilding,4195256366.0,United States,0,0
+CNK,Cinemark Holdings Inc Cinemark Holdings Inc.,Consumer Discretionary,Movies/Entertainment,4193690914.0,United States,0,0
+FHI,Federated Hermes Inc.,Finance,Investment Managers,4192921381.0,United States,0,0
+MRP,Millrose Properties Inc.,Finance,Real Estate,4184407760.0,United States,0,0
+BMA,Banco Macro S.A.  ADR (representing Ten,Finance,Commercial Banks,4177776220.0,Argentina,0,0
+INDV,Indivior Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,4175969825.0,United Kingdom,0,0
+ESAB,ESAB Corporation,Industrials,Industrial Machinery/Components,4172081729.0,United States,0,0
+BC,Brunswick Corporation,Industrials,Industrial Machinery/Components,4161290826.0,United States,0,0
+JOYY,JOYY Inc.,Technology,EDP Services,4153275958.0,Singapore,0,0
+PAM,Pampa Energia S.A.,Utilities,Electric Utilities: Central,4150010613.0,Argentina,0,0
+ONDS,Ondas Inc.,Technology,Radio And Television Broadcasting And Communications Equipment,4145995217.0,United States,0,0
+RDN,Radian Group Inc.,Finance,Property-Casualty Insurers,4130447148.0,United States,0,0
+TNGX,Tango Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,4122523473.0,United States,0,0
+BCO,Brinks Company (The),Industrials,Integrated Freight & Logistics,4117727711.0,United States,0,0
+LIVN,LivaNova PLC,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus,4115484973.0,United Kingdom,0,0
+PRIM,Primoris Services Corporation,Industrials,Water Sewer Pipeline Comm & Power Line Construction,4104714934.0,United States,0,0
+BWLP,BW LPG Limited,Consumer Discretionary,Transportation Services,4104697140.0,,0,0
+TDW,Tidewater Inc.,Consumer Discretionary,Marine Transportation,4088967064.0,United States,0,0
+UCB,United Community Banks Inc.,Finance,Major Banks,4071834736.0,United States,0,0
+FBP,First BanCorp. New,Finance,Major Banks,4070136025.0,Puerto Rico,0,0
+AZZ,AZZ Inc.,Industrials,Industrial Specialties,4069273750.0,United States,0,0
+GEO,Geo Group Inc (The) REIT,Consumer Discretionary,Homebuilding,4052566991.0,United States,0,0
+RLAY,Relay Therapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),4051928757.0,United States,0,0
+TCBI,Texas Capital Bancshares Inc.,Finance,Major Banks,4051811191.0,United States,0,0
+TDS,Telephone and Data Systems Inc.,Telecommunications,Telecommunications Equipment,4051520000.0,United States,0,0
+NWCL,newcleo plc,Industrials,Metal Fabrications,4049562494.0,United Kingdom,0,0
+DLO,DLocal Limited,Consumer Discretionary,Business Services,4049415756.0,Uruguay,0,0
+AIR,AAR Corp.,Industrials,Aerospace,4015401679.0,United States,0,0
+LILAP,Liberty Latin America Ltd. 9.0% Fixed Rate Cumulative Perpetual Redeemable Series A Preference Shares,Telecommunications,Cable & Other Pay Television Services,4013991000.0,United States,0,0
+CAAP,Corporacion America Airports SA,Consumer Discretionary,Aerospace,4011520865.0,,0,0
+CATY,Cathay General Bancorp,Finance,Major Banks,4008166306.0,United States,0,0
+LOPE,Grand Canyon Education Inc.,Real Estate,Other Consumer Services,4006456837.0,United States,0,0
+ELC,Entergy Louisiana Inc. Collateral Trust Mortgage Bonds 4.875 % Series due September 1 2066,Utilities,Electric Utilities: Central,4002468851.0,United States,0,0
+SIG,Signet Jewelers Limited,Consumer Discretionary,Consumer Specialties,3994572583.0,Bermuda,0,0
+TRMD,TORM plc,Consumer Discretionary,Marine Transportation,3982850148.0,United Kingdom,0,0
+TENB,Tenable Holdings Inc.,Technology,Computer Software: Prepackaged Software,3977154786.0,United States,0,0
+SKT,Tanger Inc.,Real Estate,Real Estate Investment Trusts,3957581171.0,United States,0,0
+KFY,Korn Ferry,Consumer Discretionary,Diversified Commercial Services,3948424047.0,United States,0,0
+BRC,Brady Corporation,Consumer Discretionary,Miscellaneous manufacturing industries,3946099866.0,United States,0,0
+COLD,Americold Realty Trust Inc.,Real Estate,Real Estate Investment Trusts,3942486409.0,United States,0,0
+CBT,Cabot Corporation,Industrials,Major Chemicals,3942027384.0,United States,0,0
+ICUI,ICU Medical Inc.,Health Care,Medical/Dental Instruments,3930606233.0,United States,0,0
+VVV,Valvoline Inc.,Industrials,Major Chemicals,3927109946.0,United States,0,0
+ACHR,Archer Aviation Inc.,Industrials,Aerospace,3914773917.0,United States,0,0
+WSFS,WSFS Financial Corporation,Finance,Major Banks,3914562155.0,United States,0,0
+FCN,FTI Consulting Inc.,Consumer Discretionary,Professional Services,3913112409.0,United States,0,0
+SITE,SiteOne Landscape Supply Inc.,Consumer Discretionary,Professional and commerical equipment,3905847743.0,United States,0,0
+SUNC,SunocoCorp LLC,Energy,Integrated oil Companies,3899851889.0,,0,0
+CCC,CCC Intelligent Solutions Holdings Inc.,Technology,Computer Software: Prepackaged Software,3899144940.0,United States,0,0
+DOO,BRP Inc. Common Subordinate Voting Shares,Consumer Discretionary,Industrial Specialties,3889075507.0,Canada,0,0
+MDU,MDU Resources Group Inc.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),3885154452.0,United States,0,0
+PAY,Paymentus Holdings Inc.,Consumer Discretionary,Business Services,3880200524.0,United States,0,0
+AYA,Aya Gold & Silver Inc.,Basic Materials,Precious Metals,3876013281.0,Canada,0,0
+CVBF,CVB Financial Corporation,Finance,Major Banks,3873703544.0,United States,0,0
+KRC,Kilroy Realty Corporation,Real Estate,Real Estate Investment Trusts,3873089300.0,United States,0,0
+AQN,Algonquin Power & Utilities Corp.,Utilities,Electric Utilities: Central,3871830851.0,United States,0,0
+RHI,Robert Half Inc.,Consumer Discretionary,Professional Services,3868253480.0,United States,0,0
+APLE,Apple Hospitality REIT Inc.,Real Estate,Real Estate Investment Trusts,3864673766.0,United States,0,0
+TAC,TransAlta Corporation,Utilities,Electric Utilities: Central,3861520000.0,Canada,0,0
+TNL,Travel   Leisure Co. Common  Stock,Consumer Discretionary,Hotels/Resorts,3853418447.0,United States,0,0
+VKTX,Viking Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3834760742.0,United States,0,0
+FLY,Firefly Aerospace Inc.,Industrials,Military/Government/Technical,3825196138.0,United States,0,0
+HP,Helmerich & Payne Inc.,Energy,Oil & Gas Production,3817667699.0,United States,0,0
+ALM,Almonty Industries Inc.,Basic Materials,Other Metals and Minerals,3802176285.0,Canada,0,0
+BULL,Webull Corporation,Finance,Investment Bankers/Brokers/Service,3799608742.0,United States,0,0
+XXI,Twenty One Capital Inc.,Finance,Finance: Consumer Services,3796012499.0,,0,0
+DHT,DHT Holdings Inc.,Consumer Discretionary,Marine Transportation,3794140968.0,Jersey,0,0
+SKYW,SkyWest Inc.,Consumer Discretionary,Air Freight/Delivery Services,3793139069.0,United States,0,0
+PHI,PLDT Inc. Sponsored ADR,Telecommunications,Telecommunications Equipment,3791778851.0,Philippines,0,0
+WK,Workiva Inc.,Technology,Computer Software: Prepackaged Software,3789020059.0,United States,0,0
+RUM,RUM Group Inc.,Technology,Computer Software: Programming Data Processing,3787989882.0,United States,0,0
+MSGE,Madison Square Garden Entertainment Corp.,Consumer Discretionary,Services-Misc. Amusement & Recreation,3786783982.0,United States,0,0
+SEB,Seaboard Corporation,Industrials,Farming/Seeds/Milling,3784541010.0,United States,0,0
+ITRI,Itron Inc.,Industrials,Electrical Products,3776169579.0,United States,0,0
+CRVL,CorVel Corp.,Finance,Specialty Insurers,3774598185.0,United States,0,0
+CDP,COPT Defense Properties,Real Estate,Real Estate Investment Trusts,3773165938.0,United States,0,0
+CRK,Comstock Resources Inc.,Energy,Oil & Gas Production,3770087836.0,United States,0,0
+XENE,Xenon Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3769998018.0,Canada,0,0
+GEF,Greif Inc.,Uncategorized,Uncategorized,3765488261.0,United States,0,0
+CNS,Cohen & Steers Inc,Finance,Investment Managers,3759942493.0,United States,0,0
+LEGN,Legend Biotech Corporation,Health Care,Biotechnology: Pharmaceutical Preparations,3757516139.0,United States,0,0
+TGS,Transportadora de Gas del Sur SA TGS,Utilities,Natural Gas Distribution,3756277689.0,Argentina,0,0
+CAR,Avis Budget Group Inc.,Consumer Discretionary,Rental/Leasing Companies,3748769014.0,United States,0,0
+SKE,Skeena Resources Limited,Basic Materials,Precious Metals,3741297863.0,,0,0
+INDB,Independent Bank Corp.,Finance,Major Banks,3738842984.0,United States,0,0
+NP,Neptune Insurance Holdings Inc.,Finance,Specialty Insurers,3738229372.0,United States,0,0
+IOND,Ionic Digital Inc.,Finance,Finance: Consumer Services,3737382296.0,United States,0,0
+BILL,BILL Holdings Inc.,Technology,Computer Software: Prepackaged Software,3733417516.0,United States,0,0
+ERO,Ero Copper Corp.,Basic Materials,Metal Mining,3727937356.0,Canada,0,0
+BFH,Bread Financial Holdings Inc.,Consumer Discretionary,Business Services,3724363840.0,United States,0,0
+BMI,Badger Meter Inc.,Industrials,Industrial Machinery/Components,3721041549.0,United States,0,0
+NVST,Envista Holdings Corporation,Health Care,Medical/Dental Instruments,3719906140.0,United States,0,0
+AVNT,Avient Corporation,Industrials,Major Chemicals,3718310557.0,United States,0,0
+OTTR,Otter Tail Corporation,Utilities,Electric Utilities: Central,3714044407.0,United States,0,0
+PBLS,Parabilis Medicines Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3712219793.0,United States,0,0
+BATRA,Atlanta Braves Holdings Inc. Series A,Consumer Discretionary,Services-Misc. Amusement & Recreation,3711471162.0,United States,0,0
+JOE,St. Joe Company (The),Real Estate,Homebuilding,3709588187.0,United States,0,0
+SRAD,Sportradar Group AG,Technology,Computer Software: Programming Data Processing,3697442337.0,Switzerland,0,0
+SEZL,Sezzle Inc.,Finance,Finance: Consumer Services,3694654161.0,United States,0,0
+CELC,Celcuity Inc.,Health Care,Medical Specialities,3676254248.0,United States,0,0
+SLGN,Silgan Holdings Inc.,Industrials,Containers/Packaging,3674563835.0,United States,0,0
+BOOT,Boot Barn Holdings Inc.,Consumer Discretionary,Clothing/Shoe/Accessory Stores,3663860427.0,United States,0,0
+USAC,USA Compression Partners LP,Utilities,Natural Gas Distribution,3662718328.0,United States,0,0
+IRTC,iRhythm Holdings Inc.,Health Care,Medical/Dental Instruments,3660541483.0,United States,0,0
+MGNI,Magnite Inc.,Technology,Computer Software: Programming Data Processing,3648710554.0,United States,0,0
+IDYA,IDEAYA Biosciences Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3648267390.0,United States,0,0
+DORM,Dorman Products Inc.,Consumer Discretionary,Auto Parts:O.E.M.,3646836696.0,United States,0,0
+EE,Excelerate Energy Inc.,Utilities,Oil/Gas Transmission,3641341592.0,United States,0,0
+WT,WisdomTree Inc.,Finance,Investment Bankers/Brokers/Service,3640836027.0,United States,0,0
+BELFB,Bel Fuse Inc.,Uncategorized,Uncategorized,3640040951.0,United States,0,0
+ATMU,Atmus Filtration Technologies Inc.,Consumer Discretionary,Auto Parts:O.E.M.,3638344549.0,United States,0,0
+TLX,Telix Pharmaceuticals Limited,Health Care,Biotechnology: Pharmaceutical Preparations,3631689965.0,Australia,0,0
+LMND,Lemonade Inc.,Finance,Property-Casualty Insurers,3619065717.0,United States,0,0
+WSBC,WesBanco Inc.,Finance,Major Banks,3607979544.0,United States,0,0
+OGN,Organon & Co.,Health Care,Biotechnology: Pharmaceutical Preparations,3600375326.0,United States,0,0
+LXP,LXP Industrial Trust,Real Estate,Real Estate Investment Trusts,3593445241.0,United States,0,0
+RNST,Renasant Corporation,Finance,Major Banks,3590367385.0,United States,0,0
+ZIM,ZIM Integrated Shipping Services Ltd.,Consumer Discretionary,Marine Transportation,3583860763.0,,0,0
+IPAR,Interparfums Inc.,Consumer Discretionary,Package Goods/Cosmetics,3582083605.0,United States,0,0
+BANF,BancFirst Corporation,Finance,Major Banks,3577930355.0,United States,0,0
+ARIS,Aris Mining Corporation,Uncategorized,Uncategorized,3574848000.0,,0,0
+MIR,Mirion Technologies Inc.,Industrials,Industrial Machinery/Components,3573690234.0,United States,0,0
+THO,Thor Industries Inc.,Industrials,Homebuilding,3563971627.0,United States,0,0
+CENX,Century Aluminum Company,Industrials,Aluminum,3562768687.0,United States,0,0
+UCTT,Ultra Clean Holdings Inc.,Technology,Semiconductors,3560585561.0,United States,0,0
+IPGP,IPG Photonics Corporation,Technology,Semiconductors,3558439533.0,United States,0,0
+OLED,Universal Display Corporation,Technology,Electrical Products,3557373361.0,United States,0,0
+MANU,Manchester United Ltd.,Consumer Discretionary,Services-Misc. Amusement & Recreation,3556772524.0,United Kingdom,0,0
+PLSE,Pulse Biosciences Inc,Health Care,Medical/Dental Instruments,3554005507.0,United States,0,0
+VCYT,Veracyte Inc.,Health Care,Medical Specialities,3552466403.0,United States,0,0
+LAZ,Lazard Inc.,Finance,Investment Managers,3551098844.0,Bermuda,0,0
+VAC,Marriott Vacations Worldwide Corporation,Finance,Real Estate,3546845398.0,United States,0,0
+TARS,Tarsus Pharmaceuticals Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),3530900776.0,United States,0,0
+AMLX,Amylyx Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3522868587.0,United States,0,0
+RXO,RXO Inc.,Consumer Discretionary,Transportation Services,3522822094.0,United States,0,0
+QTWO,Q2 Holdings Inc.,Technology,Computer Software: Prepackaged Software,3521793174.0,United States,0,0
+GNW,Genworth Financial Inc,Finance,Life Insurance,3517793154.0,United States,0,0
+BNL,Broadstone Net Lease Inc.,Real Estate,Real Estate Investment Trusts,3502046721.0,United States,0,0
+SXI,Standex International Corporation,Industrials,Industrial Machinery/Components,3501691301.0,United States,0,0
+PVH,PVH Corp.,Industrials,Garments and Clothing,3499554633.0,United States,0,0
+TNK,Teekay Tankers Ltd.,Consumer Discretionary,Marine Transportation,3499376097.0,Bermuda,0,0
+NHC,National HealthCare Corporation,Health Care,Hospital/Nursing Management,3497972573.0,United States,0,0
+GPGI,GPGI Inc.,Finance,Finance: Consumer Services,3493175488.0,United States,0,0
+WBI,WaterBridge Infrastructure LLC,Energy,Oilfield Services/Equipment,3472823159.0,,0,0
+KTB,Kontoor Brands Inc.,Industrials,Garments and Clothing,3471597942.0,United States,0,0
+SLG,SL Green Realty Corp,Real Estate,Real Estate Investment Trusts,3455349964.0,United States,0,0
+MNDY,monday.com Ltd.,Technology,Computer Software: Prepackaged Software,3445856673.0,Israel,0,0
+FRSH,Freshworks Inc.,Technology,Computer Software: Prepackaged Software,3431108152.0,United States,0,0
+NIC,Nicolet Bankshares Inc.,Finance,Major Banks,3429068277.0,United States,0,0
+ACAD,ACADIA Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3427156753.0,United States,0,0
+CDNA,CareDx Inc.,Health Care,Medical Specialities,3426357589.0,United States,0,0
+MHO,M/I Homes Inc.,Consumer Discretionary,Homebuilding,3420035603.0,United States,0,0
+IRT,Independence Realty Trust Inc.,Real Estate,Real Estate Investment Trusts,3418296222.0,United States,0,0
+FIBK,First Interstate BancSystem Inc.,Finance,Major Banks,3409045792.0,United States,0,0
+FSM,Fortuna Mining Corp.,Basic Materials,Precious Metals,3401906013.0,Canada,0,0
+WRBY,Warby Parker Inc.,Health Care,Ophthalmic Goods,3397985404.0,United States,0,0
+SBLK,Star Bulk Carriers Corp.,Consumer Discretionary,Marine Transportation,3393862465.0,Greece,0,0
+ZGN,Ermenegildo Zegna N.V.,Consumer Discretionary,Apparel,3386098071.0,,0,0
+ELVN,Enliven Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3385841866.0,United States,0,0
+OPCH,Option Care Health Inc.,Health Care,Medical/Nursing Services,3382150787.0,United States,0,0
+HNI,HNI Corporation,Consumer Discretionary,Office Equipment/Supplies/Services,3373055514.0,United States,0,0
+MWA,MUELLER WATER PRODUCTS,Industrials,Metal Fabrications,3356702099.0,United States,0,0
+BATRK,Atlanta Braves Holdings Inc. Series C,Consumer Discretionary,Services-Misc. Amusement & Recreation,3352772618.0,United States,0,0
+MIAX,Miami International Holdings Inc.,Finance,Investment Bankers/Brokers/Service,3349042808.0,United States,0,0
+ECO,Okeanis Eco Tankers Corp.,Consumer Discretionary,Marine Transportation,3347688720.0,,0,0
+LION,Lionsgate Studios Corp,Consumer Discretionary,Movies/Entertainment,3347546400.0,Canada,0,0
+SMR,NuScale Power Corporation,Industrials,Metal Fabrications,3347544289.0,United States,0,0
+COCO,The Vita Coco Company Inc.,Consumer Staples,Beverages (Production/Distribution),3346156228.0,United States,0,0
+SHOO,Steven Madden Ltd.,Consumer Discretionary,Shoe Manufacturing,3343461471.0,United States,0,0
+CSTM,Constellium SE,Industrials,Metal Fabrications,3342113772.0,Netherlands,0,0
+AAMI,Acadian Asset Management Inc.,Finance,Investment Managers,3338201440.0,United Kingdom,0,0
+COHU,Cohu Inc.,Industrials,Electrical Products,3329785377.0,United States,0,0
+NATL,NCR Atleos Corporation,Miscellaneous,Office Equipment/Supplies/Services,3327578938.0,United States,0,0
+EXPO,Exponent Inc.,Consumer Discretionary,Professional Services,3323471272.0,United States,0,0
+AEHR,Aehr Test Systems,Industrials,Electrical Products,3318209874.0,United States,0,0
+PLMR,Palomar Holdings Inc. Common stock,Finance,Property-Casualty Insurers,3314185820.0,United States,0,0
+FFBC,First Financial Bancorp.,Finance,Major Banks,3313809838.0,United States,0,0
+BBWI,Bath & Body Works Inc.,Consumer Discretionary,Other Specialty Stores,3306983133.0,United States,0,0
+SFNC,Simmons First National Corporation,Finance,Major Banks,3284798424.0,United States,0,0
+GBDC,Golub Capital BDC Inc.,Finance,Finance: Consumer Services,3284592601.0,United States,0,0
+LIF,Life360 Inc.,Technology,EDP Services,3283658871.0,United States,0,0
+DNLI,Denali Therapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),3281667184.0,United States,0,0
+VGNT,Versigent PLC,Consumer Discretionary,Auto Parts:O.E.M.,3276839359.0,United Kingdom,0,0
+MCHB,Mechanics Bancorp,Finance,Major Banks,3267227865.0,United States,0,0
+KN,Knowles Corporation,Consumer Staples,Consumer Electronics/Appliances,3265236763.0,United States,0,0
+VECO,Veeco Instruments Inc.,Technology,Industrial Machinery/Components,3251485552.0,United States,0,0
+PRK,Park National Corporation,Finance,Major Banks,3236375085.0,United States,0,0
+BTE,Baytex Energy Corp,Energy,Oil & Gas Production,3232529280.0,Canada,0,0
+CSQ,Calamos Strategic Total Return,Finance,Finance Companies,3228596479.0,United States,0,0
+LRN,Stride Inc.,Real Estate,Other Consumer Services,3221719184.0,United States,0,0
+PFSI,PennyMac Financial Services Inc.,Finance,Finance: Consumer Services,3218399885.0,United States,0,0
+AWR,American States Water Company,Utilities,Water Supply,3218016475.0,United States,0,0
+LUNR,Intuitive Machines Inc.,Industrials,Industrial Machinery/Components,3216383155.0,United States,0,0
+CLSK,CleanSpark Inc.,Finance,Finance: Consumer Services,3215349754.0,United States,0,0
+CURB,Curbline Properties Corp.,Finance,Real Estate,3215312799.0,United States,0,0
+CXW,CoreCivic Inc.,Real Estate,Real Estate Investment Trusts,3213049458.0,United States,0,0
+RCUS,Arcus Biosciences Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3212621076.0,United States,0,0
+HIW,Highwoods Properties Inc.,Real Estate,Real Estate Investment Trusts,3208807678.0,United States,0,0
+ABG,Asbury Automotive Group Inc,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,3203878627.0,United States,0,0
+POST,Post Holdings Inc.,Consumer Staples,Packaged Foods,3201374108.0,United States,0,0
+ATKR,Atkore Inc.,Miscellaneous,Industrial Machinery/Components,3200624564.0,United States,0,0
+NHI,National Health Investors Inc.,Real Estate,Real Estate Investment Trusts,3196107045.0,United States,0,0
+USLM,United States Lime & Minerals Inc.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),3194736104.0,United States,0,0
+ARQT,Arcutis Biotherapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,3178749694.0,United States,0,0
+HTGC,Hercules Capital Inc.,Finance,Investment Managers,3170558160.0,United States,0,0
+NVTS,Navitas Semiconductor Corporation,Technology,Semiconductors,3164453075.0,United States,0,0
+CBU,Community Financial System Inc.,Finance,Major Banks,3153271187.0,United States,0,0
+BFAM,Bright Horizons Family Solutions Inc.,Consumer Discretionary,Other Consumer Services,3153026888.0,United States,0,0
+FA,First Advantage Corporation,Technology,EDP Services,3149962693.0,United States,0,0
+PLNT,Planet Fitness Inc.,Consumer Discretionary,Hotels/Resorts,3147829985.0,United States,0,0
+ASH,Ashland Inc.,Consumer Discretionary,Specialty Chemicals,3141883116.0,United States,0,0
+OSIS,OSI Systems Inc.,Technology,Semiconductors,3134509748.0,United States,0,0
+ARLP,Alliance Resource Partners L.P.,Energy,Coal Mining,3131555216.0,United States,0,0
+RGC,Regencell Bioscience Holdings Limited,Health Care,Medicinal Chemicals and Botanical Products,3130114788.0,Hong Kong,0,0
+WSC,WillScot Holdings Corporation,Industrials,Misc Corporate Leasing Services,3120108297.0,United States,0,0
+SBCF,Seacoast Banking Corporation of Florida,Finance,Major Banks,3113821216.0,United States,0,0
+KAI,Kadant Inc,Industrials,Industrial Machinery/Components,3111938512.0,United States,0,0
+EFXT,Enerflex Ltd,Industrials,Industrial Machinery/Components,3106297344.0,Canada,0,0
+PK,Park Hotels & Resorts Inc.,Consumer Discretionary,Hotels/Resorts,3104637049.0,United States,0,0
+AMBA,Ambarella Inc.,Technology,Semiconductors,3103110261.0,United States,0,0
+KEN,Kenon Holdings Ltd.,Utilities,Electric Utilities: Central,3094196614.0,Singapore,0,0
+PTRN,Pattern Group Inc. Series A,Consumer Discretionary,Catalog/Specialty Distribution,3086744149.0,United States,0,0
+BSM,Black Stone Minerals L.P. Common units representing limited partner interests,Energy,Oil & Gas Production,3080049068.0,United States,0,0
+CALM,Cal-Maine Foods Inc.,Consumer Staples,Farming/Seeds/Milling,3075426760.0,United States,0,0
+FSK,FS KKR Capital Corp.,Finance,Investment Managers,3070140511.0,United States,0,0
+WIX,Wix.com Ltd.,Technology,Computer Software: Programming Data Processing,3069661632.0,Israel,0,0
+GPI,Group 1 Automotive Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,3060435158.0,United States,0,0
+PPLI,People Incorporated,Technology,Computer Software: Programming Data Processing,3049297729.0,United States,0,0
+BKU,BankUnited Inc.,Finance,Savings Institutions,3043041677.0,United States,0,0
+LBTYA,Liberty Global Ltd.,Telecommunications,Cable & Other Pay Television Services,3042501089.0,United Kingdom,0,0
+TGB,Trekor Metals Limited,Basic Materials,Precious Metals,3041653773.0,Canada,0,0
+BHE,Benchmark Electronics Inc.,Technology,Electrical Products,3039544730.0,United States,0,0
+SPSC,SPS Commerce Inc.,Technology,Computer Software: Prepackaged Software,3031214651.0,United States,0,0
+LPL,LG Display Co Ltd AMERICAN DEPOSITORY SHARES,Technology,Industrial Machinery/Components,3030000000.0,South Korea,0,0
+FHB,First Hawaiian Inc.,Finance,Major Banks,3029865665.0,United States,0,0
+YETI,YETI Holdings Inc.,Consumer Discretionary,Recreational Games/Products/Toys,3019546491.0,United States,0,0
+BTU,Peabody Energy Corporation,Energy,Coal Mining,3015806000.0,United States,0,0
+LBRT,Liberty Energy Inc.,Energy,Oilfield Services/Equipment,3014145454.0,United States,0,0
+AEO,American Eagle Outfitters Inc.,Consumer Discretionary,Clothing/Shoe/Accessory Stores,3011292794.0,United States,0,0
+INFQ,Infleqtion Inc.,Technology,EDP Services,3010770215.0,United States,0,0
+CLBK,Columbia Financial Inc.,Finance,Savings Institutions,3008123707.0,United States,0,0
+AGO,Assured Guaranty Ltd.,Finance,Property-Casualty Insurers,3002460530.0,Bermuda,0,0
+CPK,Chesapeake Utilities Corporation,Utilities,Oil & Gas Production,2997155550.0,United States,0,0
+LBTYK,Liberty Global Ltd.,Telecommunications,Cable & Other Pay Television Services,2996454267.0,United Kingdom,0,0
+SII,Sprott Inc.,Finance,Finance: Consumer Services,2984286000.0,,0,0
+PII,Polaris Inc.,Consumer Discretionary,Industrial Specialties,2980037552.0,United States,0,0
+AVPT,AvePoint Inc.,Technology,Computer Software: Prepackaged Software,2978841198.0,United States,0,0
+TNET,TriNet Group Inc.,Consumer Discretionary,Business Services,2977381307.0,United States,0,0
+DAN,Dana Incorporated,Consumer Discretionary,Auto Parts:O.E.M.,2972343641.0,United States,0,0
+CBZ,CBIZ Inc.,Consumer Discretionary,Business Services,2968776820.0,United States,0,0
+AD,Array Digital Infrastructure Inc.,Telecommunications,Telecommunications Equipment,2955705000.0,United States,0,0
+DYN,Dyne Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2954328538.0,United States,0,0
+COLM,Columbia Sportswear Company,Consumer Discretionary,Apparel,2953335362.0,United States,0,0
+OUST,Ouster Inc.,Industrials,Industrial Machinery/Components,2947231050.0,United States,0,0
+ASO,Academy Sports and Outdoors Inc.,Consumer Discretionary,Other Specialty Stores,2946549934.0,United States,0,0
+DAC,Danaos Corporation,Consumer Discretionary,Marine Transportation,2944230047.0,Greece,0,0
+BELFA,Bel Fuse Inc.,Uncategorized,Uncategorized,2942037938.0,United States,0,0
+ATRO,Astronics Corporation,Industrials,Military/Government/Technical,2940959796.0,United States,0,0
+SA,Seabridge Gold Inc.,Basic Materials,Precious Metals,2939490636.0,Canada,0,0
+PGEN,Precigen Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2939469378.0,United States,0,0
+AVA,Avista Corporation,Utilities,Power Generation,2937211748.0,United States,0,0
+APAM,Artisan Partners Asset Management Inc.,Finance,Investment Managers,2934830618.0,United States,0,0
+NTCT,NetScout Systems Inc.,Technology,EDP Services,2932285893.0,United States,0,0
+ASST,Strive Inc.,Finance,Finance: Consumer Services,2920749761.0,United States,0,0
+PFS,Provident Financial Services Inc,Finance,Savings Institutions,2914945512.0,United States,0,0
+BRZE,Braze Inc.,Technology,Computer Software: Prepackaged Software,2913440553.0,United States,0,0
+SMG,Scotts Miracle-Gro Company (The),Industrials,Agricultural Chemicals,2912178105.0,United States,0,0
+SOUN,SoundHound AI Inc,Technology,Computer Software: Prepackaged Software,2910078332.0,United States,0,0
+EXTR,Extreme Networks Inc.,Telecommunications,Computer Communications Equipment,2903790169.0,United States,0,0
+DKL,Delek Logistics Partners L.P.,Energy,Natural Gas Distribution,2897656985.0,United States,0,0
+ARCB,ArcBest Corporation,Industrials,Trucking Freight/Courier Services,2896958992.0,United States,0,0
+WOR,Worthington Enterprises Inc.,Industrials,Steel/Iron Ore,2893530006.0,United States,0,0
+BTDR,Bitdeer Technologies Group,Finance,Finance: Consumer Services,2891763087.0,Singapore,0,0
+NAMS,NewAmsterdam Pharma Company N.V.,Health Care,Biotechnology: Pharmaceutical Preparations,2888018003.0,Netherlands,0,0
+IMAX,Imax Corporation,Consumer Discretionary,Industrial Machinery/Components,2880307827.0,Canada,0,0
+BHF,Brighthouse Financial Inc.,Finance,Life Insurance,2878453728.0,United States,0,0
+FG,F&G Annuities & Life Inc.,Finance,Life Insurance,2877955894.0,United States,0,0
+POWI,Power Integrations Inc.,Technology,Semiconductors,2877474847.0,United States,0,0
+KYIV,Kyivstar Group Ltd.,Telecommunications,Telecommunications Equipment,2877427574.0,United Arab Emirates,0,0
+INTA,Intapp Inc.,Technology,Computer Software: Prepackaged Software,2876054053.0,United States,0,0
+KNF,Knife Riv Holding Co.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2873364320.0,United States,0,0
+NMIH,NMI Holdings Inc.,Finance,Property-Casualty Insurers,2864295766.0,United States,0,0
+ZLAB,Zai Lab Limited,Health Care,Biotechnology: Pharmaceutical Preparations,2862788814.0,China,0,0
+PURR,Hyperliquid Strategies Inc,Finance,Finance: Consumer Services,2862169035.0,United States,0,0
+GRBK,Green Brick Partners Inc.,Consumer Discretionary,Homebuilding,2857630642.0,United States,0,0
+KBH,KB Home,Consumer Discretionary,Homebuilding,2853354741.0,United States,0,0
+WING,Wingstop Inc.,Consumer Discretionary,Restaurants,2843032101.0,United States,0,0
+QS,QuantumScape Corporation,Miscellaneous,Industrial Machinery/Components,2841730997.0,United States,0,0
+TR,Tootsie Roll Industries Inc.,Consumer Staples,Specialty Foods,2840711160.0,United States,0,0
+ABM,ABM Industries Incorporated,Consumer Discretionary,Diversified Commercial Services,2840463128.0,United States,0,0
+SPNT,SiriusPoint Ltd.,Finance,Property-Casualty Insurers,2835588041.0,Bermuda,0,0
+CWK,Cushman & Wakefield Ltd.,Finance,Real Estate,2830647318.0,United States,0,0
+AGYS,Agilysys Inc.,Technology,EDP Services,2829322594.0,United States,0,0
+DXPE,DXP Enterprises Inc.,Industrials,Industrial Machinery/Components,2828931252.0,United States,0,0
+AAUC,Allied Gold Corporation,Uncategorized,Uncategorized,2827368749.0,,0,0
+VTMX,Corporacion Inmobiliaria Vesta S.A.B de C.V.,Finance,Real Estate,2825049689.0,,0,0
+MNSO,MINISO Group Holding Limited,Consumer Discretionary,Department/Specialty Retail Stores,2824740232.0,China,0,0
+CHRN,ChronoScale Holdings Corporation,Industrials,Industrial Machinery/Components,2820997445.0,United States,0,0
+SDRL,Seadrill Limited,Energy,Oil & Gas Production,2818117422.0,Bermuda,0,0
+PENG,Penguin Solutions Inc.,Technology,Semiconductors,2817323591.0,United States,0,0
+NG,Novagold Resources Inc.,Basic Materials,Precious Metals,2816971542.0,Canada,0,0
+FOUR,Shift4 Payments Inc.,Consumer Discretionary,Business Services,2809401070.0,United States,0,0
+MGRC,McGrath RentCorp,Consumer Discretionary,Diversified Commercial Services,2808706988.0,United States,0,0
+HG,Hamilton Insurance Group Ltd.,Finance,Property-Casualty Insurers,2808362374.0,Bermuda,0,0
+MMS,Maximus Inc.,Consumer Discretionary,Business Services,2802711053.0,United States,0,0
+IHS,IHS Holding Limited,Telecommunications,Telecommunications Equipment,2801602204.0,Cayman Islands,0,0
+CLBT,Cellebrite DI Ltd.,Technology,Computer Software: Prepackaged Software,2799939408.0,Israel,0,0
+ADEA,Adeia Inc.,Telecommunications,Cable & Other Pay Television Services,2794499001.0,United States,0,0
+EROK,EagleRock Land LLC,Energy,Oil & Gas Production,2792160471.0,,0,0
+CWT,California Water Service Group,Utilities,Water Supply,2785851500.0,United States,0,0
+DGII,Digi International Inc.,Telecommunications,Computer Communications Equipment,2785012747.0,United States,0,0
+ROG,Rogers Corporation,Industrials,Major Chemicals,2783886593.0,United States,0,0
+TDC,Teradata Corporation,Technology,Computer Software: Prepackaged Software,2782560000.0,United States,0,0
+FIZZ,National Beverage Corp.,Consumer Staples,Beverages (Production/Distribution),2779438316.0,United States,0,0
+TALO,Talos Energy Inc.,Energy,Oil & Gas Production,2778305388.0,United States,0,0
+FRPT,Freshpet Inc.,Consumer Staples,Packaged Foods,2773912031.0,United States,0,0
+WTTR,Select Water Solutions Inc.,Energy,Oilfield Services/Equipment,2773771085.0,United States,0,0
+CXT,Crane NXT Co.,Industrials,Metal Fabrications,2766396270.0,United States,0,0
+BANC,Banc of California Inc.,Finance,Major Banks,2762554752.0,United States,0,0
+DNOW,DNOW Inc.,Consumer Discretionary,Oil and Gas Field Machinery,2762408414.0,United States,0,0
+SLDE,Slide Insurance Holdings Inc.,Finance,Property-Casualty Insurers,2760260920.0,United States,0,0
+REZI,Resideo Technologies Inc.,Industrials,Wholesale Distributors,2759066858.0,United States,0,0
+CSQR,Csquare Inc.,Technology,Computer Software: Programming Data Processing,2752793416.0,,0,0
+DX,Dynex Capital Inc.,Real Estate,Real Estate Investment Trusts,2749689440.0,United States,0,0
+LEU,Centrus Energy Corp.,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2745183942.0,United States,0,0
+KC,Kingsoft Cloud Holdings Limited,Technology,Computer Software: Prepackaged Software,2733245032.0,China,0,0
+TMDX,TransMedics Group Inc.,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus,2726853403.0,United States,0,0
+ATRC,AtriCure Inc.,Health Care,Medical/Dental Instruments,2725924695.0,United States,0,0
+KWR,Quaker Houghton,Industrials,Major Chemicals,2725527920.0,United States,0,0
+MBX,MBX Biosciences Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2723453429.0,United States,0,0
+MZTI,The Marzetti Company,Consumer Staples,Packaged Foods,2720639790.0,United States,0,0
+WDFC,WD-40 Company,Industrials,Major Chemicals,2715490354.0,United States,0,0
+AVAH,Aveanna Healthcare Holdings Inc.,Health Care,Medical/Nursing Services,2712470821.0,United States,0,0
+GPOR,Gulfport Energy Corporation,Energy,Oil & Gas Production,2711820851.0,United States,0,0
+BOH,Bank of Hawaii Corporation,Finance,Major Banks,2711031213.0,United States,0,0
+HGV,Hilton Grand Vacations Inc.,Consumer Discretionary,Hotels/Resorts,2707131970.0,United States,0,0
+APPN,Appian Corporation,Technology,Computer Software: Prepackaged Software,2705374339.0,United States,0,0
+PONY,Pony AI Inc.,Technology,EDP Services,2705299291.0,China,0,0
+FUL,H. B. Fuller Company,Industrials,Home Furnishings,2703836647.0,United States,0,0
+UNFI,United Natural Foods Inc.,Consumer Discretionary,Food Distributors,2700999022.0,United States,0,0
+ALRM,Alarm.com Holdings Inc.,Technology,Computer Software: Prepackaged Software,2693089908.0,United States,0,0
+HURN,Huron Consulting Group Inc.,Consumer Discretionary,Professional Services,2679574326.0,United States,0,0
+TOWN,TowneBank,Finance,Major Banks,2676523627.0,United States,0,0
+UUUU,Energy Fuels Inc,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2676075570.0,Canada,0,0
+NMM,Navios Maritime Partners LP,Consumer Discretionary,Marine Transportation,2673275337.0,Greece,0,0
+FIVN,Five9 Inc.,Technology,EDP Services,2671366233.0,United States,0,0
+NEOG,Neogen Corporation,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances,2669617501.0,United States,0,0
+EROC,ERock Inc.,Energy,Industrial Machinery/Components,2665710972.0,,0,0
+HWKN,Hawkins Inc.,Consumer Discretionary,Specialty Chemicals,2655106131.0,United States,0,0
+VCRE,Vicore Pharma Holding AB,Health Care,Biotechnology: Pharmaceutical Preparations,2654786342.0,Sweden,0,0
+GCMG,GCM Grosvenor Inc.,Finance,Investment Managers,2652520668.0,United States,0,0
+LFTO,Liftoff Mobile Inc.,Technology,EDP Services,2651731713.0,United States,0,0
+CARG,CarGurus Inc.,Technology,EDP Services,2648154501.0,United States,0,0
+MGEE,MGE Energy Inc,Energy,Electric Utilities: Central,2646770041.0,United States,0,0
+RDW,Redwire Corporation,Industrials,Military/Government/Technical,2642421877.0,United States,0,0
+PLUG,Plug Power Inc.,Energy,Industrial Machinery/Components,2640699075.0,United States,0,0
+KD,Kyndryl Holdings Inc.,Technology,EDP Services,2639957348.0,United States,0,0
+NBTB,NBT Bancorp Inc.,Finance,Major Banks,2636453495.0,United States,0,0
+AMBP,Ardagh Metal Packaging S.A.,Industrials,Containers/Packaging,2623901183.0,,0,0
+PPTA,Perpetua Resources Corp.,Basic Materials,Precious Metals,2618255157.0,Canada,0,0
+TRMK,Trustmark Corporation,Finance,Major Banks,2617821611.0,United States,0,0
+MAN,ManpowerGroup,Consumer Discretionary,Professional Services,2617333480.0,United States,0,0
+BCC,Boise Cascade L.L.C.,Consumer Discretionary,RETAIL: Building Materials,2606383920.0,United States,0,0
+FBK,FB Financial Corporation,Finance,Major Banks,2603361208.0,United States,0,0
+HAYW,Hayward Holdings Inc.,Industrials,Industrial Machinery/Components,2596343684.0,United States,0,0
+DCO,Ducommun Incorporated,Industrials,Military/Government/Technical,2596256001.0,United States,0,0
+FRMI,Fermi Inc.,Real Estate,Real Estate Investment Trusts,2593892759.0,United States,0,0
+GRDN,Guardian Pharmacy Services Inc.,Consumer Staples,Retail-Drug Stores and Proprietary Stores,2586899695.0,United States,0,0
+HOG,Harley-Davidson Inc.,Consumer Discretionary,Motor Vehicles,2584120349.0,United States,0,0
+PAGS,PagSeguro Digital Ltd.,Technology,EDP Services,2578311279.0,Cayman Islands,0,0
+SHAK,Shake Shack Inc.,Consumer Discretionary,Restaurants,2576068078.0,United States,0,0
+AKR,Acadia Realty Trust,Real Estate,Real Estate Investment Trusts,2565375247.0,United States,0,0
+DRH,Diamondrock Hospitality Company,Real Estate,Real Estate Investment Trusts,2559617069.0,United States,0,0
+PRVA,Privia Health Group Inc.,Health Care,Medical/Nursing Services,2558516166.0,United States,0,0
+CALY,Callaway Golf Company,Consumer Discretionary,Recreational Games/Products/Toys,2556270661.0,United States,0,0
+FBNC,First Bancorp,Finance,Major Banks,2548925532.0,United States,0,0
+IMOS,ChipMOS TECHNOLOGIES INC.,Technology,Semiconductors,2543738658.0,Taiwan,0,0
+HCM,HUTCHMED (China) Limited,Health Care,Biotechnology: Pharmaceutical Preparations,2541962685.0,Hong Kong,0,0
+BBAR,Banco BBVA Argentina S.A. ADS,Finance,Commercial Banks,2538662094.0,Argentina,0,0
+GDV,Gabelli Dividend & Income Trust,Finance,Investment Managers,2536100367.0,United States,0,0
+EXK,Endeavour Silver Corporation,Basic Materials,Precious Metals,2534348945.0,Canada,0,0
+CLDX,Celldex Therapeutics Inc.,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances,2527080340.0,United States,0,0
+HIMX,Himax Technologies Inc.,Technology,Semiconductors,2520454457.0,Taiwan,0,0
+TTAM,Titan America SA,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels),2520234897.0,United States,0,0
+HTO,H2O America,Utilities,Water Supply,2519779601.0,United States,0,0
+BEAM,Beam Therapeutics Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2519186149.0,United States,0,0
+NESR,National Energy Services Reunited Corp,Energy,Oilfield Services/Equipment,2514738486.0,United States,0,0
+ACHC,Acadia Healthcare Company Inc.,Health Care,Medical Specialities,2507190406.0,United States,0,0
+NOG,Northern Oil and Gas Inc.,Energy,Oil & Gas Production,2506035491.0,United States,0,0
+LQDA,Liquidia Corporation,Health Care,Biotechnology: Pharmaceutical Preparations,2505353859.0,United States,0,0
+HSAI,Hesai Group,Industrials,Industrial Machinery/Components,2503275421.0,China,0,0
+CUBI,Customers Bancorp Inc,Finance,Major Banks,2501014640.0,United States,0,0
+MH,McGraw Hill Inc.,Consumer Discretionary,Publishing,2498493111.0,,0,0
+RNW,ReNew Energy Global plc,Utilities,Electric Utilities: Central,2488870359.0,United Kingdom,0,0
+FRME,First Merchants Corporation,Finance,Major Banks,2485680322.0,United States,0,0
+WLYB,John Wiley & Sons Inc.,Consumer Discretionary,Books,2483862459.0,United States,0,0
+WLY,John Wiley & Sons Inc.,Consumer Discretionary,Books,2482339551.0,United States,0,0
+INOD,Innodata Inc.,Technology,EDP Services,2470393474.0,United States,0,0
+UE,Urban Edge Properties,Finance,Real Estate,2469341755.0,United States,0,0
+BANR,Banner Corporation,Finance,Major Banks,2466202860.0,United States,0,0
+AMC,AMC Entertainment Holdings Inc.,Consumer Discretionary,Movies/Entertainment,2463588801.0,United States,0,0
+VIA,Via Transportation Inc.,Technology,Computer Software: Prepackaged Software,2463099625.0,United States,0,0
+GRND,Grindr Inc.,Technology,Computer Software: Programming Data Processing,2463038285.0,Singapore,0,0
+CENT,Central Garden & Pet Company,Consumer Discretionary,Consumer Specialties,2453629842.0,United States,0,0
+SUPN,Supernus Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2451797408.0,United States,0,0
+BUSE,First Busey Corporation,Finance,Major Banks,2450762699.0,United States,0,0
+NGVT,Ingevity Corporation,Industrials,Major Chemicals,2443926475.0,United States,0,0
+DJT,Trump Media & Technology Group Corp.,Technology,Computer Software: Programming Data Processing,2443103798.0,United States,0,0
+IRON,Disc Medicine Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2442168807.0,United States,0,0
+SKWD,Skyward Specialty Insurance Group Inc.,Finance,Property-Casualty Insurers,2432039887.0,United States,0,0
+KALU,Kaiser Aluminum Corporation,Industrials,Metal Fabrications,2426041762.0,United States,0,0
+LCLN,Lincoln International Inc.,Finance,Investment Managers,2425872697.0,,0,0
+PLUS,ePlus inc.,Technology,Retail: Computer Software & Peripheral Equipment,2423538928.0,United States,0,0
+NRIX,Nurix Therapeutics Inc. Common stock,Health Care,Biotechnology: Pharmaceutical Preparations,2422264481.0,United States,0,0
+LPG,Dorian LPG Ltd.,Consumer Discretionary,Marine Transportation,2421071918.0,United States,0,0
+PAYO,Payoneer Global Inc.,Consumer Discretionary,Business Services,2419394969.0,United States,0,0
+KMT,Kennametal Inc.,Industrials,Industrial Machinery/Components,2419272282.0,United States,0,0
+SYBT,Stock Yards Bancorp Inc.,Finance,Major Banks,2405179501.0,United States,0,0
+ATHM,Autohome Inc.,Technology,EDP Services,2402465203.0,China,0,0
+EEFT,Euronet Worldwide Inc.,Finance,Investment Bankers/Brokers/Service,2380364786.0,United States,0,0
+IMNM,Immunome Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2372636670.0,United States,0,0
+IVT,InvenTrust Properties Corp.,Real Estate,Real Estate Investment Trusts,2368204949.0,United States,0,0
+VC,Visteon Corporation,Consumer Discretionary,Auto Parts:O.E.M.,2358808106.0,United States,0,0
+BKV,BKV Corporation,Energy,Oil & Gas Production,2357290858.0,United States,0,0
+BBT,Beacon Financial Corporation Common stock,Finance,Banks,2355232017.0,United States,0,0
+SVM,Silvercorp Metals Inc.,Basic Materials,Precious Metals,2351511644.0,Canada,0,0
+FCPT,Four Corners Property Trust Inc.,Real Estate,Real Estate Investment Trusts,2350982217.0,United States,0,0
+IOSP,Innospec Inc.,Industrials,Major Chemicals,2344136743.0,United States,0,0
+AXGN,Axogen Inc.,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus,2342166799.0,United States,0,0
+ICHR,Ichor Holdings,Technology,Semiconductors,2340140228.0,United States,0,0
+AAP,Advance Auto Parts Inc.,Consumer Discretionary,Auto & Home Supply Stores,2339896000.0,United States,0,0
+FIGS,FIGS Inc.,Consumer Discretionary,Apparel,2339254607.0,United States,0,0
+INTR,Inter & Co. Inc.,Finance,Commercial Banks,2339004814.0,Brazil,0,0
+CNXN,PC Connection Inc.,Consumer Discretionary,Catalog/Specialty Distribution,2336290824.0,United States,0,0
+COTY,Coty Inc.,Consumer Discretionary,Package Goods/Cosmetics,2333819130.0,United States,0,0
+NTB,Bank of N.T. Butterfield & Son Limited (The) Voting,Finance,Commercial Banks,2332800000.0,Bermuda,0,0
+OPEN,Opendoor Technologies Inc,Finance,Real Estate,2330618520.0,United States,0,0
+STNE,StoneCo Ltd.,Technology,EDP Services,2324052163.0,Brazil,0,0
+NN,NextNav Inc.,Industrials,Industrial Machinery/Components,2322824362.0,United States,0,0
+ARR,ARMOUR Residential REIT Inc.,Real Estate,Real Estate Investment Trusts,2307615066.0,United States,0,0
+OSW,OneSpaWorld Holdings Limited,Consumer Discretionary,Hotels/Resorts,2307065724.0,Bahamas,0,0
+HRMY,Harmony Biosciences Holdings Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2304414071.0,United States,0,0
+LASR,nLIGHT Inc.,Technology,Semiconductors,2303569566.0,United States,0,0
+LTC,LTC Properties Inc.,Real Estate,Real Estate Investment Trusts,2300150373.0,United States,0,0
+DNN,Denison Mines Corp,Basic Materials,Other Metals and Minerals,2299248963.0,Canada,0,0
+NMRK,Newmark Group Inc.,Finance,Real Estate,2292542132.0,United States,0,0
+RAMP,LiveRamp Holdings Inc.,Technology,EDP Services,2291970821.0,United States,0,0
+SLS,SELLAS Life Sciences Group Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2288044883.0,United States,0,0
+UFPT,UFP Technologies Inc.,Health Care,Medical/Dental Instruments,2284930592.0,United States,0,0
+NEO,NeoGenomics Inc.,Health Care,Precision Instruments,2284293323.0,United States,0,0
+RH,RH,Consumer Discretionary,Other Specialty Stores,2281634991.0,United States,0,0
+SDGR,Schrodinger Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2278579429.0,United States,0,0
+PBI,Pitney Bowes Inc.,Miscellaneous,Office Equipment/Supplies/Services,2277068421.0,United States,0,0
+MBIN,Merchants Bancorp,Finance,Major Banks,2274853474.0,United States,0,0
+HLIO,Helios Technologies Inc.,Industrials,Metal Fabrications,2273370000.0,United States,0,0
+BFLY,Butterfly Network Inc.,Health Care,Medical Electronics,2271412611.0,United States,0,0
+AGM,Federal Agricultural Mortgage Corporation,Finance,Finance Companies,2270383000.0,United States,0,0
+NWL,Newell Brands Inc.,Industrials,Plastic Products,2261529000.0,United States,0,0
+PRLB,Proto Labs Inc. Common stock,Industrials,Metal Fabrications,2257509420.0,United States,0,0
+HCI,HCI Group Inc.,Finance,Property-Casualty Insurers,2256286085.0,United States,0,0
+PDFS,PDF Solutions Inc.,Technology,Computer Software: Prepackaged Software,2254511062.0,United States,0,0
+ALMR,Alamar Biosciences Inc.,Industrials,Biotechnology: Laboratory Analytical Instruments,2252489184.0,United States,0,0
+SIND,Sinda Ltd.,Basic Materials,Precious Metals,2251654749.0,,0,0
+CLOV,Clover Health Investments Corp.,Health Care,Medical Specialities,2246790992.0,United States,0,0
+SECZ,Securitize Corp.,Finance,Finance: Consumer Services,2243270512.0,,0,0
+UPST,Upstart Holdings Inc. Common stock,Finance,Finance: Consumer Services,2233334406.0,United States,0,0
+VERA,Vera Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2233242752.0,United States,0,0
+ANDE,Andersons Inc. (The),Industrials,Farming/Seeds/Milling,2225060079.0,United States,0,0
+ADMA,ADMA Biologics Inc,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2224167872.0,United States,0,0
+WAFD,WaFd Inc.,Finance,Major Banks,2218377235.0,United States,0,0
+VVX,V2X Inc.,Consumer Discretionary,Diversified Commercial Services,2216430264.0,United States,0,0
+PRCH,Porch Group Inc.,Technology,Computer Software: Prepackaged Software,2208186737.0,United States,0,0
+LIND,Lindblad Expeditions Holdings Inc.,Consumer Discretionary,Transportation Services,2206790141.0,United States,0,0
+PHIN,PHINIA Inc.,Consumer Discretionary,Auto Parts:O.E.M.,2199384423.0,United States,0,0
+BKE,Buckle Inc. (The),Consumer Discretionary,Clothing/Shoe/Accessory Stores,2199065807.0,United States,0,0
+CALX,Calix Inc,Consumer Discretionary,Telecommunications Equipment,2197443216.0,United States,0,0
+NWBI,Northwest Bancshares Inc.,Finance,Major Banks,2195422239.0,United States,0,0
+ALVO,Alvotech,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2194224918.0,Luxembourg,0,0
+BGSI,Boyd Group Services Inc.,Uncategorized,Uncategorized,2189892341.0,Canada,0,0
+PTON,Peloton Interactive Inc.,Consumer Discretionary,Recreational Games/Products/Toys,2181192851.0,United States,0,0
+RXRX,Recursion Pharmaceuticals Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2178842632.0,United States,0,0
+AERO,Grupo Aeromexico S.A.B. de C.V.,Consumer Discretionary,Air Freight/Delivery Services,2176878862.0,,0,0
+HTH,Hilltop Holdings Inc.,Finance,Major Banks,2172873797.0,United States,0,0
+PHVS,Pharvaris N.V.,Health Care,Biotechnology: Pharmaceutical Preparations,2160356708.0,Netherlands,0,0
+AMR,Alpha Metallurgical Resources Inc.,Energy,Coal Mining,2159114573.0,United States,0,0
+CTOS,Custom Truck One Source Inc.,Consumer Discretionary,Diversified Commercial Services,2156752472.0,Cayman Islands,0,0
+EFSC,Enterprise Financial Services Corporation,Finance,Major Banks,2153454940.0,United States,0,0
+SSMR,Sunshine Silver Mining & Refining Company,Basic Materials,Precious Metals,2151587247.0,,0,0
+VRDN,Viridian Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2151420188.0,United States,0,0
+KSS,Kohl's Corporation,Consumer Discretionary,Department/Specialty Retail Stores,2145082339.0,United States,0,0
+DBD,Diebold Nixdorf Incorporated Common stock,Miscellaneous,Office Equipment/Supplies/Services,2144745430.0,United States,0,0
+BHC,Bausch Health Companies Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2142965915.0,Canada,0,0
+OFG,OFG Bancorp,Finance,Major Banks,2142437891.0,Puerto Rico,0,0
+PATK,Patrick Industries Inc.,Consumer Discretionary,Auto Parts:O.E.M.,2137791652.0,United States,0,0
+FLYW,Flywire Corporation Voting,Consumer Discretionary,Business Services,2136484355.0,United States,0,0
+STUB,StubHub Holdings Inc.,Consumer Discretionary,Services-Misc. Amusement & Recreation,2135882910.0,United States,0,0
+CHA,Chagee Holdings Limited,Consumer Discretionary,Restaurants,2125103452.0,China,0,0
+KEEL,Keel Infrastructure Corp.,Finance,Finance: Consumer Services,2124451849.0,Canada,0,0
+PEB,Pebblebrook Hotel Trust,Real Estate,Real Estate Investment Trusts,2122571488.0,United States,0,0
+AUPH,Aurinia Pharmaceuticals Inc,Health Care,Biotechnology: Pharmaceutical Preparations,2122166130.0,Canada,0,0
+PBH,Prestige Consumer Healthcare Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2120957350.0,United States,0,0
+WGS,GeneDx Holdings Corp.,Health Care,Medical/Nursing Services,2116207509.0,United States,0,0
+CENTA,Central Garden & Pet Company,Consumer Discretionary,Consumer Specialties,2115003886.0,United States,0,0
+PLGO,Pelagos Insurance Capital Limited,Finance,Property-Casualty Insurers,2105791531.0,Bermuda,0,0
+SHO,Sunstone Hotel Investors Inc. Sunstone Hotel Investors Inc.,Consumer Discretionary,Hotels/Resorts,2103025973.0,United States,0,0
+SONO,Sonos Inc.,Consumer Staples,Consumer Electronics/Appliances,2099718127.0,United States,0,0
+MLYS,Mineralys Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2097011312.0,United States,0,0
+DRD,DRDGOLD Limited,Basic Materials,Precious Metals,2095763033.0,South Africa,0,0
+TRLV,Trulieve Cannabis Corp. Subordinate Voting Shares,Health Care,Medicinal Chemicals and Botanical Products,2093184833.0,United States,0,0
+MD,Pediatrix Medical Group Inc.,Health Care,Hospital/Nursing Management,2093084261.0,United States,0,0
+DV,DoubleVerify Holdings Inc.,Technology,Computer Software: Programming Data Processing,2090772566.0,United States,0,0
+ADRX,ADARx Pharmaceuticals Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2086897891.0,United States,0,0
+ADUS,Addus HomeCare Corporation,Health Care,Medical/Nursing Services,2085919310.0,United States,0,0
+MCRI,Monarch Casino & Resort Inc.,Consumer Discretionary,Hotels/Resorts,2082238490.0,United States,0,0
+SBET,Sharplink Inc.,Technology,Computer Software: Prepackaged Software,2081002126.0,United States,0,0
+LIFE,Ethos Technologies Inc.,Finance,Specialty Insurers,2076645417.0,United States,0,0
+ETOR,eToro Group Ltd.,Finance,Investment Bankers/Brokers/Service,2076484465.0,Israel,0,0
+BLX,Bladex Inc. Class E,Finance,Commercial Banks,2075836318.0,Panama,0,0
+BCRX,BioCryst Pharmaceuticals Inc.,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2074945053.0,United States,0,0
+CTRI,Centuri Holdings Inc.,Utilities,Oil & Gas Production,2073781109.0,United States,0,0
+SRCE,1st Source Corporation,Finance,Major Banks,2069592126.0,United States,0,0
+STGW,Stagwell Inc.,Consumer Discretionary,Advertising,2068262315.0,Canada,0,0
+CDLR,Cadeler A/S,Consumer Discretionary,Marine Transportation,2066833729.0,,0,0
+GPCR,Structure Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2066559656.0,United States,0,0
+RLX,RLX Technology Inc.,Health Care,Medicinal Chemicals and Botanical Products,2065610213.0,Cayman Islands,0,0
+ALGT,Allegiant Travel Company,Consumer Discretionary,Air Freight/Delivery Services,2062906992.0,United States,0,0
+WERN,Werner Enterprises Inc.,Industrials,Trucking Freight/Courier Services,2057216451.0,United States,0,0
+TRN,Trinity Industries Inc.,Industrials,Railroads,2055472739.0,United States,0,0
+UTZ,Utz Brands Inc,Consumer Staples,Packaged Foods,2052901157.0,United States,0,0
+FCF,First Commonwealth Financial Corporation,Finance,Major Banks,2049414159.0,United States,0,0
+INSP,Inspire Medical Systems Inc.,Health Care,Medical/Dental Instruments,2046276343.0,United States,0,0
+NCNO,nCino Inc.,Technology,Computer Software: Prepackaged Software,2045994967.0,United States,0,0
+ASAN,Asana Inc.,Technology,Computer Software: Prepackaged Software,2044703145.0,United States,0,0
+TH,Target Hospitality Corp.,Consumer Discretionary,Hotels/Resorts,2040287703.0,United States,0,0
+MTX,Minerals Technologies Inc.,Basic Materials,Major Chemicals,2028972707.0,United States,0,0
+CC,Chemours Company (The),Industrials,Major Chemicals,2028726453.0,United States,0,0
+TRVI,Trevi Therapeutics Inc.,Health Care,Biotechnology: Pharmaceutical Preparations,2020307425.0,United States,0,0
+VCEL,Vericel Corporation,Health Care,Biotechnology: Biological Products (No Diagnostic Substances),2019588856.0,United States,0,0
+SAH,Sonic Automotive Inc.,Consumer Discretionary,Retail-Auto Dealers and Gas Stations,2015759776.0,United States,0,0
+AADX,Applied Aerospace & Defense Inc.,Industrials,Military/Government/Technical,2015280225.0,,0,0
+MPT,Medical Properties Trust Inc. common stock,Real Estate,Real Estate Investment Trusts,2012564000.0,United States,0,0
+PLBL,Polibeli Group Ltd,Consumer Discretionary,Consumer Electronics/Appliances,2011467210.0,Indonesia,0,0
+BAND,Bandwidth Inc.,Technology,Computer Software: Prepackaged Software,2009368403.0,United States,0,0
+ATEN,A10 Networks Inc.,Telecommunications,Computer Communications Equipment,2004008980.0,United States,0,0
+ECPG,Encore Capital Group Inc,Finance,Finance Companies,2000043214.0,United States,0,0
+BF-B,Brown Forman Corporation,Uncategorized,Uncategorized,,United States,1,0
+SPY,SPY,,ETF,,United States,0,1
+QQQ,QQQ,,ETF,,United States,0,1
+IWM,IWM,,ETF,,United States,0,1
+DIA,DIA,,ETF,,United States,0,1
+RSP,RSP,,ETF,,United States,0,1
+SOXX,SOXX,,ETF,,United States,0,1
+XLK,XLK,,ETF,,United States,0,1
+XLV,XLV,,ETF,,United States,0,1
+XLF,XLF,,ETF,,United States,0,1
+XLY,XLY,,ETF,,United States,0,1
+XLC,XLC,,ETF,,United States,0,1
+XLI,XLI,,ETF,,United States,0,1
+XLP,XLP,,ETF,,United States,0,1
+XLE,XLE,,ETF,,United States,0,1
+XLU,XLU,,ETF,,United States,0,1
+XLRE,XLRE,,ETF,,United States,0,1
+XLB,XLB,,ETF,,United States,0,1

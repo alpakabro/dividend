@@ -18,6 +18,7 @@
 | `app/data/stock_db_full.js` | 종목 DB `window.STOCK_DB`(약 11MB): 국내 주식·ETF, 미국 주식·ETF 약 8,000개(종목 수는 `meta.json`의 `counts`) |
 | `app/data/meta.json` | 데이터 날짜(`asof`)·원/달러(`fx`, 출처 `fx_src`)·연중 환율 고저(`fx_range`)·코스피/코스닥 실제 종가·첫 적립 월·종목 수. `refresh.py`가 쓰고 `build.py`가 문구와 `window.META`에 넣는다 |
 | `app/build.py` | 조립 스크립트(`fill`이 문구 자리표시자 `{{KR_D}}` 등을 meta로 채움) → `index.html`, `db.js`, `sw.js`, `app/dist/artifact.html` |
+| `app/data/site.json` | 후원 링크(`donate.url/label`)와 애드센스 ID(`adsense.client/slot`). 비우면 버튼·광고가 안 보인다. `window.SITE`로 주입되고 `applySite`가 켠다. 광고 로더는 사이트 head에만 들어가며 PC 프로그램(`?app=desktop`)·아티팩트·오프라인에서는 광고를 내지 않는다. 안내 카드 `#privacyCard` |
 | `manifest.webmanifest`, `icons/` | 설치형 웹앱(PWA) 정보와 아이콘. 휴대폰·PC 브라우저의 '홈 화면에 추가/앱 설치'로 설치되고, 사이트 빌드의 head에만 연결된다(아티팩트·exe 사본은 등록 안 함) |
 | `app/tests/*.py` | Playwright 확인 스크립트 |
 | `pipeline/` | DB 생성 `build_db.py`, ETF 병합 `add_etf.py`(개별 주식 배당도 붙임), 검증 `check_db.py`, 미국 종목 메타 `universe.csv`, 주요 미국 ETF 168개의 한글명·유형 `us_etf_list.json` |

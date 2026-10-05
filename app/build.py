@@ -40,6 +40,7 @@ def main():
     os.chdir(D)
     nodb = '--nodb' in sys.argv
     meta = json.load(open('data/meta.json', encoding='utf-8'))
+    site = json.load(open('data/site.json', encoding='utf-8'))      # 후원 링크·광고 ID(비우면 꺼짐)
     src = open('app_src.html', encoding='utf-8').read()
     assert '/*__DATA_MODULES__*/' in src and '/*__UI_MODULES__*/' in src and '<!--__PAYLOAD__-->' in src
     src = fill(src, meta)
@@ -50,7 +51,7 @@ def main():
     macro = json.dumps(json.load(open('src/macro_report.json', encoding='utf-8')), ensure_ascii=False, separators=(',', ':'))
     db = 'window.STOCK_DB={"asof":{},"ax":{},"s":[],"idx":{}};' if nodb else open('data/stock_db_full.js', encoding='utf-8').read().strip()
     esc = lambda s: s.replace('</', '<\\/')     # <script> 안의 JSON이 태그를 닫지 못하게
-    payload = lambda dbtag: ('<script>window.META=' + esc(json.dumps(meta, ensure_ascii=False, separators=(',', ':'))) + ';</script>\n'
+    payload = lambda dbtag: ('<script>window.META=' + esc(json.dumps(meta, ensure_ascii=False, separators=(',', ':'))) + ';window.SITE=' + esc(json.dumps(site, ensure_ascii=False, separators=(',', ':'))) + ';</script>\n'
                             + dbtag + '<script>window.RESEARCH=' + esc(research) + ';</script>\n'
                             '<script>window.MACRO=' + esc(macro) + ';</script>\n')
     inline = src.replace('<!--__PAYLOAD__-->', payload('<script>' + db + '</script>\n'))          # 아티팩트·미리보기: 한 파일
@@ -68,7 +69,8 @@ def main():
                             '<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n'
                             f'<link rel="preload" href="db.js?v={ver}" as="script">\n'
                             '<link rel="manifest" href="manifest.webmanifest">\n<meta name="theme-color" content="#1f6feb">\n'
-                            '<meta name="apple-mobile-web-app-capable" content="yes">\n<link rel="apple-touch-icon" href="icons/icon-192.png">', 1)   # 머리말 그리는 동안 DB 내려받기 시작 · 설치형 웹앱(PWA)
+                            '<meta name="apple-mobile-web-app-capable" content="yes">\n<link rel="apple-touch-icon" href="icons/icon-192.png">'
+                            + (f'\n<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={site["adsense"]["client"]}" crossorigin="anonymous"></script>' if site.get('adsense', {}).get('client') else ''), 1)   # 머리말 그리는 동안 DB 내려받기 시작 · 설치형 웹앱(PWA) · 애드센스(ID 있을 때만)
     assert 'noindex' in site
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(site)
     open(os.path.join(ROOT, 'db.js'), 'w', encoding='utf-8').write(db + '\n')

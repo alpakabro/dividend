@@ -20,8 +20,8 @@ def online():
         return False
 
 def main():
-    url = SITE if online() else bundled()
-    w = webview.create_window(TITLE + ('' if url == SITE else ' — 오프라인 사본'), url, width=1400, height=950, min_size=(900, 600))
+    url = SITE + '?app=desktop' if online() else bundled()      # ?app=desktop: 사이트가 광고를 숨긴다
+    w = webview.create_window(TITLE + ('' if url.startswith(SITE) else ' — 오프라인 사본'), url, width=1400, height=950, min_size=(900, 600))
     storage = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'DividendSim')
     after = (lambda: (time.sleep(3), w.destroy())) if '--selftest' in sys.argv else None   # 빌드 확인용 자동 종료
     webview.start(after, private_mode=False, storage_path=storage)   # private_mode=False: 보유 종목(localStorage)이 다음 실행에도 남게

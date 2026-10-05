@@ -22,6 +22,7 @@
 | `manifest.webmanifest`, `icons/` | 설치형 웹앱(PWA) 정보와 아이콘. 휴대폰·PC 브라우저의 '홈 화면에 추가/앱 설치'로 설치되고, 사이트 빌드의 head에만 연결된다(아티팩트·exe 사본은 등록 안 함) |
 | `app/tests/*.py` | Playwright 확인 스크립트 |
 | `pipeline/` | DB 생성 `build_db.py`, ETF 병합 `add_etf.py`(개별 주식 배당도 붙임), 검증 `check_db.py`, 미국 종목 메타 `universe.csv`, 주요 미국 ETF 168개의 한글명·유형 `us_etf_list.json` |
+| `pipeline/fetch_kr_sector.py`, `pipeline/kr_sector.csv` | 국내 상장사 업종(KRX KIND 표준산업분류·주요제품)을 받아 앱 섹터로 매핑한 표(git 포함). `add_etf.py`가 국내 주식 레코드의 `sector`·`industry`에 넣고, `recSectorKo`가 `KR_SECTOR` 다음 순위로 쓴다. 우선주는 보통주 코드로 연결. 매핑은 규칙 기반이라 종목 창에 KRX 업종명을 함께 표시 |
 | `pipeline/fetch_stock_div.py` | 개별 주식 배당락 이력 수집(야후 파이낸스, 2021~) → `pipeline/raw_div/stock_div.csv`(git 제외). 지급월 추정·성장 가정·배당 정보 조립 함수는 여기 있고 `add_etf.py`가 가져다 쓴다 |
 | `pipeline/refresh.py` | **데이터 자동 갱신 본체**(4절): 수집(ETF·주식 배당) → DB → 병합 → 메타 → 매크로 타일 → 빌드 → 검증 → 커밋. `test_refresh.py`는 그 도우미 함수 점검 |
 | `.github/workflows/refresh.yml` | 매일 08:00 KST(화~토) GitHub Actions에서 `refresh.py --push` 정기 실행, 수동 실행(Run workflow)도 가능 |
@@ -80,7 +81,7 @@ DB 레코드(인덱스는 `RF`):
  d_off, d_enc, w_off, w_enc, m_off, m_enc, y_off, y_enc, v_enc, div?]
 ```
 
-- `mk`: `KS`/`KQ`/`KE`(국내 ETF)/`US`. ETF는 `sector='ETF'`, `industry`=유형
+- `mk`: `KS`/`KQ`/`KE`(국내 ETF)/`US`. ETF는 `sector='ETF'`, `industry`=유형. 국내 주식은 `sector`=앱 섹터(KRX 업종 매핑), `industry`=KRX 업종명
 - 시리즈 인코딩: base64 VLQ 델타. 미국 가격은 센트(×100), 거래량은 `round(ln(1+v)*20)`
 - `stats`: `[1주, 1개월, 3개월, 6개월, 연초, 1년, 3년, 5년, 변동성, 최대낙폭, 52주고, 52주저, 상장후, 시작일]`
 - `div`(ETF와 배당 이력이 있는 주식): `[최근 12개월 분배금(배당), 지급월 비중 12개, 횟수, 마지막 배당락일, 성장 가정]` → `mkDbStock`이 자동 반영(`divSrc:'db'`). 주식의 지급월 추정은 국내 12월 배당락→4월·그 외 +2개월, 미국 +25일. 성장 가정은 완전한 연도 3개 이상이면 연간 합계 증가율(0~8%), 아니면 3.0. 큐레이션(RAW) 종목은 큐레이션 값이 우선
@@ -99,7 +100,7 @@ python3 app/build.py                 # index.html + app/dist/artifact.html (문�
 python3 pipeline/test_refresh.py     # 갱신·빌드 도우미 함수 점검, OK면 정상
 python3 pipeline/refresh.py --steps build,verify   # 빌드 + 검증 관문(오류 0건·월배당 계산·종목 수·환율 반영)
 python3 desktop/build_exe.py         # 윈도우 PC 프로그램 exe (pip install pywebview pyinstaller pillow 필요, 1~2분)
-pip install playwright pandas pyarrow numpy yfinance requests && python3 -m playwright install chromium
+pip install playwright pandas pyarrow numpy yfinance requests lxml && python3 -m playwright install chromium
 for t in app/tests/test_*.py; do echo "== $t"; python3 "$t"; done   # 'errors []'면 정상, 스크린샷은 app/tests/out/
 git add -A && git commit -m "..." && git push origin main            # GitHub Pages 자동 배포(1~3분)
 ```
@@ -119,7 +120,7 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
   - `db`: 올해 marcap 파일과 미국 가격 파일을 지우고 `build_db.py`(FinanceData/marcap 2016~올해 + us-stock-data) → `pipeline/stock_db.js`, `check_db.py`로 점검. 새해 첫 거래일 전에는 올해 파일이 없어 전년도까지로 만든다
   - `etf`: etf-job 브랜치의 `tools/etf/fetch_etf.py`(국내 ETF 전체 + 주요 미국 ETF 168개)·`fetch_us_all.py`(미국 ETF 전체)를 받아 실행 → `pipeline/raw_etf/etf-data`, `etf-data-us` (약 20분). etf-job 브랜치의 Actions는 그대로 있어 따로 돌려도 된다
   - `div`: `fetch_stock_div.py`가 DB의 모든 주식(약 4,800개)의 배당락 이력을 야후 파이낸스에서 받는다(80개씩 묶음, 약 6분) → `pipeline/raw_div/stock_div.csv`. 이력 있는 종목이 1,000개 미만이면 실패
-  - `merge`: `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)
+  - `merge`: `fetch_kr_sector.py`(KIND, 실패 시 기존 csv)로 국내 업종을 갱신한 뒤 `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)
   - `meta`: 야후 파이낸스에서 원/달러(`KRW=X`, 미국 데이터 날짜 종가)와 연중 고저, 코스피·코스닥 실제 종가(`^KS11`·`^KQ11`, 국내 데이터 날짜) → `app/data/meta.json`. 그 날짜 종가가 아직 없으면 실패하고 다음 실행에서 다시 시도한다(수치를 지어내지 않음). 이 단계에서 큐레이션 배당(RAW·RAW_ADD의 d)과 DB의 최근 12개월 실제 배당을 비교해 10% 이상 다르면 요약에 ⚠ "배당 변동 의심"을 남긴다(비교만 하고 자동 수정은 없음, 야후 이력 누락일 수도 있으니 공시로 확인)
   - `macro`: 매크로 브리핑 지표 타일 10개를 다시 쓴다 → `app/src/macro_report.json`의 `tiles`(값·설명·등락·출처)와 `tiles_asof`·`src_auto`. 출처는 야후 파이낸스(美 10년물 `^TNX`, 달러인덱스 `DX-Y.NYB`, 원/달러 `KRW=X`, 코스피 `^KS11`, S&P500 `^GSPC`, 브렌트 `BZ=F`·WTI `CL=F`), FRED CSV(기준금리 `DFEDTARU`/`DFEDTARL`, CPI `CPIAUCNS`/`CPILFENS`(비계절조정, 공식 전년 대비와 같음), 실업률 `UNRATE`, 고용 `PAYEMS` — 파이썬 기본 접속은 차단되므로 `curl_cffi`로 크롬처럼 접속), 한국은행 기준금리 페이지(표 해석). 기준일은 미국 데이터 날짜. 어느 출처가 실패하면 그 타일은 이전 값을 두고 요약에 ⚠ 경고만 남긴다(수치를 지어내지 않음). headline·key3·sections는 사람이 쓴다
   - `build`: `app/build.py`

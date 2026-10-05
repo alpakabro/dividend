@@ -10,6 +10,8 @@ with sync_playwright() as p:
     opts = pg.evaluate("() => [...document.querySelectorAll('#mdSector option')].map(o => o.textContent)")
     print('sector options:', len(opts), opts[:8])
     assert len(opts) > 10 and any(o.startswith('금융') for o in opts) and any(o.startswith('ETF(') for o in opts), opts
+    etc = next((o for o in opts if o.startswith('기타 (')), '기타 (0)'); n_etc = int(etc.split('(')[1].rstrip(')').replace(',', ''))
+    print('기타:', n_etc); assert n_etc < 400, etc            # 국내 업종을 채운 뒤에는 '기타'가 크게 줄어야 함
     # 1) 섹터만 고르면 그 섹터 전체가 시가총액순으로
     pg.select_option('#mdSector', '금융'); pg.wait_for_timeout(400)
     r = pg.evaluate("() => ({ count: document.querySelector('#mdList .md-count').textContent, items: [...document.querySelectorAll('#mdList .ritem .m')].slice(0, 120).map(e => e.textContent), n: window.__divsim.searchStocks ? null : null })")

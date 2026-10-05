@@ -30,7 +30,7 @@ jobs:
           python-version: '3.12'
       - name: 파이썬 패키지·크롬 설치
         run: |
-          pip install --quiet pandas pyarrow numpy yfinance requests playwright
+          pip install --quiet pandas pyarrow numpy yfinance requests lxml playwright
           python -m playwright install --with-deps chromium
       - name: 갱신 실행 (수집 → DB → 빌드 → 검증 → 커밋·푸시)
         run: |

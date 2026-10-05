@@ -179,6 +179,7 @@ function recSectorKo(rec) {
   if (isEtfRec(rec)) return 'ETF(' + (rec[5] || '분산') + ')';
   if (rec[0] === 'US') return US_SECTOR_KO[rec[4]] || (rec[4] ? rec[4] : '기타');
   if (KR_SECTOR[rec[1]]) return KR_SECTOR[rec[1]];
+  if (rec[4]) return rec[4];   // KRX 업종(표준산업분류)에서 매핑한 섹터 (pipeline/fetch_kr_sector.py), 업종명은 rec[5]
   for (const [re, s] of KR_NAME_SECTOR) if (re.test(rec[2])) return s + '(추정)';
   return '기타(국내)';
 }

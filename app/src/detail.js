@@ -41,7 +41,7 @@ function renderDetail(it) {
   // 머리말
   const price = rec ? rec[RF.price] : st ? st.p0 : null, chg = rec ? rec[RF.chg] : null;
   const sector = st && st.sector ? st.sector : rec ? recSectorKo(rec) : '—';
-  const ind = rec && rec[0] === 'US' && !isEtfRec(rec) ? String(rec[5] || '').replace('|SP500', '') : '';   // ETF는 유형이 이미 섹터 칸에 있음
+  const ind = rec && !isEtfRec(rec) ? (rec[0] === 'US' ? String(rec[5] || '').replace('|SP500', '') : (rec[5] ? 'KRX 업종 ' + rec[5] : '')) : '';   // ETF는 유형이 이미 섹터 칸에 있음. 국내는 표준산업분류 업종명
   const meta = h('div', { class: 'dt-meta' }, h('span', { text: it.code }), h('span', { text: rec ? mktLabel(rec) : (mkt === 'US' ? '미국 ETF' : '국내') }), h('span', { text: sector + (ind ? ' · ' + ind : '') }));
   if (rec && /\|SP500/.test(rec[5] || '')) meta.append(h('span', { class: 'badge', text: 'S&P500' }));
   if (rec && rec[0] === 'US' && it.name !== rec[2]) meta.append(h('span', { style: 'color:var(--muted)', text: rec[2] }));

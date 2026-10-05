@@ -23,6 +23,17 @@ def ax_from(m):
     return d, w, mo, y
 KAX = ax_from(db['ax']['KR']); UAX = ax_from(db['ax']['US'])
 KR_ASOF = pd.Timestamp(db['asof']['KR']); US_ASOF = pd.Timestamp(db['asof']['US'])
+# ── 국내 주식 업종: kr_sector.csv(fetch_kr_sector.py) → sector(앱 섹터)·industry(KRX 업종명). 우선주는 보통주 코드로 ──
+KSEC = os.path.join(D, 'kr_sector.csv')
+if os.path.exists(KSEC):
+    from fetch_kr_sector import common_code
+    ks = {r['code']: r for r in pd.read_csv(KSEC, dtype=str).fillna('').to_dict('records')}   # dict로(pandas 행은 or 판정이 안 됨)
+    n_sec = 0
+    for rec in db['s']:
+        if rec[0] not in ('KS', 'KQ') or rec[4] == 'ETF': continue
+        row = ks.get(rec[1]) or ks.get(common_code(rec[1]))
+        if row: rec[4] = row['sector']; rec[5] = row['industry']; n_sec += 1
+    print('KR sectors attached', n_sec, 'of', sum(1 for r in db['s'] if r[0] in ('KS', 'KQ')))
 print('KR axis', KAX[0][0].date(), '~', KAX[0][-1].date(), len(KAX[0]), '| w', len(KAX[1]), 'm', len(KAX[2]), 'y', len(KAX[3]))
 print('US axis', UAX[0][0].date(), '~', UAX[0][-1].date(), len(UAX[0]), '| w', len(UAX[1]), 'm', len(UAX[2]), 'y', len(UAX[3]))
 

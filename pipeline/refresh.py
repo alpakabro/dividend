@@ -274,7 +274,9 @@ def step_div():
     log(f"stock dividends: {m.get('tickers')}종목 중 {m.get('with_div')}종목 이력 있음, 실패 {m.get('n_fail')}")
 
 def step_merge():
-    """ETF를 DB에 병합 → app/data/stock_db_full.js"""
+    """국내 업종 갱신(실패해도 기존 csv 사용) → ETF·주식 배당·업종을 DB에 병합 → app/data/stock_db_full.js"""
+    try: run([PY, 'fetch_kr_sector.py'], cwd=D)
+    except Exception as e: WARN.append(f'국내 업종(KIND) 갱신 실패, 기존 kr_sector.csv 사용: {e}')
     run([PY, 'add_etf.py'], cwd=D)
 
 def step_meta():
@@ -360,7 +362,7 @@ def step_verify():
 
 def step_commit(meta):
     """index.html·db.js·DB·meta·매크로 타일만 커밋. --push면 origin main으로 (거절되면 원격 변경을 받아 한 번 더)"""
-    git('add', '--', 'index.html', 'db.js', 'sw.js', 'app/data/stock_db_full.js', 'app/data/meta.json', 'app/src/macro_report.json')
+    git('add', '--', 'index.html', 'db.js', 'sw.js', 'app/data/stock_db_full.js', 'app/data/meta.json', 'app/src/macro_report.json', 'pipeline/kr_sector.csv')
     if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=ROOT).returncode == 0:
         log('커밋할 변경 없음'); return None
     msg = f"data: 국내 {meta['asof']['KR']} · 미국 {meta['asof']['US']} 종가 자동 갱신"

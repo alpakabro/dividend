@@ -10,7 +10,7 @@
 
 | 경로 | 내용 |
 |---|---|
-| `index.html` | **빌드 결과물. 직접 고치지 않는다.** GitHub Pages가 그대로 배포 |
+| `index.html`, `db.js` | **빌드 결과물. 직접 고치지 않는다.** GitHub Pages가 그대로 배포. 종목 DB는 `db.js`(약 11MB)로 분리돼 있고 `index.html`(약 0.7MB)이 `db.js?v=해시`로 불러온다(머리말이 먼저 뜨고, 데이터가 안 바뀌면 캐시 사용). 아티팩트용 `app/dist/artifact.html`은 DB 인라인 |
 | `app/app_src.html` | 페이지 틀: CSS(테마 토큰) + HTML + 핵심 스크립트(상태·시뮬레이션·보유 종목·종목 구성·차트) |
 | `app/src/*.js` | 기능 모듈 (2절) |
 | `app/src/research.json` | 종목 리포트 8개(삼성전자·KT·KT&G·두산에너빌리티·하나금융·ADP·맥도날드·P&G) + 매크로 사실(us/kr, 출처 번호 포함) |
@@ -109,7 +109,7 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
 
 `pipeline/refresh.py`가 전 과정을 한 번에 한다: **DB 생성 → (새 종가일 때만) ETF 수집 → 주식 배당 수집 → 병합 → 메타(환율·지수·종목 수) → 매크로 지표 타일 → 빌드 → 검증 → 커밋**.
 
-- **정기 실행:** `.github/workflows/refresh.yml`이 매일 한국시간 08:00(화~토)에 GitHub Actions에서 `refresh.py --push`를 돌린다. 새 종가가 있으면 `index.html`·`app/data/stock_db_full.js`·`app/data/meta.json`을 main에 커밋하고 GitHub Pages가 배포한다. 데이터 날짜가 그대로면 "변동 없음"으로 끝난다(커밋 없음). 검증에 실패하면 커밋하지 않고 끝나며 GitHub가 소유자에게 이메일을 보낸다
+- **정기 실행:** `.github/workflows/refresh.yml`이 매일 한국시간 08:00(화~토)에 GitHub Actions에서 `refresh.py --push`를 돌린다. 새 종가가 있으면 `index.html`·`db.js`·`app/data/stock_db_full.js`·`app/data/meta.json`(·`macro_report.json`)을 main에 커밋하고 GitHub Pages가 배포한다. 데이터 날짜가 그대로면 "변동 없음"으로 끝난다(커밋 없음). 검증에 실패하면 커밋하지 않고 끝나며 GitHub가 소유자에게 이메일을 보낸다
 - **수동 실행:** GitHub → Actions → refresh → Run workflow (`force`: 날짜가 같아도 다시 빌드·배포, `steps`: 일부 단계만). 실행 페이지의 요약(Summary)에 날짜·환율·지수·종목 수·검증 결과·경고가 나오고, `artifact.html`과 `refresh.log`를 내려받을 수 있다(14일 보관)
 - **내 컴퓨터에서:** `python3 pipeline/refresh.py` (`--steps db,etf,div,merge,meta,macro,build,verify,commit` 중 골라 쉼표로, `--force`, `--push`). 필요 패키지는 3절. 기록은 `pipeline/refresh.log`
 - **단계별 하는 일**
@@ -151,7 +151,7 @@ ETF 데이터의 특성:
 
 ## 6. 알려진 제약
 
-- **용량:** 파일이 11.7MB라 휴대폰에서 처음 열 때 느리다. 개선 후보는 DB 분리 로딩
+- **용량:** 종목 DB `db.js`가 11MB라 처음 열 때 몇 초 걸린다(머리말은 바로 뜨고 '불러오는 중' 표시). 같은 데이터면 브라우저 캐시를 쓴다
 - **가격 이력:** 미국 개별 주식은 2024.7부터라(원본 데이터 한계) 3년·5년 수익률이 없다. 주요 미국 ETF는 2016~, 나머지 ETF는 2023.9~
 - **사이트의 AI:** GitHub Pages에는 Claude 연결이 없어 AI가 바로 답하지 못한다(질문 복사로 동작). 바로 답하게 하려면 아티팩트를 공유하거나 API 키와 서버가 필요하다
 - **종목 리포트:** 종목 창의 '기업/실적/재무' 리포트는 research.json의 8개 종목만 사전 조사돼 있다. 나머지 종목은 AI 실행 또는 프롬프트 복사를 쓴다
@@ -161,5 +161,4 @@ ETF 데이터의 특성:
 
 - 매크로 브리핑 분석 글(headline·key3·①~⑦) 자동 갱신 — 출처(U#/K#)가 필요해 AI 조사 단계가 필요(지표 타일은 이미 자동)
 - 윈도우 exe를 GitHub Actions(windows 러너)에서 만들어 릴리스에 첨부하기
-- DB 지연 로딩으로 용량 줄이기
 - 거래량이 적은 ETF는 요청이 오면 `MUST_US`에 추가

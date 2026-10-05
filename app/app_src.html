@@ -501,6 +501,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
     <div>
       <h1>월배당 포트폴리오 시뮬레이터</h1>
       <p class="sub">국내·미국 배당주 지급월을 엇갈려 매달 배당 받기 · 종목·ETF {{N_ALL}} 검색 · 주가 국내 {{KR_D}}·미국 {{US_DS}} 종가, 원/달러 {{FX}}원 기준</p>
+      <p class="sub" id="dbLoading" role="status">종목 데이터(약 11MB)를 불러오는 중…</p>
     </div>
     <div class="top-r">
       <form class="gsearch" id="gSearch" role="search" autocomplete="off">
@@ -739,6 +740,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 (function () {
 'use strict';
 document.documentElement.lang = 'ko';
+{ const ld = document.getElementById('dbLoading'); if (ld) ld.remove(); }   // db.js가 다 오면 이 스크립트가 돌기 시작한다
 
 /* ───────── 상수 ───────── */
 const META = window.META;    // 데이터 날짜·환율·지수·종목 수 (app/data/meta.json, pipeline/refresh.py가 갱신)

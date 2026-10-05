@@ -1,8 +1,8 @@
 # 앱 조립: app_src.html + src/*.js + 리서치·매크로 JSON + 종목 DB + meta → 한 개의 HTML
-#   python app/build.py          → ../index.html (GitHub Pages 사이트) + dist/artifact.html (Claude 아티팩트용 조각)
+#   python app/build.py          → ../index.html + ../db.js (GitHub Pages 사이트: 종목 DB는 별도 파일, index.html이 db.js?v=해시 로 불러옴) + dist/artifact.html (Claude 아티팩트용 조각, DB 인라인)
 #   python app/build.py --nodb   → 종목 DB 없이 빠르게(화면 확인용, 사이트 파일은 덮어쓰지 않음)
 # 문구 속 날짜·환율·종목 수는 data/meta.json(pipeline/refresh.py가 갱신)으로 채운다: app_src.html의 {{KR_D}} 같은 자리표시자
-import json, os, re, sys
+import hashlib, json, os, re, sys
 
 D = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(D)
@@ -50,11 +50,13 @@ def main():
     macro = json.dumps(json.load(open('src/macro_report.json', encoding='utf-8')), ensure_ascii=False, separators=(',', ':'))
     db = 'window.STOCK_DB={"asof":{},"ax":{},"s":[],"idx":{}};' if nodb else open('data/stock_db_full.js', encoding='utf-8').read().strip()
     esc = lambda s: s.replace('</', '<\\/')     # <script> 안의 JSON이 태그를 닫지 못하게
-    payload = ('<script>window.META=' + esc(json.dumps(meta, ensure_ascii=False, separators=(',', ':'))) + ';</script>\n'
-               '<script>' + db + '</script>\n'
-               '<script>window.RESEARCH=' + esc(research) + ';</script>\n'
-               '<script>window.MACRO=' + esc(macro) + ';</script>\n')
-    src = src.replace('<!--__PAYLOAD__-->', payload)
+    payload = lambda dbtag: ('<script>window.META=' + esc(json.dumps(meta, ensure_ascii=False, separators=(',', ':'))) + ';</script>\n'
+                            + dbtag + '<script>window.RESEARCH=' + esc(research) + ';</script>\n'
+                            '<script>window.MACRO=' + esc(macro) + ';</script>\n')
+    inline = src.replace('<!--__PAYLOAD__-->', payload('<script>' + db + '</script>\n'))          # 아티팩트·미리보기: 한 파일
+    ver = hashlib.sha1(db.encode('utf-8')).hexdigest()[:10]                                        # 데이터가 바뀌면 주소가 바뀌어 캐시가 새로 받음
+    site_src = src.replace('<!--__PAYLOAD__-->', payload(f'<script src="db.js?v={ver}"></script>\n'))   # 사이트: DB 분리
+    src = inline
 
     os.makedirs('dist', exist_ok=True)
     if nodb:
@@ -62,11 +64,13 @@ def main():
         print('wrote dist/preview_nodb.html (DB 없음)'); return
 
     # 1) 공개 사이트(GitHub Pages): 완전한 문서 + 검색엔진 노출 차단
-    site = src.replace('<meta name="viewport" content="width=device-width, initial-scale=1">',
-                       '<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">', 1)
+    site = site_src.replace('<meta name="viewport" content="width=device-width, initial-scale=1">',
+                            '<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n'
+                            f'<link rel="preload" href="db.js?v={ver}" as="script">', 1)   # 머리말 그리는 동안 DB 내려받기 시작
     assert 'noindex' in site
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(site)
-    print('wrote index.html', round(len(site.encode('utf-8')) / 1e6, 2), 'MB')
+    open(os.path.join(ROOT, 'db.js'), 'w', encoding='utf-8').write(db + '\n')
+    print('wrote index.html', round(len(site.encode('utf-8')) / 1e6, 2), 'MB + db.js', round(len(db.encode('utf-8')) / 1e6, 2), 'MB (v=' + ver + ')')
 
     # 2) Claude 아티팩트: 문서 골격(doctype/html/head/body)은 게시 때 씌워지므로 <title>부터 시작하는 조각만
     m_head = re.search(r'<head>(.*?)</head>', src, re.S); m_body = re.search(r'<body>(.*)</body>', src, re.S)

@@ -322,7 +322,7 @@ def step_verify():
         b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1400, 'height': 1000})
         pg.on('pageerror', lambda e: errs.append('PAGEERR ' + str(e)))
         pg.on('console', lambda m: errs.append(f'CONSOLE {m.type} {m.text}') if m.type in ('error', 'warning') else None)
-        pg.goto(pathlib.Path(ROOT, 'index.html').as_uri()); pg.wait_for_timeout(1500)
+        pg.goto(pathlib.Path(ROOT, 'index.html').as_uri()); pg.wait_for_function('() => !!window.__divsim', timeout=60000); pg.wait_for_timeout(500)
         r = pg.evaluate("() => { const d = window.__divsim, M = d.metrics(); return { m: M ? M.m : null, n: d.DB_IDX.size, fx: d.FX0, search: d.searchStocks('두산').length }; }")
         b.close()
     if errs: bad.append('페이지 오류 ' + ' | '.join(errs[:3]))
@@ -335,8 +335,8 @@ def step_verify():
     return r
 
 def step_commit(meta):
-    """index.html·DB·meta·매크로 타일만 커밋. --push면 origin main으로 (거절되면 원격 변경을 받아 한 번 더)"""
-    git('add', '--', 'index.html', 'app/data/stock_db_full.js', 'app/data/meta.json', 'app/src/macro_report.json')
+    """index.html·db.js·DB·meta·매크로 타일만 커밋. --push면 origin main으로 (거절되면 원격 변경을 받아 한 번 더)"""
+    git('add', '--', 'index.html', 'db.js', 'app/data/stock_db_full.js', 'app/data/meta.json', 'app/src/macro_report.json')
     if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=ROOT).returncode == 0:
         log('커밋할 변경 없음'); return None
     msg = f"data: 국내 {meta['asof']['KR']} · 미국 {meta['asof']['US']} 종가 자동 갱신"

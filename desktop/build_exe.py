@@ -7,7 +7,7 @@ D = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(D)
 NAME = '월배당시뮬레이터'
 ICON = os.path.join(D, 'app.ico')
 INDEX = os.path.join(ROOT, 'index.html')
-assert os.path.exists(INDEX), '먼저 python app/build.py 로 index.html을 만드세요'
+assert os.path.exists(INDEX) and os.path.exists(os.path.join(ROOT, 'db.js')), '먼저 python app/build.py 로 index.html·db.js를 만드세요'
 
 def make_icon():
     """파란 둥근 사각형 + 흰 동전 + ₩ (맑은 고딕 굵게)"""
@@ -24,6 +24,6 @@ if __name__ == '__main__':
     os.chdir(D)
     if not os.path.exists(ICON): make_icon()
     subprocess.run([sys.executable, '-m', 'PyInstaller', '--noconfirm', '--clean', '--onefile', '--noconsole', '--name', NAME, '--icon', ICON,
-                    '--add-data', INDEX + os.pathsep + '.', 'app.py'], check=True)
+                    '--add-data', INDEX + os.pathsep + '.', '--add-data', os.path.join(ROOT, 'db.js') + os.pathsep + '.', 'app.py'], check=True)
     exe = os.path.join(D, 'dist', NAME + '.exe')
     print('완성:', exe, round(os.path.getsize(exe) / 1e6, 1), 'MB')

@@ -399,6 +399,23 @@ sup.cite a:hover{color:var(--focus);text-decoration:underline}
 details.sub{margin-top:8px}
 details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 
+/* 내 포트폴리오 창 */
+.pf-dlg{border:1px solid var(--line-strong);border-radius:12px;padding:0;width:min(600px,96vw);max-height:86vh;background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.pf-dlg::backdrop{background:var(--scrim)}
+.pf-h{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.pf-h h2{font-size:14px;margin:0}
+.pf-note{margin:10px 14px 0;font-size:11.5px;color:var(--muted);line-height:1.5}
+.pf-new{display:flex;gap:6px;padding:10px 14px}
+.pf-new input{flex:1;min-width:0;height:32px;border:1px solid var(--line-strong);border-radius:8px;padding:0 10px;background:var(--surface);font-size:13px}
+.pf-list{padding:0 14px 14px;display:grid;gap:8px;overflow:auto;max-height:52vh}
+.pf-row{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.pf-row.cur{border-color:var(--ink)}
+.pf-info{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pf-info b{font-size:13px}
+.pf-sum{font-size:11.5px;color:var(--muted)}
+.pf-acts{display:flex;gap:6px;flex-wrap:wrap}
+.pf-empty{font-size:12px;color:var(--muted);padding:6px 0 10px}
+
 /* modal (종목 검색 창) */
 .modal{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:18px}
 .modal[hidden]{display:none}
@@ -529,6 +546,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         <button class="btn query" type="submit">조회</button>
       </form>
       <button class="btn primary" id="btnDone" title="지금 보유 종목과 종목 구성으로 포트폴리오 분석 화면을 엽니다">포트폴리오 완성 →</button>
+      <button class="btn" id="btnPf" title="보유 종목·종목 구성·가정을 이름 붙여 여러 개 저장하고 불러옵니다 (이 브라우저에 저장)">내 포트폴리오</button>
       <button class="btn icon" id="btnTheme" aria-label="밝은/어두운 테마 전환" title="테마 전환"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>
       <details class="menu" id="moreMenu">
         <summary class="btn icon" aria-label="더보기 메뉴" title="비교 기준 · 되돌리기 · 백업 · 공유"><svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><circle cx="4" cy="10" r="1.9"/><circle cx="10" cy="10" r="1.9"/><circle cx="16" cy="10" r="1.9"/></svg></summary>
@@ -748,6 +766,12 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   <div id="viewAnalysis" hidden></div>
 </div>
 
+<dialog class="pf-dlg" id="pfDlg" aria-labelledby="pfTitle">
+  <div class="pf-h"><h2 id="pfTitle">내 포트폴리오</h2><button class="btn icon" type="button" id="pfClose" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <p class="pf-note">보유 종목·종목 구성·가정을 이름을 붙여 저장해 두고 언제든 불러옵니다. 이 브라우저(기기)에만 저장되며, 다른 기기로 옮기려면 ⋯ 메뉴의 '공유 링크'나 '설정 내보내기'를 쓰세요.</p>
+  <div class="pf-new"><input id="pfName" type="text" maxlength="30" placeholder="이름 (예: 은퇴 준비, 공격형)" aria-label="포트폴리오 이름"><button class="btn primary" type="button" id="pfSave">현재 상태 저장</button></div>
+  <div class="pf-list" id="pfList"></div>
+</dialog>
 <div class="modal" id="modal" hidden>
   <div class="modal-back" data-close="1"></div>
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="mdTtl">
@@ -1878,7 +1902,7 @@ $('#fOnly').addEventListener('change', e => { state.onlySel = e.target.checked; 
 $('#fAuto').addEventListener('change', e => { state.auto = e.target.checked; if (state.auto) equalize(); renderAll(); });
 $('#btnEq').addEventListener('click', () => { state.auto = true; equalize(); renderAll(); });
 /* ───────── 백업·복원·공유 링크 ───────── */
-const SHARE_KEYS = ['sel', 'base', 'a', 'hold', 'custom', 'ov', 'extra', 'risk', 'slots'];   // 사용자가 입력한 것만 (화면 상태는 제외)
+const SHARE_KEYS = ['sel', 'base', 'a', 'hold', 'custom', 'ov', 'extra', 'risk', 'slots', 'pfName'];   // 사용자가 입력한 것만 (화면 상태는 제외)
 function exportState() { const o = {}; SHARE_KEYS.forEach(k => { if (state[k] !== undefined) o[k] = state[k]; }); return { app: 'monthly-div-sim', v: 1, saved: new Date().toISOString().slice(0, 10), state: o }; }
 function applyState(obj) {   // 가져오기: 검증 → 저장소에 덮어쓰기 → 새로고침(초기화 때 id 정규화 등을 다시 거치게)
   const st = obj && obj.app === 'monthly-div-sim' && obj.state && typeof obj.state === 'object' ? obj.state : null;
@@ -1906,6 +1930,60 @@ $('#btnShare').addEventListener('click', () => {
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.open) m.open = false; });
   m.querySelector('.menu-list').addEventListener('click', e => { if (e.target.closest('.btn')) setTimeout(() => { m.open = false; }, 1200); }); }
 $('#holdHelpBtn').addEventListener('click', () => { const el = $('#holdHelp'), b = $('#holdHelpBtn'); el.hidden = !el.hidden; b.setAttribute('aria-expanded', String(!el.hidden)); b.textContent = el.hidden ? '자세히' : '접기'; });
+/* ───────── 내 포트폴리오: 이름 붙여 여러 개 저장 (이 브라우저의 localStorage) ───────── */
+const PF_KEY = 'monthly-div-sim-pfs';
+function pfAll() { try { const o = JSON.parse(localStorage.getItem(PF_KEY) || 'null'); return o && Array.isArray(o.items) ? o.items : []; } catch (e) { return []; } }
+function pfWrite(items) { try { localStorage.setItem(PF_KEY, JSON.stringify({ v: 1, items })); } catch (e) { alert('저장 공간이 부족하거나 저장소를 쓸 수 없어요'); } }
+function pfSummary(st) {
+  const rows = (st.hold || []).filter(r => r && r.id), cash = rows.filter(r => r.id === CASH).reduce((t, r) => t + numOr(r.v, 0), 0), a = st.a || {};
+  return `보유 ${rows.filter(r => r.id !== CASH).length}종목${cash ? ` · 현금 ${fx1(cash, 0)}만원` : ''} · 구성 ${Object.keys(st.sel || {}).length}종목 · 월 ${fx1(a.monthly || 0, 0)}만원 · ${a.years || '—'}년`;
+}
+function pfSave(name) {
+  name = String(name || '').trim(); if (!name) { alert('이름을 넣어 주세요'); return false; }
+  const items = pfAll(), now = new Date().toISOString(), i = items.findIndex(x => x.name === name);
+  state.pfName = name; const snap = exportState().state;
+  if (i >= 0) { if (!confirm(`'${name}'이(가) 이미 있어요. 지금 상태로 덮어쓸까요?`)) return false; items[i] = Object.assign({}, items[i], { state: snap, saved: now }); }
+  else { if (items.length >= 30) { alert('최대 30개까지 저장할 수 있어요. 안 쓰는 것을 지워 주세요.'); return false; } items.unshift({ id: now + '-' + Math.random().toString(36).slice(2, 6), name, state: snap, saved: now }); }
+  pfWrite(items); save(); pfRender(); pfBtn(); return true;
+}
+function pfLoad(id) {   // 불러오기 = 저장소에 덮어쓰고 새로고침(가져오기와 같은 경로)
+  const it = pfAll().find(x => x.id === id); if (!it) return false;
+  if (!confirm(`'${it.name}'을(를) 불러올까요?\n지금 화면의 보유 종목·구성·가정은 덮어써집니다. 남기려면 먼저 저장하세요.`)) return false;
+  applyState({ app: 'monthly-div-sim', state: Object.assign({}, it.state, { pfName: it.name }) }); return true;
+}
+function pfDelete(id) {
+  const items = pfAll(), it = items.find(x => x.id === id); if (!it || !confirm(`'${it.name}'을(를) 지울까요?`)) return false;
+  pfWrite(items.filter(x => x.id !== id)); if (state.pfName === it.name) { state.pfName = ''; save(); pfBtn(); } pfRender(); return true;
+}
+function pfRename(id) {
+  const items = pfAll(), it = items.find(x => x.id === id); if (!it) return;
+  const nm = String(prompt('새 이름', it.name) || '').trim(); if (!nm || nm === it.name) return;
+  if (items.some(x => x.name === nm)) { alert('같은 이름이 이미 있어요'); return; }
+  if (state.pfName === it.name) { state.pfName = nm; save(); pfBtn(); }
+  it.name = nm; pfWrite(items); pfRender();
+}
+function pfRender() {
+  const box = $('#pfList'); if (!box) return; box.textContent = '';
+  const items = pfAll();
+  if (!items.length) { box.append(h('div', { class: 'pf-empty', text: '저장된 포트폴리오가 없어요. 위에 이름을 넣고 [현재 상태 저장]을 누르세요.' })); return; }
+  items.forEach(it => {
+    const cur = state.pfName === it.name;
+    box.append(h('div', { class: 'pf-row' + (cur ? ' cur' : '') },
+      h('div', { class: 'pf-info' }, h('div', null, h('b', { text: it.name }), cur ? h('span', { class: 'badge ok', style: 'margin-left:6px', text: '지금 화면' }) : null), h('span', { class: 'pf-sum', text: pfSummary(it.state) + ' · 저장 ' + dateKo(it.saved.slice(0, 10)) })),
+      h('div', { class: 'pf-acts' },
+        h('button', { class: 'btn sm primary', type: 'button', text: '불러오기', onclick: () => pfLoad(it.id) }),
+        h('button', { class: 'btn sm', type: 'button', title: '지금 화면의 상태로 이 이름에 다시 저장', text: '덮어쓰기', onclick: () => pfSave(it.name) }),
+        h('button', { class: 'btn sm', type: 'button', text: '이름 바꾸기', onclick: () => pfRename(it.id) }),
+        h('button', { class: 'btn sm', type: 'button', text: '삭제', onclick: () => pfDelete(it.id) }))));
+  });
+}
+function pfBtn() { const b = $('#btnPf'); if (b) b.textContent = state.pfName ? `내 포트폴리오 · ${state.pfName}` : '내 포트폴리오'; }
+$('#btnPf').addEventListener('click', () => { pfRender(); $('#pfName').value = state.pfName || ''; $('#pfDlg').showModal(); });
+$('#pfClose').addEventListener('click', () => $('#pfDlg').close());
+$('#pfSave').addEventListener('click', () => { if (pfSave($('#pfName').value)) flash('#pfSave', '저장됨'); });
+$('#pfName').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); if (pfSave(e.target.value)) flash('#pfSave', '저장됨'); } });
+$('#pfDlg').addEventListener('click', e => { if (e.target === $('#pfDlg')) $('#pfDlg').close(); });   // 바깥(배경) 클릭으로 닫기
+pfBtn();
 $('#btnPin').addEventListener('click', () => { state.base = Object.assign({}, state.sel); renderAll(); flash('#btnPin', '비교 기준 저장됨'); });
 $('#btnReset').addEventListener('click', () => {
   state.sel = recSel(); state.base = recSel(); state.auto = true;
@@ -1981,7 +2059,7 @@ renderMacro();
 renderAdvisor();
 
 renderAll();
-window.__divsim = { FX0, META, MD, exportState, applyState, shareLink, applySite, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
+window.__divsim = { FX0, META, MD, exportState, applyState, shareLink, applySite, pfAll, pfSave, pfLoad, pfDelete, advLocal, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
 })();
 </script>
 </body>

@@ -152,20 +152,146 @@ function advSuggestions() {
   if (held[0]) out.push(`${held[0].name} 계속 들고 가도 될까?`);
   const b = plan.find(st => !held.length || st.id !== held[0].id);
   if (b) out.push(`${b.name} 배당 안전해?`);
-  out.push('엔비디아 유망해?', '삼성전자 차트 분석해줘', '내 포트폴리오 점검해줘', '지금 금리 환경에서 배당주 비중 늘려도 될까?');
+  if (SAMPLE) out.push('엔비디아 유망해?', '삼성전자 차트 분석해줘', '내 포트폴리오 점검해줘', '지금 금리 환경에서 배당주 비중 늘려도 될까?');
+  else out.push('배당률 높은 국내 금융주 추천해줘', '월 50만원 20년이면 얼마 받아?', 'SCHD랑 JEPI 비교해줘', '내 포트폴리오 점검해줘', '삼성전자 차트 분석해줘', '요즘 매크로 어때?');   // 앱 데이터로 바로 답할 수 있는 질문
   return [...new Set(out)].slice(0, 6);
+}
+
+/* ───────── 조언 도우미: Claude 없이 앱 데이터로 답하는 로컬 답변 (마크다운) ───────── */
+const ADV_END = '\n\n이 분석은 참고용입니다.';   // 뉴스·전망이 없다는 안내는 답변 아래 작은 글씨(note)로
+function advLocal(q, its, intent) {
+  const s = String(q).replace(/\s/g, '');
+  if (intent === 'pf') return advLocalPf() + ADV_END;
+  if (intent === 'macro') return advLocalMacro() + ADV_END;
+  if (/추천|고배당|배당률높은|배당많이|괜찮은종목|어떤종목|뭐사|뭘사|종목찾아|골라줘|스크리닝|순위|상위|top\d*|월배당(etf|주|종목)|etf\d+개|\d+개(추천|알려|뽑|골)/i.test(s) && !(its.length >= 2 && /비교/.test(s))) return advLocalScreen(q, s) + ADV_END;
+  if (its.length >= 2 && /비교|vs|차이|어느쪽|어떤게/.test(s)) return advLocalCompare(its) + ADV_END;
+  if (!its.length && /(\d+)만원|(\d+)년|얼마|목표/.test(s) && /월|적립|투자|받|배당/.test(s)) return advLocalCalc(q, s) + ADV_END;
+  if (its.length) return its.slice(0, 3).map(it => advLocalStock(it, intent)).join('\n\n') + ADV_END;
+  return advLocalHelp();
+}
+function advLocalHelp() {
+  return ['### 이렇게 물어보세요', '- **종목**: "삼성전자 배당 어때?", "SCHD 차트 분석해줘" → 현재가·수익률·배당·지급월·차트 지표·체크 포인트',
+    '- **추천**: "배당률 높은 국내 금융주 추천해줘", "미국 월배당 ETF 10개" → 섹터·시장별 고배당 순위',
+    '- **계산**: "월 50만원 20년이면 얼마 받아?", "목표 100만원 몇 년 걸려?" → 지금 종목 구성으로 시뮬레이션',
+    '- **비교**: "SCHD랑 JEPI 비교해줘" → 표로 나란히', '- **포트폴리오**: "내 포트폴리오 점검해줘" → 비중·섹터·위험·배당 진단과 조정안',
+    '- **매크로**: "요즘 매크로 어때?" → 금리·물가·환율·지수 요약', '', '뉴스·실적 전망·종목 추천 의견처럼 최신 정보가 필요하면 아래 [Claude용 질문 복사]로 Claude에 물어보세요.'].join('\n');
+}
+function advLocalStock(it, intent) {
+  const st = S(stockIdOf(it)), rec = it.rec, L = [];
+  L.push(`### ${it.name} (${it.code}) · ${rec ? mktLabel(rec) : (it.mk === 'US' ? '미국' : '국내')} · ${(st && st.sector) || (rec ? recSectorKo(rec) : '—')}`);
+  if (rec) { const t = rec[RF.st]; L.push(`- 현재가 **${pxFmt(rec[RF.price], it.mk)}** (전일 ${sp(rec[RF.chg], 2)}) · 1개월 ${sp(t[1])} · 1년 ${sp(t[5])} · 52주 ${pxFmt(t[11], it.mk)}~${pxFmt(t[10], it.mk)} · 1년 변동성 ${t[8] != null ? fx1(t[8], 1) + '%' : '—'}`); }
+  else if (st) L.push(`- 현재가 **${pxFmt(st.p0, st.mkt)}** (직접 입력 종목)`);
+  if (st && !st.noDiv && st.d0 > 0) L.push(`- 배당: 연 ${pxFmt(st.d0, st.mkt)} · 수익률 **${pct(yieldOf(st))}** · 지급월 ${monthsText(st.mon)} · 성장 가정 ${fx1(st.g, 1)}%/년${SAFE[st.safe] ? ' · ' + SAFE[st.safe].e + ' ' + SAFE[st.safe].t : ''}`, `  - ${st.note}`);
+  else if (rec && NO_DIV[rec[1]]) L.push(`- 배당: 현재 무배당 (${NO_DIV[rec[1]]})`);
+  else L.push('- 배당: 자료 없음 (무배당이거나 최근 12개월 이력이 없어요 — 종목 창에서 직접 넣을 수 있어요)');
+  if (rec && intent !== 'earn' && intent !== 'fin') {
+    try { const ta = techAnalysis(rec); if (ta && ta.ok) {
+      const f = v => pxFmt(tickRound(v, ta.mkt), it.mk);
+      L.push(`- 차트: ${ta.summary}`, `- 가격대: 지지 ${f(ta.S1.v)} · ${f(ta.S2.v)} / 저항 ${f(ta.R1.v)} · ${f(ta.R2.v)}${ta.stop ? ' / 손절 참고 ' + f(ta.stop.v != null ? ta.stop.v : ta.stop) : ''}`);
+      if (intent === 'chart') ta.sec.forEach(sec => { L.push('', `**${sec.no} ${sec.title}**`); sec.items.forEach(x => L.push('- ' + x)); });
+    } } catch (e) { /* 차트 자료 부족 */ }
+  }
+  const rep = RESEARCH.stocks[it.id];
+  if (rep) {
+    const v = rep.valuation || {};
+    L.push(`- 사전 조사(${rep.asof}): PER ${v.per ?? '—'} · PBR ${v.pbr ?? '—'} · ROE ${v.roe ?? '—'}% · 목표주가 평균 ${v.target_price_avg ?? '—'}`);
+    if (intent === 'earn' || intent === 'fin' || intent === 'company') { const txt = stockData(it, intent); L.push(...txt.split('\n').filter(l => /^- 재무|^  ·|^- 최근 실적|^- 경쟁사/.test(l))); }
+    if (rep.company && rep.company.s1) L.push('- 사업: ' + rep.company.s1.slice(0, 2).join(' / '));
+  } else if (intent === 'earn' || intent === 'fin' || intent === 'company') L.push('- 실적·재무 리포트는 사전 조사된 8종목에만 있어요. 이 종목은 [Claude용 질문 복사]로 물어보세요.');
+  const chk = [];
+  if (st && !st.noDiv && st.d0 > 0) {
+    const y = yieldOf(st);
+    chk.push(y >= 0.05 ? `배당수익률 ${pct(y)}: 높은 편이라 배당 유지 가능성(배당성향·실적)을 꼭 확인하세요` : y < 0.015 ? `배당수익률 ${pct(y)}: 월배당 목적보다는 성장 기대로 보는 종목이에요` : `배당수익률 ${pct(y)}: 보통 수준이에요`);
+    if (st.safe === 'bad') chk.push('최근 삭감·중단 이력이 있어요');
+    const cur = new Set(); itemsOf(state.sel).forEach(x => x.st.mon.forEach((v, i) => { if (v > 0) cur.add(i); }));
+    const add = st.mon.map((v, i) => v > 0 && !cur.has(i) ? i + 1 : 0).filter(Boolean);
+    if (state.sel[st.id] != null) chk.push('이미 종목 구성에 들어 있어요');
+    else if (add.length) chk.push(`지급월 ${add.join('·')}월은 지금 구성에서 비어 있는 달이라 월배당 보완에 도움돼요`);
+  }
+  if (rec && rec[RF.st][8] != null && rec[RF.st][8] >= 40) chk.push(`1년 변동성 ${fx1(rec[RF.st][8], 0)}%: 가격 흔들림이 큰 편이에요`);
+  if (chk.length) L.push('', '**체크 포인트**', ...chk.map(x => '- ' + x));
+  return L.join('\n');
+}
+function advLocalPf() {
+  let pa = null; try { pa = paCompute(state.paBasis, state.risk); } catch (e) { pa = null; }
+  if (!pa || !pa.pos.length) return '포트폴리오가 비어 있어요. 왼쪽 **보유 종목**에 가진 주식을 넣거나 **종목 구성**에 체크하면 진단해 드릴게요.';
+  const L = [`### 포트폴리오 진단 (${pa.basis === 'hold' ? '현재 보유' : '매달 투자 구성'} · 위험 성향 ${pa.R.k})`];
+  L.push(`- 총 ${wonT(pa.total)} · 국내 ${pct(pa.kr, 0)} / 미국 ${pct(pa.us, 0)} · 현금 ${pct(pa.cashW, 1)}`);
+  L.push('- 섹터: ' + pa.sectors.slice(0, 5).map(x => `${x.k} ${pct(x.w, 0)}`).join(', ') + ` · 실질 분산 ${fx1(pa.effN, 1)}종목 · 상위 3종목 ${pct(pa.top3, 0)}`);
+  L.push(`- 배당: 수익률 ${pct(pa.yieldP)} · 연 세후 ${wonT(pa.divN)} · 배당 들어오는 달 ${pa.covMonths}/12 · 성장 가정 ${fx1(pa.gAvg, 1)}%`);
+  if (pa.vol != null) L.push(`- 위험: 연 변동성 ${pct(pa.vol, 1)} · 1년 95% VaR ${neg}${pct(pa.var1y, 1)}${pa.bt ? ` · 최근 1년 백테스트 ${sp(pa.bt.ret1y * 100)} (최대 낙폭 ${neg}${pct(-pa.bt.mdd, 1)})` : ''}`);
+  if (CUR) { const M = metrics(CUR_PORT, CUR); L.push(`- 시뮬레이션: ${CUR.H}년 후 월평균 배당 **${man(M.m)}**(${state.a.basis === 'gross' ? '세전' : '세후'}) · 목표 ${fx1(state.a.target, 0)}만원 대비 ${fx1(M.ach * 100, 0)}%`); }
+  L.push('', '**강점**', ...(pa.strengths.length ? pa.strengths : ['—']).map(x => '- ' + x));
+  L.push('', '**취약점**', ...(pa.weaknesses.length ? pa.weaknesses : ['특별히 없음']).map(x => '- ' + x));
+  const acts = (pa.actions || []).map(x => typeof x === 'string' ? x : (x.text || x.t || x.x || x.msg || '')).filter(Boolean);
+  if (acts.length) L.push('', '**조정안**', ...acts.map(x => '- ' + x));
+  L.push('', "자세한 표·차트는 [포트폴리오 완성 →] 화면에 있어요.");
+  return L.join('\n');
+}
+function advLocalMacro() {
+  if (!MACRO) return '매크로 데이터가 없어요.';
+  const L = [`### 매크로 한눈에 (지표 ${dateKo(MACRO.tiles_asof || MACRO.asof)} · 분석 ${dateKo(MACRO.asof)})`, '- ' + MACRO.headline];
+  MACRO.tiles.forEach(t => { const c = mchg(t.chg); L.push(`- ${t.k}: **${t.v}**${c ? ` (${c.lab} ${c.txt})` : ''} · ${t.d}`); });
+  L.push('', '**주목할 지표**'); MACRO.key3.forEach(k => L.push(`- ${k.name}: ${k.why}`));
+  L.push('', '분석 ①~⑦ 전체는 메인 화면 매크로 브리핑의 [전체 분석 보기]에 있어요.');
+  return L.join('\n');
+}
+function advLocalCompare(its) {
+  const cols = its.slice(0, 4), row = (name, f) => `| ${name} | ` + cols.map(it => { try { return f(it) ?? '—'; } catch (e) { return '—'; } }).join(' | ') + ' |';
+  const st = it => S(stockIdOf(it)), rec = it => it.rec, t = it => (it.rec ? it.rec[RF.st] : null);
+  const L = ['### 나란히 비교', '| 항목 | ' + cols.map(it => `${it.name} (${it.code})`).join(' | ') + ' |', '|---|' + cols.map(() => '---').join('|') + '|'];
+  L.push(row('현재가', it => rec(it) ? pxFmt(rec(it)[RF.price], it.mk) : (st(it) ? pxFmt(st(it).p0, st(it).mkt) : null)));
+  L.push(row('1년 수익률', it => t(it) && t(it)[5] != null ? sp(t(it)[5]) : null), row('1년 변동성', it => t(it) && t(it)[8] != null ? fx1(t(it)[8], 1) + '%' : null), row('1년 최대낙폭', it => t(it) && t(it)[9] != null ? sp(t(it)[9]) : null));
+  L.push(row('배당수익률', it => st(it) && !st(it).noDiv && st(it).d0 > 0 ? pct(yieldOf(st(it))) : null), row('연 배당(주당)', it => st(it) && !st(it).noDiv && st(it).d0 > 0 ? pxFmt(st(it).d0, st(it).mkt) : null));
+  L.push(row('지급월', it => st(it) && !st(it).noDiv && st(it).d0 > 0 ? monthsText(st(it).mon) : null), row('배당성장 가정', it => st(it) ? fx1(st(it).g, 1) + '%' : null));
+  L.push(row('섹터', it => (st(it) && st(it).sector) || (rec(it) ? recSectorKo(rec(it)) : null)), row('시가총액', it => rec(it) ? mcapFmt(rec(it)) : null));
+  L.push('', '같은 돈을 넣었을 때 월배당 차이는 종목 구성에 각각 넣고 [조회]로 비교해 보세요.');
+  return L.join('\n');
+}
+function advLocalScreen(q, s) {
+  const mkt = /국내|코스피|코스닥|한국/.test(s) ? 'KR' : /미국|나스닥|뉴욕|달러/.test(s) ? 'US' : 'all';
+  const nm = s.match(/(\d{1,2})(?:개|종목)/), n = Math.min(30, Math.max(3, nm ? +nm[1] : 10));
+  const wantEtf = /ETF|etf|상장지수/.test(q), monthly = /월배당|매월|매달/.test(s);
+  const s2 = s.replace(/월배당|고배당|배당률|배당금/g, ''), names = sectorList(mkt).map(x => x.sec);   // '월배당'의 '배당'이 배당 ETF 유형으로 잡히지 않게
+  const pick = names.filter(sec => { const k = sec.replace(/^ETF\(|\)$/g, '').replace(/\s/g, ''); return k && s2.includes(k) && (wantEtf ? /^ETF/.test(sec) : !/^ETF/.test(sec)); }).sort((a, b) => b.length - a.length);
+  const sec = pick[0] || null;
+  let items = sec ? sectorItems(sec, mkt) : SIDX.filter(it => (mkt === 'all' || it.mk === mkt) && (wantEtf ? /^ETF/.test(it.sec) : !/^ETF/.test(it.sec)) && it.sec !== '스팩');
+  const rows = items.map(it => ({ it, st: S(stockIdOf(it)) })).filter(x => x.st && !x.st.noDiv && x.st.d0 > 0 && x.st.p0 > 0 && (x.it.mcap >= 2e11 || x.it.cid))
+    .filter(x => !monthly || x.st.mon.filter(v => v > 0).length >= 11).map(x => Object.assign(x, { y: x.st.d0 / x.st.p0 })).sort((a, b) => b.y - a.y).slice(0, n);
+  const where = `${mkt === 'KR' ? '국내' : mkt === 'US' ? '미국' : '국내·미국'} ${sec ? sec.replace(/^ETF\((.*)\)$/, '$1 ETF') : (wantEtf ? 'ETF' : '주식')}`;
+  if (!rows.length) return `${where}에서 조건에 맞는 종목을 찾지 못했어요. 섹터 이름(금융, IT, 헬스케어, 리츠 …)이나 시장(국내/미국)을 바꿔 보세요.`;
+  const L = [`### 배당률 높은 ${where} TOP ${rows.length}${monthly ? ' · 매월 지급' : ''}`, '시가총액 2,000억원 이상 · 최근 12개월 배당 ÷ 현재가 · 시가총액 큰 순이 아니라 배당률 순',
+    '| 순위 | 종목 | 배당률 | 연 배당 | 현재가 | 1년 수익률 | 지급월 |', '|---|---|---|---|---|---|---|'];
+  rows.forEach((x, i) => { const t = x.it.rec ? x.it.rec[RF.st] : null; L.push(`| ${i + 1} | ${x.it.name} (${x.it.code}) | **${pct(x.y)}** | ${pxFmt(x.st.d0, x.st.mkt)} | ${pxFmt(x.st.p0, x.st.mkt)} | ${t && t[5] != null ? sp(t[5]) : '—'} | ${monthsText(x.st.mon)} |`); });
+  L.push('', '배당률이 아주 높으면 주가 급락이나 일회성 배당 때문일 수 있어요. 종목 창에서 배당 이력과 삭감 위험을 확인하세요. 종목명을 조회 창에 넣으면 차트·배당 상세가 나와요.');
+  return L.join('\n');
+}
+function advLocalCalc(q, s) {
+  const a = Object.assign({}, state.a), m1 = s.match(/월(\d+(?:\.\d+)?)만/), y1 = s.match(/(\d{1,2})년/), t1 = s.match(/목표(\d+(?:\.\d+)?)만/);
+  if (m1) a.monthly = +m1[1]; if (y1) a.years = +y1[1]; if (t1) a.target = +t1[1];
+  const port = portOf(state.sel, state.hold);
+  if (!port.items.length) return '종목 구성이 비어 있어요. 종목 구성에 체크하거나 ⋯ 메뉴의 [추천안으로 되돌리기]를 누른 뒤 다시 물어보세요.';
+  const r = simulate(port, a); if (!r) return '계산할 수 없어요.';
+  const basis = a.basis === 'gross' ? 'gross' : 'net', m = basis === 'gross' ? r.mG : r.mN, hz = r.hz, tgt = a.target * 1e4, reach = reachYear(r, basis, tgt);
+  const L = [`### 월 ${fx1(a.monthly, 0)}만원 × ${a.years}년 (${SCEN[a.scen].label} 시나리오, 지금 종목 구성 기준)`];
+  L.push(`- ${a.years}년 후 월평균 배당 **${man(m)}** (${basis === 'gross' ? '세전' : '세후'}${basis === 'gross' ? '' : ' · 세전 ' + man(r.mG)})`);
+  L.push(`- ${a.years}년 후 평가액 ${won(hz.value)} · 넣은 원금 ${won(hz.contrib)}${r.init > 0 ? ` (초기 ${won(r.init)} 포함)` : ''}`);
+  L.push(`- 목표 월 ${fx1(a.target, 0)}만원: ${m >= tgt ? '달성 ✅' : `달성률 ${fx1(m / tgt * 100, 0)}%`} · ${reach ? `${reach}년차에 도달` : `${EXT_YEARS}년 안에는 어려워요`}`);
+  const yr5 = r.yrs[4], yr10 = r.yrs[9]; if (yr5 && yr10) L.push(`- 중간 점검: 5년차 월 ${man((basis === 'gross' ? yr5.fwdG : yr5.fwdN) / 12)} · 10년차 월 ${man((basis === 'gross' ? yr10.fwdG : yr10.fwdN) / 12)}`);
+  L.push('', '위 입력칸의 숫자를 바꾸고 [조회]를 누르면 화면 전체가 같은 조건으로 다시 계산돼요.');
+  return L.join('\n');
 }
 
 /* 화면: 오른쪽 아래 작은 버튼 → 채팅 창 */
 function advNote() {
   return SAMPLE
     ? `질문 속 종목의 시세(국내 ${dataDate('KR')}·미국 ${dataDate('US')})·차트·배당·리포트와 내 포트폴리오를 함께 보내요 · 웹 검색은 못 해요 · 질문마다 Claude 사용량이 쓰여요`
-    : '여기서는 AI가 바로 답할 수 없어요. [질문 복사] → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요. Claude 앱에서 연 아티팩트에서는 바로 답해요.';
+    : `앱 데이터(국내 ${dataDate('KR')}·미국 ${dataDate('US')} 종가)로 계산한 답이에요. 뉴스·전망이 필요하면 [Claude용 질문 복사]로 Claude에 물어보세요.`;
 }
 function advRefresh() {
-  const send = $('#advSend'); if (send) send.textContent = SAMPLE ? '보내기' : '질문 복사';
+  const send = $('#advSend'); if (send) send.textContent = '보내기';
   const note = $('#advNote'); if (note) note.textContent = advNote();
-  const web = $('#advWeb'); if (web) web.hidden = !SAMPLE;
+  const web = $('#advWeb'); if (web) { web.hidden = false; web.textContent = SAMPLE ? '웹 검색용 복사' : 'Claude용 질문 복사'; }
 }
 function advQEl(t) {
   const wrap = h('div', { class: 'adv-qw' }, h('div', { class: 'adv-q', text: t.show }));
@@ -221,11 +347,13 @@ async function advSend(qText) {
   const q = String(qText != null ? qText : (ta ? ta.value : '')).trim();
   if (!q || ADV.busy) return;
   if (msg) msg.textContent = '';
-  if (!SAMPLE) {   // 사이트 등 Claude 밖: 질문 + 앱 데이터를 복사
-    const txt = advCopyPrompt(q), ok = await copyText(txt);
-    if (msg) msg.textContent = ok ? '복사했어요 → Claude 채팅(웹 검색 켜기)에 붙여 넣으세요' : '복사가 막혀 아래에 펼쳤어요 (전체 선택 후 복사)';
-    if (!ok) { const log = $('#advLog'); log.textContent = ''; const box = h('textarea', { readonly: true, style: 'width:100%;height:200px;font-size:11.5px;font-family:inherit' }); box.value = txt; log.append(box); const e = $('#advEmpty'); if (e) e.hidden = true; }
-    return;
+  if (!SAMPLE) {   // 사이트 등 Claude 밖: 앱 데이터로 직접 답한다(조언 도우미). Claude용 질문 복사는 아래 링크
+    const its = advFindStocks(q), intent = advIntent(q, its);
+    let content; try { content = advLocal(q, its, intent); } catch (e) { content = '지금은 이 질문에 답을 만들지 못했어요. 다른 식으로 물어보거나 [Claude용 질문 복사]를 쓰세요.'; }
+    ADV.turns.push({ role: 'user', show: q, content: q, stocks: its.map(it => ({ id: stockIdOf(it), name: it.name, code: it.code })) },
+                   { role: 'assistant', content, note: '앱 데이터로 계산한 답 · 최신 뉴스·전망은 없어요 · 더 깊은 분석은 [Claude용 질문 복사]' });
+    if (ta && qText == null) ta.value = '';
+    advRenderLog(true); return;
   }
   const its = advFindStocks(q), intent = advIntent(q, its);
   const user = { role: 'user', show: q, content: advUserContent(q, its, intent, false), stocks: its.map(it => ({ id: stockIdOf(it), name: it.name, code: it.code })) };
@@ -269,20 +397,20 @@ function renderAdvisor() {
   const dot = h('i', { class: 'adv-dot', 'aria-hidden': 'true' }); dot.hidden = true; fab.append(dot);
   const panel = h('section', { class: 'adv-panel', id: 'advPanel', 'aria-labelledby': 'advTitle' }); panel.hidden = true;
   const close = h('button', { class: 'adv-x', type: 'button', 'aria-label': 'AI 조언 창 닫기', text: '×' });
-  panel.append(h('div', { class: 'adv-ph' }, h('div', { style: 'min-width:0' }, h('b', { id: 'advTitle', text: 'AI에 조언 구하기' }), h('span', { class: 'adv-sub', text: '월가 애널리스트 관점 · 앱 데이터 기반' })), close));
+  panel.append(h('div', { class: 'adv-ph' }, h('div', { style: 'min-width:0' }, h('b', { id: 'advTitle', text: SAMPLE ? 'AI에 조언 구하기' : '조언 도우미' }), h('span', { class: 'adv-sub', text: SAMPLE ? '월가 애널리스트 관점 · 앱 데이터 기반' : '앱 데이터로 바로 답해요 · 종목·배당·차트·포트폴리오·추천·계산' })), close));
   const chips = h('div', { class: 'adv-chips' });
   advSuggestions().forEach(sq => chips.append(h('button', { class: 'chip', type: 'button', text: sq, onclick: () => advSend(sq) })));
   panel.append(h('div', { class: 'adv-body', id: 'advBody' },
-    h('div', { class: 'adv-empty', id: 'advEmpty' }, h('p', { text: '"삼성전자 어떻게 생각해?", "SCHD 유망해?"처럼 물어보세요. 차트·실적·재무제표·포트폴리오·시장을 물으면 정해 둔 분석 형식으로 답해요.' }), chips),
+    h('div', { class: 'adv-empty', id: 'advEmpty' }, h('p', { text: SAMPLE ? '"삼성전자 어떻게 생각해?", "SCHD 유망해?"처럼 물어보세요. 차트·실적·재무제표·포트폴리오·시장을 물으면 정해 둔 분석 형식으로 답해요.' : '"삼성전자 배당 어때?", "배당률 높은 국내 금융주 추천해줘", "월 50만원 20년이면 얼마 받아?"처럼 물어보세요. 앱 데이터로 바로 계산해 답하고, 뉴스·전망이 필요하면 Claude용 질문을 복사해 드려요.' }), chips),
     h('div', { class: 'adv-log', id: 'advLog', 'aria-live': 'polite' })));
   const ta = h('textarea', { id: 'advQ', rows: 2, maxlength: 600, placeholder: '예: 삼성전자 지금 사도 될까?', 'aria-label': 'AI에게 질문' });
   ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); advSend(); } });
-  const send = h('button', { class: 'btn primary sm', id: 'advSend', type: 'button', text: SAMPLE ? '보내기' : '질문 복사' });
+  const send = h('button', { class: 'btn primary sm', id: 'advSend', type: 'button', text: '보내기' });
   send.addEventListener('click', () => advSend());
   const stop = h('button', { class: 'btn sm', id: 'advStop', type: 'button', text: '중지' }); stop.hidden = true;
   stop.addEventListener('click', () => { if (ADV.ctl) ADV.ctl.abort(); });
   panel.append(h('div', { class: 'adv-in' }, ta, h('div', { class: 'adv-btns' }, send, stop)));
-  const web = h('button', { class: 'linkish', id: 'advWeb', type: 'button', text: '웹 검색용 복사' }); web.hidden = !SAMPLE;
+  const web = h('button', { class: 'linkish', id: 'advWeb', type: 'button', text: SAMPLE ? '웹 검색용 복사' : 'Claude용 질문 복사' });
   web.addEventListener('click', async () => {
     const q = (ta.value || '').trim() || (ADV.turns.filter(t => t.role === 'user').slice(-1)[0] || {}).show;
     const m = $('#advMsg'); if (!q) { m.textContent = '질문을 먼저 입력하세요'; return; }

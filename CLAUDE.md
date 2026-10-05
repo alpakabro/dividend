@@ -48,7 +48,7 @@
   - **사용자가 지정한 분석 가이드라인 원문 `G_COMPANY/G_CHART/G_EARN/G_FIN/G_PF/G_MACRO`는 문구를 바꾸지 않는다**
 - **`pa.js`:** '포트폴리오 완성' 다음 화면(비중·섹터 쏠림, 상관관계, 변동성·VaR, 백테스트, 배당 현금흐름, 강점·취약점·조정안). 성향별 한도 `RISKP`, 환율 고저 `FX_RANGE = META.fx_range`, `promptPortfolio`의 매크로 줄은 `MACRO.tiles`에서 조립(박힌 숫자 없음)
 - **`macro.js`:** 메인 상단 매크로 브리핑(타일 등락 `mchg`, 접기/펼치기, 전체 분석 ①~⑦, 지수 차트, 섹터 ETF 표). 출처 코드 Y·F·B는 `MACRO.src_auto`에서 해석하고, 배지는 "지표 {tiles_asof} · 분석 {asof} 기준"
-- **`advisor.js`:** 오른쪽 아래 'AI 조언' 버튼과 채팅 창
+- **`advisor.js`:** 오른쪽 아래 'AI 조언' 버튼과 채팅 창. **Claude가 없는 곳(사이트·exe)에서는 '조언 도우미'로 동작**: `advLocal`이 질문 의도에 따라 앱 데이터로 마크다운 답을 만든다 — 종목 카드(`advLocalStock`: 시세·배당·차트 지표·체크 포인트), 포트폴리오 진단(`advLocalPf` ← `paCompute`), 매크로 요약, 비교 표, 고배당 스크리닝(`advLocalScreen` ← 섹터·시장·월배당 파싱, 시총 2,000억 이상), 수익 계산(`advLocalCalc` ← `simulate`). 끝에 '참고용' 문구. Claude용 질문 복사는 [Claude용 질문 복사] 링크
   - 질문 속 종목 자동 인식 `advFindStocks`: 이름·한글명·별명·티커(소문자 포함), 한국 기업 ADR은 국내 종목으로 연결
   - 의도 분류 `advIntent`: 의견/차트/실적/재무/기업/포트폴리오/매크로 → 해당 가이드라인 형식
   - 앱 데이터를 붙여 보내고, Claude 밖(사이트)에서는 '질문 복사'로 동작
@@ -59,6 +59,7 @@
 - 계산: `simulate`, `portOf`, `itemsOf`, `metrics`, `needCalc`
 - 렌더: `renderAll`, 보유 종목(`renderHold/holdRow/holdValue/pnlOf`), 종목 구성(`renderPicker/toggle/equalize`), KPI·캘린더·성장 차트·시나리오·연도별 표. KPI의 `#taxTile`(세금 경계선)은 연간 세전 배당 `yrs[].recvG`(ISA면 미국분 `recvGus`만)이 1,000만원·2,000만원을 처음 넘는 연차. 확인은 `app/tests/test_tax_line.py`
 - 저장: `state`를 localStorage 키 `monthly-div-sim-v1`에 저장
+- 내 포트폴리오: 머리말 `#btnPf` → `<dialog id="pfDlg">`. localStorage 키 `monthly-div-sim-pfs`에 `{items:[{id,name,saved,state}]}`(최대 30개). `pfSave/pfLoad/pfDelete/pfRename`, 불러오기는 `applyState`로 덮어쓰고 새로고침, 현재 이름은 `state.pfName`(SHARE_KEYS 포함). 확인은 `app/tests/test_portfolios.py`
 - 백업·복원·공유: 머리말 버튼 `설정 내보내기`(JSON 파일)·`가져오기`·`공유 링크 복사`(`#s=` 뒤에 base64url JSON). `exportState/applyState/shareLink`, 대상 키는 `SHARE_KEYS`(sel·base·a·hold·custom·ov·extra·risk·slots). 공유 링크로 열면 확인 뒤 저장소에 넣고 새로고침. 확인은 `app/tests/test_backup_share.py`
 
 `state` 주요 필드:

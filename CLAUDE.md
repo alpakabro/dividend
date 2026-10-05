@@ -117,7 +117,7 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
   - `etf`: etf-job 브랜치의 `tools/etf/fetch_etf.py`(국내 ETF 전체 + 주요 미국 ETF 168개)·`fetch_us_all.py`(미국 ETF 전체)를 받아 실행 → `pipeline/raw_etf/etf-data`, `etf-data-us` (약 20분). etf-job 브랜치의 Actions는 그대로 있어 따로 돌려도 된다
   - `div`: `fetch_stock_div.py`가 DB의 모든 주식(약 4,800개)의 배당락 이력을 야후 파이낸스에서 받는다(80개씩 묶음, 약 6분) → `pipeline/raw_div/stock_div.csv`. 이력 있는 종목이 1,000개 미만이면 실패
   - `merge`: `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)
-  - `meta`: 야후 파이낸스에서 원/달러(`KRW=X`, 미국 데이터 날짜 종가)와 연중 고저, 코스피·코스닥 실제 종가(`^KS11`·`^KQ11`, 국내 데이터 날짜) → `app/data/meta.json`. 그 날짜 종가가 아직 없으면 실패하고 다음 실행에서 다시 시도한다(수치를 지어내지 않음)
+  - `meta`: 야후 파이낸스에서 원/달러(`KRW=X`, 미국 데이터 날짜 종가)와 연중 고저, 코스피·코스닥 실제 종가(`^KS11`·`^KQ11`, 국내 데이터 날짜) → `app/data/meta.json`. 그 날짜 종가가 아직 없으면 실패하고 다음 실행에서 다시 시도한다(수치를 지어내지 않음). 이 단계에서 큐레이션 배당(RAW·RAW_ADD의 d)과 DB의 최근 12개월 실제 배당을 비교해 10% 이상 다르면 요약에 ⚠ "배당 변동 의심"을 남긴다(비교만 하고 자동 수정은 없음, 야후 이력 누락일 수도 있으니 공시로 확인)
   - `macro`: 매크로 브리핑 지표 타일 10개를 다시 쓴다 → `app/src/macro_report.json`의 `tiles`(값·설명·등락·출처)와 `tiles_asof`·`src_auto`. 출처는 야후 파이낸스(美 10년물 `^TNX`, 달러인덱스 `DX-Y.NYB`, 원/달러 `KRW=X`, 코스피 `^KS11`, S&P500 `^GSPC`, 브렌트 `BZ=F`·WTI `CL=F`), FRED CSV(기준금리 `DFEDTARU`/`DFEDTARL`, CPI `CPIAUCNS`/`CPILFENS`(비계절조정, 공식 전년 대비와 같음), 실업률 `UNRATE`, 고용 `PAYEMS` — 파이썬 기본 접속은 차단되므로 `curl_cffi`로 크롬처럼 접속), 한국은행 기준금리 페이지(표 해석). 기준일은 미국 데이터 날짜. 어느 출처가 실패하면 그 타일은 이전 값을 두고 요약에 ⚠ 경고만 남긴다(수치를 지어내지 않음). headline·key3·sections는 사람이 쓴다
   - `build`: `app/build.py`
   - `verify`: 헤드리스 크롬으로 `index.html`을 열어 오류·경고 0건, 월배당 계산값 > 0, 종목 수가 마지막 커밋의 90% 이상, 페이지의 `FX0`가 meta와 같음, 검색 동작을 확인한다. 하나라도 어긋나면 실패

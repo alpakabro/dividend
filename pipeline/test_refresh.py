@@ -106,4 +106,16 @@ assert di[1][3] == round(1331 / 2031, 3) and di[1][7] == round(700 / 2031, 3) an
 assert fsd.stock_div_info([], '2026-10-01', kr=True) == [0, [0] * 12, 0, '', 3.0]
 us = fsd.stock_div_info([('2025-11-10', 0.25), ('2026-02-10', 0.25), ('2026-05-11', 0.26), ('2026-08-10', 0.26)], '2026-10-01', kr=False)
 assert us[0] == 1.02 and us[2] == 4 and [i + 1 for i, v in enumerate(us[1]) if v > 0] == [3, 6, 9, 12], us
+
+# ── 큐레이션 배당 변동 감지 ──
+js = ("const RAW = [\n  { id:'KTG',   mkt:'KR', name:'KT&G',        code:'033780', p:176900, d:6600,  mo:{4:4600, 9:2000}, g:4,   s:'good', rec:1 },\n"
+      "  { id:'ADP',   mkt:'US', name:'ADP',  code:'ADP', p:300, d:6.2, mo:{1:1,4:1,7:1,10:1}, g:9, s:'good' },\n];")
+cur = refresh.parse_curated(js)
+assert cur == {'K:033780': ('KT&G', 6600.0, 'KR'), 'U:ADP': ('ADP', 6.2, 'US')}, cur
+dbx = {'s': [['KS', '033780', 'KT&G', '', 'x', '', 176900, 0, 0, 0, 0, [], 0, '', 0, '', 0, '', 0, '', '', [5800, [0] * 12, 2, '2026-06-29', 3.0]],
+             ['US', 'ADP', 'ADP', '', 'x', '', 300, 0, 0, 0, 0, [], 0, '', 0, '', 0, '', 0, '', '', [6.3, [0] * 12, 4, '2026-09-10', 5.0]],
+             ['KS', '000001', '없음', '', 'x', '', 1, 0, 0, 0, 0, [], 0, '', 0, '', 0, '', 0, '', '']]}
+w = refresh.curated_drift(cur, dbx)
+assert len(w) == 1 and 'KT&G' in w[0] and '6,600' in w[0] and '5,800' in w[0] and '▲12' in w[0], w     # ADP는 1.6% 차이라 조용
+assert refresh.curated_drift({'K:000001': ('없음', 100.0, 'KR')}, dbx) == []                            # 실제 배당 자료가 없으면 비교 안 함
 print('OK')

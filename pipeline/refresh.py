@@ -49,6 +49,27 @@ def count_gate(prev, new, ratio=0.9):
 def days_between(a, b):
     return (dt.date.fromisoformat(b) - dt.date.fromisoformat(a)).days
 
+# ── 큐레이션 배당 변동 감지 (순수 함수) ──
+CUR_RE = re.compile(r"\{\s*id:'[^']+',\s*mkt:'(KR|US)',\s*name:'([^']+)',\s*code:'([^']+)',\s*p:[\d.]+,\s*d:([\d.]+)")
+def parse_curated(js):
+    """RAW/RAW_ADD 자바스크립트 원문 → {DB id: (이름, 연간 배당(주당), 시장)}"""
+    return {('K:' if mkt == 'KR' else 'U:') + code: (name, float(d), mkt) for mkt, name, code, d in CUR_RE.findall(js)}
+
+def curated_drift(curated, db, th=0.10):
+    """큐레이션 연간 배당과 DB의 최근 12개월 실제 배당(야후)이 th 이상 다르면 경고 문구 목록. 실제 자료가 없는 종목은 비교하지 않음"""
+    out = []
+    for r in db['s']:
+        if len(r) < 22 or r[4] == 'ETF' or not r[21] or not r[21][0]: continue
+        key = ('U:' if r[0] == 'US' else 'K:') + r[1]
+        if key not in curated: continue
+        name, d, mkt = curated[key]; ttm = r[21][0]
+        if d <= 0: continue
+        diff = (ttm - d) / d
+        if abs(diff) >= th:
+            f = (lambda v: f'${v:,.2f}') if mkt == 'US' else (lambda v: f'{v:,.0f}원')
+            out.append(f'배당 변동 의심: {name}({r[1]}) 큐레이션 {f(d)} vs 최근 12개월 실제 {f(ttm)} ({pm(diff * 100, 0, "%")}) — RAW/RAW_ADD 확인')
+    return out
+
 # ── 매크로 타일 계산 (순수 함수) ──
 def pm(x, dp, unit='', pre=''):
     """부호 표기: 양수 '+', 음수 '▲'(앱 규칙), 0은 부호 없음"""
@@ -260,6 +281,9 @@ def step_meta():
     """환율·지수·종목 수 → app/data/meta.json (가격 데이터 날짜 기준, 출처: 야후 파이낸스)"""
     db = load_db(DB_FULL); kr, us = db['asof']['KR'], db['asof']['US']
     old = read_json(META_PATH) or {}
+    cur = {}   # 큐레이션 배당(RAW·RAW_ADD)이 실제 지급과 10% 이상 다르면 요약에 경고
+    for f in (os.path.join(APP, 'app_src.html'), os.path.join(APP, 'src', 'data.js')): cur.update(parse_curated(open(f, encoding='utf-8').read()))
+    drift = curated_drift(cur, db); WARN.extend(drift); log(f'curated check: {len(cur)}종목 중 변동 의심 {len(drift)}건')
     fx_rows = yf_closes(YF['fx'], f'{us[:4]}-01-01', us)
     fx_date, fx = fx_rows[-1]
     if days_between(fx_date, us) > 3: raise RuntimeError(f'환율이 {fx_date}까지만 있음 (미국 데이터 {us})')

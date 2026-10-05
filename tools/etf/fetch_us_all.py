@@ -11,7 +11,7 @@ def log(*a):
 def save_log():
     open(os.path.join(OUT, 'log.txt'), 'w', encoding='utf-8').write('\n'.join(LOG))
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'}
-MUST = ['DRAM']          # 사용자가 보유한다고 알려 준 종목 등은 거래대금과 관계없이 포함
+MUST = ['DRAM']          # 거래대금과 관계없이 꼭 포함할 ETF
 MIN_ADV = 1_000_000      # 20일 평균 거래대금(달러) 기준 — 실제 수록 범위는 앱 빌드 때 다시 정함
 meta = {'started': dt.datetime.utcnow().isoformat() + 'Z'}
 

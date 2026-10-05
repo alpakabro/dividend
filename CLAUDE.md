@@ -41,7 +41,7 @@
 모듈별 역할:
 
 - **`data.js`:** 큐레이션 추가분 `RAW_ADD`(RAW 총 114개), `NO_DIV`, `SECTOR`, DB 해독(`decSeries`, `seriesOf`, `volumesOf`, `idxSeries`), `recId/mktLabel/recName/recSectorKo/isEtfRec`, `CUR_BY_DB`(큐레이션↔DB 연결, 가격은 DB 종가로 통일), `DATA_DATE`(DB `asof`, 없으면 `META.asof`). `idxSeries`의 수준 보정값 `ACT`는 `META.kospi/kosdaq`
-- **`ui_core.js`:** `S(id)`(종목 객체, DB 종목은 `mkDbStock`), 숫자 포맷(`pxFmt, sp, eok, mcapFmt, dateKo`), 검색 색인(`buildIndex/searchStocks`, 항목에 섹터 `sec/secL/secq` 포함 · 섹터명으로도 검색됨), 섹터 탐색(`sectorList/sectorItems`, 모달의 `#mdSector` 선택 상자, 검색어 없이 섹터만 고르면 시가총액순 전체 목록), 종목 창 모달(`openSearch/openStock`, 열 때 섹터 필터 초기화), `addHolding/addToPlan`, 화면 전환(`goAnalysis/goMain`)
+- **`ui_core.js`:** `S(id)`(종목 객체, DB 종목은 `mkDbStock`), 숫자 포맷(`pxFmt, sp, eok, mcapFmt, dateKo`), 검색 색인(`buildIndex/searchStocks`, 항목에 섹터 `sec/secL/secq` 포함 · 섹터명으로도 검색됨), 섹터 탐색(`sectorList/sectorItems`, 모달의 `#mdSector` 선택 상자, 검색어 없이 섹터만 고르면 시가총액순 전체 목록), 목록 정렬(`MD_SORTS`·`sortResults`: 시가총액·현재가·배당금·배당률 큰/작은 순, 미국은 원화 환산, 배당 자료 없으면 뒤로. 검색어가 있고 기본 정렬이면 관련도 순 유지), 종목 창 모달(`openSearch/openStock`, 열 때 섹터 필터 초기화), `addHolding/addToPlan`, 화면 전환(`goAnalysis/goMain`)
 - **`tech.js`:** 차트 분석 `techAnalysis`(이평 20/60/120, RSI, MACD, 볼린저, 지지·저항, 손절), `tickRound`(국내 호가단위, 국내 ETF는 1/5원)
 - **`detail.js`:** 종목 창(가격 차트 일/주/월/연, 지표 표, 배당·분배금 칸, 기업/실적/재무 리포트 탭)
 - **`ai.js`:** 앱 안 AI(`window.claude.use('sample')`), `aiPanel`(실행/중지/프롬프트 복사), `stockData`, 프롬프트 빌더

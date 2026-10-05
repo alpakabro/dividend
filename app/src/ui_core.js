@@ -98,9 +98,25 @@ function itemFor(id) {
   return SIDX.find(it => it.id === key) || SIDX.find(it => it.cid === id) || null;
 }
 function stockIdOf(it) { return it.cid || it.id; }   // 시뮬레이션에서 쓰는 id (큐레이션 우선)
+// 목록 정렬: 시가총액·현재가·배당금·배당률 (미국은 원/달러로 환산해 비교, 배당 자료가 없는 종목은 어느 방향이든 뒤로)
+const MD_SORTS = {
+  mcap_desc: ['시가총액 큰 순', it => it.mcap || null, -1], mcap_asc: ['시가총액 작은 순', it => it.mcap || null, 1],
+  price_desc: ['현재가 높은 순', it => mdPrice(it), -1], price_asc: ['현재가 낮은 순', it => mdPrice(it), 1],
+  div_desc: ['배당금 큰 순', it => mdDiv(it), -1], div_asc: ['배당금 작은 순', it => mdDiv(it), 1],
+  yield_desc: ['배당률 높은 순', it => mdYield(it), -1], yield_asc: ['배당률 낮은 순', it => mdYield(it), 1] };
+function mdStock(it) { return S(stockIdOf(it)); }
+function mdPrice(it) { const st = mdStock(it), p = st ? st.p0 : (it.rec ? it.rec[RF.price] : null); return p > 0 ? p * (it.mk === 'US' ? FX0 : 1) : null; }
+function mdDiv(it) { const st = mdStock(it); return st && !st.noDiv && st.d0 > 0 ? st.d0 * (st.mkt === 'US' ? FX0 : 1) : null; }
+function mdYield(it) { const st = mdStock(it); return st && !st.noDiv && st.d0 > 0 && st.p0 > 0 ? st.d0 / st.p0 : null; }
+function sortResults(list) {
+  const [, key, dir] = MD_SORTS[MD.sort] || MD_SORTS.mcap_desc;
+  const dec = list.map((it, i) => ({ it, i, v: key(it) }));
+  dec.sort((a, b) => ((a.v == null) - (b.v == null)) || (a.v != null && b.v != null && a.v !== b.v ? (a.v - b.v) * dir : 0) || (b.it.mcap - a.it.mcap) || (a.i - b.i));
+  return dec.map(x => x.it);
+}
 
 /* 검색 창 */
-const MD = { q: '', mkt: 'all', sec: 'all', results: [], sel: null, ctx: { mode: 'browse' }, lastFocus: null, limit: 120 };
+const MD = { q: '', mkt: 'all', sec: 'all', sort: 'mcap_desc', results: [], sel: null, ctx: { mode: 'browse' }, lastFocus: null, limit: 120 };
 const isNarrow = () => window.matchMedia('(max-width: 920px)').matches;
 function initModal() {
   $('#mdForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#mdQ').value); });
@@ -125,14 +141,14 @@ function openShell() {
   $('#mdTtl').textContent = MD_TITLE[MD.ctx.mode] || '종목 검색';
 }
 function openSearch(q, ctx) {
-  MD.ctx = ctx || { mode: 'browse' }; MD.sel = null; MD.sec = 'all'; syncMdMkt();   // 섹터 필터는 열 때마다 초기화
+  MD.ctx = ctx || { mode: 'browse' }; MD.sel = null; MD.sec = 'all'; MD.sort = 'mcap_desc'; syncMdMkt();   // 섹터 필터·정렬은 열 때마다 초기화
   openShell();
   $('#mdQ').value = q || '';
   runSearch(q || '');
   if (!q || isNarrow()) setTimeout(() => $('#mdQ').focus(), 30);
 }
 function openStock(id, ctx) {
-  MD.ctx = ctx || { mode: 'browse' }; MD.sec = 'all'; syncMdMkt();
+  MD.ctx = ctx || { mode: 'browse' }; MD.sec = 'all'; MD.sort = 'mcap_desc'; syncMdMkt();
   openShell();
   const it = itemFor(id);
   MD.q = it ? it.name : ''; $('#mdQ').value = MD.q;
@@ -150,6 +166,7 @@ function runSearch(q, keepSel) {
   MD.q = (q || '').trim(); MD.limit = 120;
   MD.results = MD.q ? searchStocks(MD.q, MD.mkt) : (MD.sec !== 'all' ? sectorItems(MD.sec, MD.mkt) : []);
   if (MD.q && MD.sec !== 'all') MD.results = MD.results.filter(it => it.sec === MD.sec);   // 검색어 + 섹터
+  if (MD.sort !== 'mcap_desc' || !MD.q) MD.results = sortResults(MD.results);   // 검색어가 있고 기본 정렬이면 관련도 순 유지
   renderList();
   const keep = keepSel && MD.sel && MD.results.includes(MD.sel);
   if (keep) selectItem(MD.sel, true);
@@ -169,12 +186,20 @@ function renderList() {
   const box = $('#mdList'); box.textContent = '';
   if (!MD.q && MD.sec === 'all') { box.append(h('div', { class: 'md-empty', text: '종목명·코드·티커를 넣거나, 위 섹터 상자에서 업종을 고르세요. 섹터명(예: 금융, 헬스케어, 리츠)을 검색해도 됩니다.' })); return; }
   const n = MD.results.length, mk = MD.mkt !== 'all' ? ' · ' + (MD.mkt === 'KR' ? '국내' : '미국') : '', what = MD.q ? `‘${MD.q}’ 검색 결과` : `‘${MD.sec}’ 섹터`;
-  box.append(h('div', { class: 'md-count', role: 'status', text: n ? `${what}${MD.q && MD.sec !== 'all' ? ` · ${MD.sec}` : ''} ${n.toLocaleString('ko-KR')}개${mk} · 시가총액 큰 순` : `${what}에 해당하는 종목이 없어요${mk}` }));
+  const cnt = h('div', { class: 'md-count', role: 'status' }, h('span', { text: n ? `${what}${MD.q && MD.sec !== 'all' ? ` · ${MD.sec}` : ''} ${n.toLocaleString('ko-KR')}개${mk}` : `${what}에 해당하는 종목이 없어요${mk}` }));
+  if (n) {   // 정렬 선택: 바꾸면 같은 조건으로 다시 정렬
+    const sel = h('select', { class: 'md-sort', 'aria-label': '목록 정렬', title: '미국 종목은 원/달러로 환산해 비교 · 배당 자료가 없는 종목은 뒤에' });
+    Object.entries(MD_SORTS).forEach(([k, v]) => sel.append(h('option', { value: k, text: v[0] }))); sel.value = MD.sort;
+    sel.addEventListener('change', e => { MD.sort = e.target.value; runSearch(MD.q, true); });
+    cnt.append(sel);
+  }
+  box.append(cnt);
   if (!n) { box.append(h('div', { class: 'md-empty', text: '철자를 바꾸거나 일부만 넣어 보세요. 국내 ETF·펀드는 이 데이터에 없어 보유 종목 카드의 [+ 목록에 없는 종목]으로 직접 입력할 수 있어요.' })); return; }
   MD.results.slice(0, MD.limit).forEach(it => {
     const rec = it.rec, st = it.cid ? U.get(it.cid) : null;
     const price = rec ? rec[RF.price] : st ? st.p0 : null, chg = rec ? rec[RF.chg] : null;
-    const sub = [it.code, rec ? mktLabel(rec) : (it.mk === 'US' ? '미국 ETF' : '국내'), /^ETF/.test(it.secL) ? null : it.secL, ...itemTags(it)].filter(Boolean).join(' · ');   // ETF는 시장 표시에 유형이 이미 있음
+    const ds = /^(div|yield)/.test(MD.sort) ? mdStock(it) : null, dv = ds && !ds.noDiv && ds.d0 > 0 ? `배당 ${pxFmt(ds.d0, it.mk)} (${pct(ds.d0 / ds.p0)})` : null;   // 배당 기준 정렬이면 배당금·배당률을 함께
+    const sub = [it.code, rec ? mktLabel(rec) : (it.mk === 'US' ? '미국 ETF' : '국내'), /^ETF/.test(it.secL) ? null : it.secL, dv, ...itemTags(it)].filter(Boolean).join(' · ');   // ETF는 시장 표시에 유형이 이미 있음
     const b = h('button', { class: 'ritem', type: 'button', role: 'option', 'aria-selected': String(MD.sel === it) },
       h('span', { class: 'n', text: it.name }), h('span', { class: 'p', text: price != null ? pxFmt(price, it.mk) : '—' }),
       h('span', { class: 'm', text: sub }), h('span', { class: 'c ' + dirCls(chg), text: chg != null ? sp(chg, 2) : '' }));

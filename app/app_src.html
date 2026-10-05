@@ -413,7 +413,8 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 .md-body{flex:1;display:grid;grid-template-columns:330px minmax(0,1fr);min-height:0}
 .md-list{border-right:1px solid var(--line);overflow:auto;background:var(--surface);overscroll-behavior:contain}
 .md-detail{overflow:auto;padding:14px 16px 24px;overscroll-behavior:contain;min-width:0}
-.md-count{font-size:11px;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.md-count{font-size:11px;color:var(--muted);padding:6px 10px 6px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.md-sort{height:24px;font-size:11px;padding:0 2px;max-width:150px;border-radius:6px;flex:none}
 .ritem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 8px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);cursor:pointer;width:100%;text-align:left;background:transparent;font:inherit;color:inherit}
 .ritem:hover{background:var(--hover)}
 .ritem[aria-selected="true"]{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--ink)}
@@ -1980,7 +1981,7 @@ renderMacro();
 renderAdvisor();
 
 renderAll();
-window.__divsim = { FX0, META, exportState, applyState, shareLink, applySite, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
+window.__divsim = { FX0, META, MD, exportState, applyState, shareLink, applySite, advFindStocks, advIntent, advCopyPrompt, advUserContent, ADV, simulate, portOf, needCalc, state, draft, U, S, commit, metrics: () => CUR && metrics(CUR_PORT, CUR), searchStocks, openSearch, openStock, techAnalysis, paCompute, DB_IDX, itemFor, promptCompany, promptEarnings, promptFinancials, promptChart, promptPortfolio, promptMacro };
 })();
 </script>
 </body>

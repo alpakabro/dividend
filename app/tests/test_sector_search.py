@@ -34,5 +34,19 @@ with sync_playwright() as p:
     # 5) 다시 열면 섹터 필터는 초기화
     pg.keyboard.press('Escape'); pg.evaluate("() => window.__divsim.openSearch('')"); pg.wait_for_timeout(200)
     assert pg.evaluate("() => document.getElementById('mdSector').value") == 'all'
+    # 6) 정렬: 금융 섹터(국내)를 배당률 높은 순 → 현재가 낮은 순 → 배당금 큰 순. 배당 자료 없는 종목은 뒤로
+    pg.click('#mdMkt button[data-v="KR"]'); pg.select_option('#mdSector', '금융'); pg.wait_for_timeout(300)
+    def series(expr):
+        return pg.evaluate("f => window.__divsim.MD.results.slice(0, 60).map(it => { const s = window.__divsim.S(it.cid || it.id); return (" + expr + "); })")
+    pg.select_option('#mdList .md-sort', 'yield_desc'); pg.wait_for_timeout(300)
+    ys = series("s && !s.noDiv && s.d0 > 0 ? s.d0 / s.p0 : null"); nn = [y for y in ys if y is not None]
+    assert len(nn) >= 10 and nn == sorted(nn, reverse=True) and ys[:len(nn)] == nn, ys[:12]        # 내림차순, null은 뒤
+    print('배당률 높은 순 상위:', [round(y * 100, 2) for y in nn[:5]], '| 첫 행:', pg.locator('#mdList .ritem .m').first.text_content())
+    pg.select_option('#mdList .md-sort', 'price_asc'); pg.wait_for_timeout(300)
+    ps = series("s ? s.p0 : null"); assert ps == sorted(ps), ps[:8]
+    pg.select_option('#mdList .md-sort', 'div_desc'); pg.wait_for_timeout(300)
+    ds = series("s && !s.noDiv && s.d0 > 0 ? s.d0 : null"); dn = [d for d in ds if d is not None]; assert dn == sorted(dn, reverse=True) and ds[:len(dn)] == dn, ds[:8]
+    assert pg.evaluate("() => document.querySelector('#mdList .md-sort').value") == 'div_desc'
+    print('정렬 ok: 배당금 큰 순 상위', dn[:3])
     print('errors', errs); assert not errs
     b.close(); print('OK')

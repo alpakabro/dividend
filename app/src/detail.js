@@ -178,7 +178,7 @@ function divCard(it, st, rec) {
       h('dt', { text: '지급월' }), h('dd', { text: monthsText(st.mon) + (fromDb ? ' (추정)' : '') }),
       h('dt', { text: '배당성장 가정' }), h('dd', { text: fx1(st.g, 1) + '% / 년' }),
       etfDb ? h('dt', { text: '분배금 변동' }) : h('dt', { text: '삭감 위험' }), etfDb ? h('dd', { text: '시장 상황에 따라 매번 달라져요' }) : fromDb ? h('dd', { text: '미확인 — 최근 12개월 지급 실적만 반영(정책·특별배당 미구분)' }) : h('dd', { text: `${SAFE[st.safe].e} ${SAFE[st.safe].t}` })),
-      h('div', { style: 'margin:10px 0 2px' }, mo, h('div', { class: 'mo-h', style: 'grid-template-columns:repeat(12,10px);gap:3px;font-size:9px' }, ...Array.from({ length: 12 }, (_, i) => h('span', { text: (i % 3 === 0 ? i + 1 : '') + '' })))), h('p', { class: 'mini', text: st.note }));
+      h('div', { style: 'margin:10px 0 2px' }, mo, h('div', { class: 'mo-h', style: 'grid-template-columns:repeat(12,10px);gap:3px;font-size:10px' }, ...Array.from({ length: 12 }, (_, i) => h('span', { text: (i % 3 === 0 ? i + 1 : '') + '' })))), h('p', { class: 'mini', text: st.note }));
     if (fromDb) {
       card.append(h('p', { class: 'mini', text: etfDb ? '분배 이력: 야후 파이낸스(배당락일 기준). 과거 분배가 앞으로도 같다는 보장은 없어요.' : '배당 이력: 야후 파이낸스(배당락일 기준), 지급월은 배당락일로 추정. 특별배당이 섞였거나 정책이 바뀌었을 수 있으니 중요한 종목은 공시로 확인하세요.' }));
       const det = h('details', { style: 'margin-top:6px' }, h('summary', { style: 'cursor:pointer;font-size:12px;color:var(--ink-2)', text: etfDb ? '분배율·지급월 직접 고치기' : '배당수익률·지급월 직접 고치기' }));

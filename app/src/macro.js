@@ -39,6 +39,12 @@ function renderMacro() {
   box.append(h('div', { class: 'macro-h' },
     h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: (MACRO.tiles_asof ? '지표 ' + dateKo(MACRO.tiles_asof) + ' · 분석 ' : '') + dateKo(MACRO.asof) + ' 기준' }))),
     h('div', { class: 'r', style: 'display:flex;gap:6px' }, folded ? null : tog, fold)));
+  if (folded) {   // 접힌 상태: 핵심 지표 4개를 한 줄 띠로
+    const strip = h('div', { class: 'mstrip', role: 'list', 'aria-label': '핵심 지표' });
+    ['코스피', '원/달러', '美 10년물', 'S&P500'].forEach(k => { const t = MACRO.tiles.find(x => x.k === k); if (!t) return; const c = mchg(t.chg);
+      strip.append(h('span', { class: 'mchip', role: 'listitem' }, h('span', { class: 'k', text: t.k }), h('b', { text: t.v }), c ? h('span', { class: 'c ' + dirCls(c.d), text: c.txt }) : null)); });
+    box.append(strip);
+  }
   if (!folded) box.append(h('p', { class: 'macro-lead', text: MACRO.headline }));   // 요약 문장은 제목 줄 아래(휴대폰에서도 접기 버튼이 위에 보이게)
   const content = h('div', { id: 'macroContent', hidden: folded }); box.append(content);
   if (folded) return;

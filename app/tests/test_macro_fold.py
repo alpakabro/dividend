@@ -18,6 +18,7 @@ async def main():
         await pg.goto(P); await pg.wait_for_timeout(1200)
         await pg.evaluate("() => { try { localStorage.clear() } catch(e){} }"); await pg.reload(); await pg.wait_for_timeout(1200)
         print('default  ', await info(pg))
+        await pg.evaluate("() => { const b = document.querySelector('#macro .fold'); if (b && b.textContent.includes('펼치기')) b.click(); }"); await pg.wait_for_timeout(300)   # 기본은 접힘 → 펼친 상태에서 시작
         await pg.click('#macro .macro-h .fold'); await pg.wait_for_timeout(200)
         print('folded   ', await info(pg))
         await pg.screenshot(path=D + 'shot_fold_desk.png', clip={'x':0,'y':0,'width':1400,'height':260})

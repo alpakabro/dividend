@@ -231,7 +231,7 @@ function renderPA() {
 
   // ③ 위험·예상 손실
   const c3 = card('③ 주요 위험 요인과 예상 손실 가능성', '과거 변동성으로 계산한 추정치 — 미래 손실 한도를 보장하지 않아요');
-  const kv = (k, v, sub) => [h('dt', { text: k }), h('dd', null, v, sub ? h('div', { style: 'font-size:10.5px;color:var(--muted);font-weight:400', text: sub }) : null)];
+  const kv = (k, v, sub) => [h('dt', { text: k }), h('dd', null, v, sub ? h('div', { style: 'font-size:11px;color:var(--muted);font-weight:400', text: sub }) : null)];
   c3.append(h('dl', { class: 'kv' },
     ...kv('예상 연 변동성', pa.vol != null ? pct(pa.vol, 1) : '—', `주가가 1년에 평균적으로 위아래로 움직이는 폭 · 성향 목표 ${pct(R.vol, 0)} 이하`),
     ...kv('1개월 최대 예상 손실(95%)', pa.var1m != null ? `${neg}${pct(pa.var1m, 1)} (${neg}${wonT(pa.var1m * pa.total)})` : '—', '20번 중 19번은 한 달 손실이 이보다 작다는 뜻(과거 변동성·로그정규 분포 가정)'),
@@ -251,7 +251,7 @@ function renderPA() {
   c3b.append(h('dl', { class: 'kv' }, ...kv('연간 배당(세전)', wonT(pa.divG), `포트폴리오 배당수익률 ${pct(pa.yieldP)}`), ...kv('연간 배당(세후)', wonT(pa.divN), `월평균 ${wonT(pa.divN / 12)}`), ...kv('배당 들어오는 달', `${pa.covMonths} / 12개월`, ''), ...kv('가중평균 배당성장 가정', fx1(pa.gAvg, 1) + '%', '')));
   const mxm = Math.max(...pa.monthly, 1), bars = h('div', { style: 'display:grid;grid-template-columns:repeat(12,1fr);gap:4px;align-items:end;height:70px;margin-top:10px' });
   pa.monthly.forEach((x, i) => bars.append(h('div', { title: `${i + 1}월 ${wonT(x)}(세전)`, style: `height:${Math.max(2, x / mxm * 64)}px;background:${x > 0.5 ? 'var(--ink)' : 'var(--grid)'};border-radius:3px 3px 0 0` })));
-  const lab = h('div', { style: 'display:grid;grid-template-columns:repeat(12,1fr);gap:4px;font-size:10px;color:var(--muted);text-align:center' }); for (let i = 1; i <= 12; i++) lab.append(h('span', { text: i + '월' }));
+  const lab = h('div', { style: 'display:grid;grid-template-columns:repeat(12,1fr);gap:4px;font-size:11px;color:var(--muted);text-align:center' }); for (let i = 1; i <= 12; i++) lab.append(h('span', { text: i + '월' }));
   c3b.append(bars, lab);
   grid.append(c3b);
 

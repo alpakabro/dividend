@@ -1,11 +1,11 @@
-# 데이터 자동 갱신: DB 생성 → (새 데이터일 때만) ETF 수집 → ETF 병합 → 메타(환율·지수·종목 수) → 빌드 → 검증 → 커밋
+# 데이터 자동 갱신: DB 생성 → (새 데이터일 때만) ETF 수집 → ETF 병합 → 메타(환율·지수·종목 수) → 매크로 타일 → 빌드 → 검증 → 커밋
 #   python pipeline/refresh.py                              # 전체 실행. 데이터 날짜가 그대로면 '변동 없음'으로 끝남
-#   python pipeline/refresh.py --steps meta,build,verify    # 일부 단계만 (쉼표: db etf merge meta build verify commit)
+#   python pipeline/refresh.py --steps meta,build,verify    # 일부 단계만 (쉼표: db etf merge meta macro build verify commit)
 #   python pipeline/refresh.py --force                      # 날짜가 같아도 끝까지 실행
 #   python pipeline/refresh.py --push                       # 커밋 뒤 origin main에 푸시 (GitHub Actions가 쓰는 옵션)
 # 기록: pipeline/refresh.log. GitHub Actions에서는 실행 요약도 남긴다($GITHUB_STEP_SUMMARY).
 # 검증에 실패하면 커밋하지 않는다. 종료 코드 1 = 실패(Actions가 이메일로 알림).
-import argparse, datetime as dt, json, os, pathlib, shutil, subprocess, sys, time, traceback
+import argparse, datetime as dt, json, os, pathlib, re, shutil, subprocess, sys, time, traceback
 
 D = os.path.dirname(os.path.abspath(__file__))        # pipeline/
 ROOT = os.path.dirname(D)
@@ -14,19 +14,22 @@ sys.path.insert(0, APP)
 from build import ko_date, short_date, start_of     # 날짜 표기 도우미(빌드와 공유)
 
 META_PATH = os.path.join(APP, 'data', 'meta.json')
+MACRO_PATH = os.path.join(APP, 'src', 'macro_report.json')
 DB_FULL = os.path.join(APP, 'data', 'stock_db_full.js')
 DB_RAW = os.path.join(D, 'stock_db.js')
 RAW = os.path.join(D, 'raw_etf')
-STEPS = ['db', 'etf', 'merge', 'meta', 'build', 'verify', 'commit']
+STEPS = ['db', 'etf', 'merge', 'meta', 'macro', 'build', 'verify', 'commit']
 PY = sys.executable
 ENV = {**os.environ, 'PYTHONUTF8': '1', 'PYTHONIOENCODING': 'utf-8'}
 YF = {'fx': 'KRW=X', 'kospi': '^KS11', 'kosdaq': '^KQ11'}     # 야후 파이낸스 심볼
+BOK_URL = 'https://www.bok.or.kr/portal/singl/baseRate/list.do?dataSeCd=01&menuNo=200643'
+UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36'}
+WARN = []   # 실행 요약에 ⚠로 붙는 경고(타일 수집 실패 등). 실패가 아니라 알림
 if hasattr(sys.stdout, 'reconfigure'): sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 # ── 순수 함수 (pipeline/test_refresh.py에서 점검) ──
 def fx_range(closes):
     """[(YYYY-MM-DD, 종가)] → 연중 고·저와 그 날짜(월/일)"""
-    md = lambda s: f'{int(s[5:7])}/{int(s[8:10])}'
     hi = max(closes, key=lambda x: x[1]); lo = min(closes, key=lambda x: x[1])
     return {'hi': hi[1], 'hiD': md(hi[0]), 'lo': lo[1], 'loD': md(lo[0])}
 
@@ -45,6 +48,85 @@ def count_gate(prev, new, ratio=0.9):
 
 def days_between(a, b):
     return (dt.date.fromisoformat(b) - dt.date.fromisoformat(a)).days
+
+# ── 매크로 타일 계산 (순수 함수) ──
+def pm(x, dp, unit='', pre=''):
+    """부호 표기: 양수 '+', 음수 '▲'(앱 규칙), 0은 부호 없음"""
+    return ('+' if x > 0 else '▲' if x < 0 else '') + pre + f'{abs(x):,.{dp}f}' + unit
+def md(d): return f'{int(d[5:7])}/{int(d[8:10])}'          # '2026-10-02' → '10/2'
+def mon(d): return f'{int(d[5:7])}월'                       # '2026-08-01' → '8월'
+def upto(series, asof): return [x for x in series if x[0] <= asof]
+def last_two(series, asof):
+    s = upto(series, asof); return s[-1], s[-2]
+def last_change(series):
+    """값이 마지막으로 바뀐 (날짜, 현재값, 직전값). 한 번도 안 바뀌었으면 첫 날짜"""
+    for i in range(len(series) - 1, 0, -1):
+        if series[i][1] != series[i - 1][1]: return series[i][0], series[-1][1], series[i - 1][1]
+    return series[0][0], series[-1][1], series[-1][1]
+def yoy(monthly):
+    """월별 지수 → [(최근 달, 전년 동월 대비 %), (그 전 달, …)]"""
+    return [(monthly[-k][0], round((monthly[-k][1] / monthly[-k - 12][1] - 1) * 100, 1)) for k in (1, 2)]
+def ytd_base(series, asof):
+    """연초 기준값 = 전년 마지막 값"""
+    prev = [v for d, v in series if d < asof[:4] + '-01-01']; return prev[-1] if prev else None
+def ytd_high(series, asof):
+    return max(v for d, v in series if asof[:4] + '-01-01' <= d <= asof)
+def parse_bok(html):
+    """한국은행 기준금리 표 → [(YYYY-MM-DD, 금리)] 최신순 (행: 연도 · 'MM월 DD일' · 금리)"""
+    out, year = [], None
+    for row in re.findall(r'<tr[^>]*>(.*?)</tr>', html, flags=re.S):
+        cells = [re.sub(r'<[^>]+>', '', c).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', row, flags=re.S)]
+        if cells and re.fullmatch(r'20\d\d', cells[0]): year, cells = cells[0], cells[1:]
+        m = re.fullmatch(r'(\d{1,2})월\s*(\d{1,2})일', cells[0]) if cells else None
+        if year and m and len(cells) > 1 and re.fullmatch(r'\d+\.\d+', cells[1]):
+            out.append((f'{year}-{int(m.group(1)):02d}-{int(m.group(2)):02d}', float(cells[1])))
+    return out
+
+def build_tiles(src):
+    """수집값 → 매크로 브리핑 타일 10개(값·설명·등락·출처). 자료가 빠진 타일은 건너뛰고 경고로 돌려줌
+    src: us(기준일), fed_u/fed_l(FRED 연방기금금리 상·하단), cpi/cpi_core, unrate/payems, tnx/dxy/krw/kospi/spx/brent/wti(야후), bok(한국은행 최신순)"""
+    us = src['us']; tiles, warn = [], []
+    def tile(name, fn):
+        try: tiles.append(fn())
+        except Exception as e: warn.append(f'{name}: 자료 없음 ({type(e).__name__})')
+    def lvl(name, key, v_fmt, d_fn, dp, unit='', pre='', s='Y'):      # 일별 시세형 타일(전일 대비)
+        (d1, v1), (d0, v0) = last_two(src[key], us)
+        return {'k': name, 'v': v_fmt(v1), 'd': d_fn(d1, v1), 's': [s],
+                'chg': {'lab': '전일 대비', 'cur': round(v1, dp), 'prev': round(v0, dp), 'kind': 'lvl', 'dp': dp,
+                        **({'unit': unit} if unit else {}), **({'pre': pre} if pre else {}), 'ptxt': f'{pre}{v0:,.{dp}f}{unit} ({md(d0)})'}}
+    def fed():
+        u = upto(src['fed_u'], us); l = upto(src['fed_l'], us)
+        d_chg, cur_u, prev_u = last_change(u); cur_l = l[-1][1]; prev_l = [v for d, v in l if d < d_chg][-1]
+        return {'k': '美 기준금리', 'v': f'{cur_l:.2f}~{cur_u:.2f}%', 's': ['F'],
+                'd': f"{md(d_chg)}부터 {int(round(abs(cur_u - prev_u) * 100))}bp {'인상' if cur_u > prev_u else '인하'} 적용 · {md(u[-1][0])} 기준",   # FRED 목표범위는 결정 다음 날(시행일)에 바뀐다
+                'chg': {'lab': '직전 변경 대비', 'cur': cur_u, 'prev': prev_u, 'kind': 'pp', 'ptxt': f'{prev_l:.2f}~{prev_u:.2f}% ({md(d_chg)} 적용 전)'}}
+    def cpi():
+        (d1, y1), (d0, y0) = yoy(src['cpi']); core = yoy(src['cpi_core'])[0][1]
+        return {'k': f'美 CPI ({mon(d1)})', 'v': f'{y1}%', 'd': f'근원 {core}% · 전년 동월 대비', 's': ['F'],
+                'chg': {'lab': '전월 대비', 'cur': y1, 'prev': y0, 'kind': 'pp', 'ptxt': f'{y0}% ({mon(d0)})'}}
+    def jobs():
+        (d1, u1), (d0, u0) = src['unrate'][-1], src['unrate'][-2]; p1, p0 = src['payems'][-1][1], src['payems'][-2][1]
+        return {'k': f'美 실업률 ({mon(d1)})', 'v': f'{u1}%', 'd': f'고용 {pm((p1 - p0) / 10, 1, "만")} (비농업, 전월 대비) · {mon(d1)}', 's': ['F'],
+                'chg': {'lab': '전월 대비', 'cur': u1, 'prev': u0, 'kind': 'pp', 'ptxt': f'{u0}% ({mon(d0)})'}}
+    def tnx():
+        (d1, v1), (d0, v0) = last_two(src['tnx'], us)
+        return {'k': '美 10년물', 'v': f'{v1:.2f}%', 'd': f'연초 대비 {pm(round((v1 - ytd_base(src["tnx"], us)) * 100), 0, "bp")} · {md(d1)}', 's': ['Y'],
+                'chg': {'lab': '전일 대비', 'cur': round(v1, 2), 'prev': round(v0, 2), 'kind': 'bp', 'ptxt': f'{v0:.2f}% ({md(d0)})'}}
+    def bok():
+        (d1, r1), (d0, r0) = src['bok'][0], src['bok'][1]
+        return {'k': '韓 기준금리', 'v': f'{r1:.2f}%', 'd': f"{md(d1)} {'인상' if r1 > r0 else '인하' if r1 < r0 else '동결'} · 한국은행", 's': ['B'],
+                'chg': {'lab': '직전 결정 대비', 'cur': r1, 'prev': r0, 'kind': 'pp', 'ptxt': f'{r0:.2f}% ({md(d0)} 결정)'}}
+    ytd = lambda key: (lambda d1, v1: f'연초 대비 {pm((v1 / ytd_base(src[key], us) - 1) * 100, 1, "%")} · {md(d1)}')
+    tile('美 기준금리', fed); tile('美 CPI', cpi); tile('美 실업률', jobs); tile('美 10년물', tnx)
+    tile('달러인덱스', lambda: lvl('달러인덱스', 'dxy', lambda v: f'{v:.2f}', ytd('dxy'), 2))
+    tile('원/달러', lambda: lvl('원/달러', 'krw', lambda v: f'{v:,.1f}원',
+                              lambda d1, v1: f"연초 대비 {pm(round(v1 - ytd_base(src['krw'], us), 1), 1, '원')} ({'원화 강세' if v1 < ytd_base(src['krw'], us) else '원화 약세'}) · {md(d1)}", 1, unit='원'))
+    tile('韓 기준금리', bok)
+    tile('코스피', lambda: lvl('코스피', 'kospi', lambda v: f'{v:,.2f}',
+                             lambda d1, v1: f"연초 대비 {pm((v1 / ytd_base(src['kospi'], us) - 1) * 100, 1, '%')} · 연중 고점 대비 {pm((v1 / ytd_high(src['kospi'], us) - 1) * 100, 1, '%')} · {md(d1)}", 2))
+    tile('S&P500', lambda: lvl('S&P500', 'spx', lambda v: f'{v:,.2f}', ytd('spx'), 2))
+    tile('브렌트유', lambda: lvl('브렌트유', 'brent', lambda v: f'${v:.2f}', lambda d1, v1: f"WTI ${upto(src['wti'], us)[-1][1]:.2f} · {md(d1)}", 2, pre='$'))
+    return tiles, warn
 
 # ── 공통 ──
 LOGF = None
@@ -91,6 +173,47 @@ def yf_closes(sym, start, end):
             log(f'yfinance {sym} 오류: {e}')
         time.sleep(5 * (t + 1))
     raise RuntimeError(f'야후 파이낸스에서 {sym}을 가져오지 못함')
+
+def yf_multi(symbols, start, end):
+    """여러 심볼의 일별 종가를 한 번에 {심볼: [(날짜, 종가)]}. 일부 심볼이 비어도 나머지는 돌려줌"""
+    import yfinance as yf, pandas as pd
+    for t in range(3):
+        try:
+            df = yf.download(symbols, start=start, end=(dt.date.fromisoformat(end) + dt.timedelta(days=1)).isoformat(), auto_adjust=False, group_by='ticker', progress=False, threads=False)
+            out = {}
+            for s in symbols:
+                try:
+                    sub = df[s] if isinstance(df.columns, pd.MultiIndex) else df
+                    out[s] = [(d.strftime('%Y-%m-%d'), round(float(v), 4)) for d, v in sub['Close'].dropna().items()]
+                except Exception: out[s] = []
+            if any(out.values()): return out
+            log('yfinance 일괄: 빈 결과')
+        except Exception as e:
+            log(f'yfinance 일괄 오류: {e}')
+        time.sleep(5 * (t + 1))
+    raise RuntimeError('야후 파이낸스 일괄 조회 실패')
+
+def http_get(url):
+    """웹 페이지·CSV 텍스트. FRED는 파이썬 기본 TLS 접속을 끊어 버리므로 curl_cffi(yfinance 의존성)로 크롬처럼 접속한다"""
+    try:
+        from curl_cffi import requests as cr
+        r = cr.get(url, impersonate='chrome', timeout=30); r.raise_for_status(); return r.text
+    except ImportError:
+        import urllib.request
+        return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30).read().decode('utf-8', 'replace')
+
+def fred(series_id):
+    """FRED CSV(키 불필요) → [(YYYY-MM-DD, 값)]. 결측('.')은 제외"""
+    txt = http_get(f'https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}')
+    out = [(d, float(v)) for d, v in (l.split(',') for l in txt.strip().splitlines()[1:]) if v not in ('.', '')]
+    if not out: raise RuntimeError('빈 결과')
+    return out
+
+def bok_rates():
+    """한국은행 기준금리 변동 추이 페이지 → [(날짜, 금리)] 최신순"""
+    out = parse_bok(http_get(BOK_URL))
+    if len(out) < 2: raise RuntimeError('표를 찾지 못함')
+    return out
 
 # ── 단계 ──
 def step_db():
@@ -144,6 +267,33 @@ def step_meta():
     log(f"meta: 국내 {kr} · 미국 {us} · 원/달러 {meta['fx']} ({fx_date}) · 연중 {meta['fx_range']} · 코스피 {idx['kospi']} · 코스닥 {idx['kosdaq']} · 종목 {meta['counts']}")
     return meta
 
+def step_macro():
+    """매크로 브리핑 지표 타일 10개 → app/src/macro_report.json (야후 파이낸스·FRED·한국은행). 실패한 타일은 이전 값 유지 + 경고"""
+    us = read_json(META_PATH)['asof']['US']
+    rep = read_json(MACRO_PATH); src = {'us': us}; warn = []
+    try:
+        y = yf_multi(['^TNX', 'DX-Y.NYB', 'KRW=X', '^KS11', '^GSPC', 'BZ=F', 'CL=F'], f'{int(us[:4]) - 1}-12-15', us)
+        src.update(tnx=y['^TNX'], dxy=y['DX-Y.NYB'], krw=y['KRW=X'], kospi=y['^KS11'], spx=y['^GSPC'], brent=y['BZ=F'], wti=y['CL=F'])
+    except Exception as e: warn.append(f'야후 파이낸스 조회 실패: {e}')
+    for key, sid in (('fed_u', 'DFEDTARU'), ('fed_l', 'DFEDTARL'), ('cpi', 'CPIAUCNS'), ('cpi_core', 'CPILFENS'), ('unrate', 'UNRATE'), ('payems', 'PAYEMS')):   # CPI는 공식 전년 대비와 같은 비계절조정 지수
+        try: src[key] = fred(sid)
+        except Exception as e: warn.append(f'FRED {sid} 조회 실패: {e}')
+    try: src['bok'] = bok_rates()
+    except Exception as e: warn.append(f'한국은행 기준금리 조회 실패: {e}')
+    tiles, w2 = build_tiles(src); warn += w2
+    base = lambda k: k.split(' (')[0]                    # '美 CPI (8월)' → '美 CPI': 달이 바뀌어도 같은 자리
+    new = {base(t['k']): t for t in tiles}
+    rep['tiles'] = [new.pop(base(t['k']), t) for t in rep['tiles']] + list(new.values())
+    rep['tiles_asof'] = us
+    rep['src_auto'] = {'Y': {'title': '야후 파이낸스 (시세·지수·환율·유가 일별 종가)', 'url': 'https://finance.yahoo.com/', 'date': us},
+                       'F': {'title': 'FRED 세인트루이스 연준 (연방기금금리 목표범위·CPI·실업률·비농업 고용)', 'url': 'https://fred.stlouisfed.org/', 'date': (upto(src.get('fed_u', []), us) or [(us, 0)])[-1][0]},
+                       'B': {'title': '한국은행 기준금리 변동 추이', 'url': BOK_URL, 'date': (src.get('bok') or [(us, 0)])[0][0]}}
+    json.dump(rep, open(MACRO_PATH, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+    WARN.extend('매크로 타일 ' + w for w in warn)
+    log(f'macro: 타일 {len(tiles)}/10 갱신 ({us} 기준)' + (' · 경고: ' + ' / '.join(warn) if warn else ''))
+    for t in tiles: log(f"  {t['k']}: {t['v']} · {t['d']}")
+    return tiles
+
 def step_build():
     run([PY, 'build.py'], cwd=APP)
 
@@ -171,8 +321,8 @@ def step_verify():
     return r
 
 def step_commit(meta):
-    """index.html·DB·meta만 커밋. --push면 origin main으로 (거절되면 원격 변경을 받아 한 번 더)"""
-    git('add', '--', 'index.html', 'app/data/stock_db_full.js', 'app/data/meta.json')
+    """index.html·DB·meta·매크로 타일만 커밋. --push면 origin main으로 (거절되면 원격 변경을 받아 한 번 더)"""
+    git('add', '--', 'index.html', 'app/data/stock_db_full.js', 'app/data/meta.json', 'app/src/macro_report.json')
     if subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=ROOT).returncode == 0:
         log('커밋할 변경 없음'); return None
     msg = f"data: 국내 {meta['asof']['KR']} · 미국 {meta['asof']['US']} 종가 자동 갱신"
@@ -194,9 +344,9 @@ def summary(lines):
     if gh: open(gh, 'a', encoding='utf-8').write('\n'.join(f'- {l}' for l in lines) + '\n')
 
 def stale_notes(meta):
-    """사람이 관리하는 콘텐츠(매크로 브리핑·종목 리포트)가 가격 데이터보다 일주일 넘게 오래되면 알림"""
+    """사람이 관리하는 콘텐츠(매크로 분석 글·종목 리포트)가 가격 데이터보다 일주일 넘게 오래되면 알림"""
     out = []
-    for name, path, getter in (('매크로 브리핑(app/src/macro_report.json)', 'macro_report.json', lambda j: j['asof']),
+    for name, path, getter in (('매크로 브리핑 분석 글(app/src/macro_report.json)', 'macro_report.json', lambda j: j['asof']),
                                ('종목 리포트·매크로 사실(app/src/research.json)', 'research.json', lambda j: j['macro']['us']['asof'])):
         try: asof = getter(read_json(os.path.join(APP, 'src', path)))
         except Exception: continue
@@ -221,6 +371,7 @@ def main():
         if 'etf' in steps: step_etf()
         if 'merge' in steps: step_merge()
         meta = step_meta() if 'meta' in steps else read_json(META_PATH)
+        mt = step_macro() if 'macro' in steps else None
         if 'build' in steps: step_build()
         r = step_verify() if 'verify' in steps else None
         sha = step_commit(meta) if 'commit' in steps else None
@@ -228,8 +379,9 @@ def main():
         log(traceback.format_exc()); summary(head + [f'**실패**: {e}']); sys.exit(1)
     lines = head + [f"새 데이터: 국내 {meta['asof']['KR']} · 미국 {meta['asof']['US']} · 원/달러 {meta['fx']:,}원({meta['fx_date']}, {meta['fx_src']}) · 코스피 {meta['kospi']:,} · 코스닥 {meta['kosdaq']:,}",
                    '종목 수: ' + ', '.join(f'{k} {v:,}' for k, v in meta['counts'].items())]
+    if mt is not None: lines.append(f"매크로 타일 {len(mt)}/10 자동 갱신 ({meta['asof']['US']} 기준): " + ', '.join(f"{t['k']} {t['v']}" for t in mt))
     if r: lines.append(f"검증 통과: 기본 구성 20년 후 세후 월배당 {r['m']:,.0f}원, 페이지 오류 0건")
-    lines += stale_notes(meta)
+    lines += ['⚠ ' + w for w in WARN] + stale_notes(meta)
     if 'commit' in steps: lines.append((f'커밋 {sha}' + (' · origin/main 푸시 완료' if ARGS.push else ' (푸시 안 함)')) if sha else '커밋 없음')
     lines.append(f'소요 {time.time() - t0:.0f}초')
     summary(lines)

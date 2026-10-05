@@ -3,6 +3,7 @@ const MACRO = window.MACRO || null;
 const SECT_ETF = [['SPY', 'S&P500'], ['QQQ', '나스닥100'], ['IWM', '러셀2000'], ['SOXX', '반도체'], ['XLK', '기술'], ['XLE', '에너지'], ['XLV', '헬스케어'], ['XLI', '산업재'], ['XLB', '소재'], ['XLP', '필수소비재'], ['XLF', '금융'], ['XLRE', '부동산'], ['XLC', '커뮤니케이션'], ['XLU', '유틸리티'], ['XLY', '경기소비재']];
 function msrc(code) {
   if (code === 'DB') return { title: MACRO ? MACRO.db_note : '앱 DB 자체 계산', url: null, date: DATA_DATE.US };
+  if (MACRO && MACRO.src_auto && MACRO.src_auto[code]) return MACRO.src_auto[code];   // Y·F·B: 지표 타일 자동 수집 출처(야후 파이낸스·FRED·한국은행), refresh.py가 기록
   const set = code[0] === 'U' ? (RESEARCH.macro.us || {}) : (RESEARCH.macro.kr || {}), n = +code.slice(1);
   return (set.sources || []).find(s => s.n === n) || null;
 }
@@ -36,7 +37,7 @@ function renderMacro() {
   const fold = h('button', { class: 'btn sm fold', type: 'button', 'aria-expanded': String(!folded), 'aria-controls': 'macroContent', title: folded ? '매크로 브리핑 펼치기' : '매크로 브리핑 접기', text: folded ? '펼치기 ▾' : '접기 ▴' });
   fold.addEventListener('click', () => { state.macroFold = !folded; save(); renderMacro(); fold.blur(); const f2 = $('#macro .macro-h .fold'); if (f2) f2.focus(); });
   box.append(h('div', { class: 'macro-h' },
-    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: dateKo(MACRO.asof) + ' 기준' }))),
+    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: (MACRO.tiles_asof ? '지표 ' + dateKo(MACRO.tiles_asof) + ' · 분석 ' : '') + dateKo(MACRO.asof) + ' 기준' }))),
     h('div', { class: 'r', style: 'display:flex;gap:6px' }, folded ? null : tog, fold)));
   if (!folded) box.append(h('p', { class: 'macro-lead', text: MACRO.headline }));   // 요약 문장은 제목 줄 아래(휴대폰에서도 접기 버튼이 위에 보이게)
   const content = h('div', { id: 'macroContent', hidden: folded }); box.append(content);
@@ -58,7 +59,7 @@ function renderMacro() {
   // 지수 차트 + 섹터 등락
   const chartCard = h('div', { style: 'min-width:0' }, h('h3', { style: 'font-size:12.5px;margin:0 0 4px', text: '주요 지수 최근 1년 (시작=100)' }));
   const leg = h('div', { class: 'legend' }), host = h('div', { class: 'chart' });
-  chartCard.append(leg, host, h('p', { class: 'mini', text: `코스피·코스닥은 상장폐지 종목 포함 시총가중 자체 계산(2026.10.1 실제 종가로 보정), 미국은 SPY·QQQ ETF 가격 · 국내 ${dataDate('KR')}·미국 ${dataDate('US')}까지` }));
+  chartCard.append(leg, host, h('p', { class: 'mini', text: `코스피·코스닥은 상장폐지 종목 포함 시총가중 자체 계산(${dataDate('KR')} 실제 종가로 보정), 미국은 SPY·QQQ ETF 가격 · 국내 ${dataDate('KR')}·미국 ${dataDate('US')}까지` }));
   const sect = h('div', { style: 'min-width:0' }, h('h3', { style: 'font-size:12.5px;margin:0 0 4px', text: '미국 업종별 등락 (섹터 ETF)' }));
   const st = h('table', { class: 'ftbl' }, h('thead', null, h('tr', null, ...['업종', '1개월', '3개월', '연초 이후', '1년'].map(x => h('th', { text: x })))));
   const stb = h('tbody');
@@ -96,8 +97,8 @@ function renderMacro() {
   const used = new Set(); [...MACRO.tiles, ...MACRO.key3].forEach(x => (x.s || []).forEach(c => used.add(c))); MACRO.sections.forEach(s => { (s.items || []).forEach(x => (x.s || []).forEach(c => used.add(c))); (s.scen || []).forEach(x => (x.s || []).forEach(c => used.add(c))); });
   const ol = h('ul', { class: 'srcs', style: 'list-style:none;padding-left:0' });
   [...used].sort((a, b) => a[0].localeCompare(b[0]) || (+a.slice(1) - +b.slice(1))).forEach(c => { const s = msrc(c); if (!s) return; ol.append(h('li', { id: 'msrc-' + c }, h('b', { text: `[${c}] ` }), s.url ? h('a', { href: s.url, target: '_blank', rel: 'noopener noreferrer', text: s.title }) : s.title, s.date ? ` (${s.date})` : '')); });
-  body.append(h('details', { class: 'sub', id: 'macroSrc' }, h('summary', { text: `출처 ${used.size}건 — U: 미국·글로벌, K: 한국·환율·지정학, DB: 앱 자체 계산` }), ol));
-  body.append(aiPanel({ key: 'macro', title: 'AI 매크로 분석 (가이드라인 ①~⑦)', prompt: () => promptMacro(false), copy: () => promptMacro(true), intro: '위 브리핑은 2026.10.4에 공식 자료·언론 보도로 정리한 스냅샷이에요. 그 뒤 소식은 [프롬프트 복사] 후 웹 검색이 되는 Claude 채팅에서 받아 보세요.' }));
+  body.append(h('details', { class: 'sub', id: 'macroSrc' }, h('summary', { text: `출처 ${used.size}건 — U: 미국·글로벌, K: 한국·환율·지정학, DB: 앱 자체 계산, Y·F·B: 지표 자동 수집(야후 파이낸스·FRED·한국은행)` }), ol));
+  body.append(aiPanel({ key: 'macro', title: 'AI 매크로 분석 (가이드라인 ①~⑦)', prompt: () => promptMacro(false), copy: () => promptMacro(true), intro: '위 브리핑의 분석은 ' + dateKo(MACRO.asof) + '에 공식 자료·언론 보도로 정리한 스냅샷이에요(지표 타일은 매일 자동 갱신). 그 뒤 소식은 [프롬프트 복사] 후 웹 검색이 되는 Claude 채팅에서 받아 보세요.' }));
   body.append(h('p', { class: 'mini', text: '[사실] 발표된 수치·사건 · [전망] 기관 전망·점도표 · [해석] 사실을 바탕으로 한 이 앱의 정리. 이 분석은 참고용입니다.' }));
 }
 function idxChart(host, leg) {
@@ -127,7 +128,7 @@ function idxChart(host, leg) {
   host.append(s);
 }
 function promptMacro(forCopy) {
-  const L = ['[앱 데이터 — 2026-10-04에 공식 자료·언론으로 확인한 사실, 괄호는 발표일/기준일]'];
+  const L = [`[앱 데이터 — 지표 타일은 ${MACRO.tiles_asof || MACRO.asof} 기준 자동 수집(야후 파이낸스·FRED·한국은행), 분석은 ${MACRO.asof}에 공식 자료·언론으로 확인한 사실, 괄호는 발표일/기준일]`];
   MACRO.tiles.forEach(t => { const c = mchg(t.chg); L.push(`- ${t.k}: ${t.v} (${c ? c.lab + ' ' + c.txt + ', ' : ''}${t.d})`); });
   const add = set => (set.facts || []).forEach(f => { if (f.value) L.push(`- ${f.label}: ${f.value} | ${f.period || ''} | ${f.date || ''}`); });
   add(RESEARCH.macro.us || {}); add(RESEARCH.macro.kr || {});

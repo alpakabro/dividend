@@ -55,9 +55,23 @@ function buildIndex() {
     const id = recId(rec), cid = CUR_BY_DB.get(id) || null, cur = cid ? U.get(cid) : null;
     const name = cur ? cur.name : recName(rec);
     const etf = isEtfRec(rec), usCap = rec[RF.mcap] > 0 ? rec[RF.mcap] : (etf ? rec[RF.amt] * 20 : 0);   // 미국 ETF는 규모 자료가 없어 거래대금으로 순위만 추정
-    SIDX.push({ id, rec, cid, name, code: rec[1], mk: rec[0] === 'US' ? 'US' : 'KR', n: normQ(name), n2: normQ(rec[2]), c: normQ(rec[1]), ko: normQ((rec[3] || '') + (etf ? ' etf ' + (rec[5] || '') : '')), mcap: rec[0] === 'US' ? usCap * 1e6 * FX0 : rec[RF.mcap] * 1e8 });
+    const secL = recSectorKo(rec), sec = secL.replace(/\((추정|국내)\)$/, '');   // 그룹 키는 '(추정)' 없이, 라벨은 그대로
+    SIDX.push({ id, rec, cid, name, code: rec[1], mk: rec[0] === 'US' ? 'US' : 'KR', n: normQ(name), n2: normQ(rec[2]), c: normQ(rec[1]), ko: normQ((rec[3] || '') + (etf ? ' etf ' + (rec[5] || '') : '')), sec, secL, secq: normQ(sec), mcap: rec[0] === 'US' ? usCap * 1e6 * FX0 : rec[RF.mcap] * 1e8 });
   });
-  RAW.forEach(r => { if (!r.db) SIDX.push({ id: r.id, rec: null, cid: r.id, name: r.name, code: r.code, mk: r.mkt, n: normQ(r.name), n2: normQ(r.code), c: normQ(r.code), ko: normQ(ETF_KO[r.code] || ''), mcap: 0 }); });
+  RAW.forEach(r => { if (!r.db) { const st = U.get(r.id), sec = (st && st.sector) || '기타'; SIDX.push({ id: r.id, rec: null, cid: r.id, name: r.name, code: r.code, mk: r.mkt, n: normQ(r.name), n2: normQ(r.code), c: normQ(r.code), ko: normQ(ETF_KO[r.code] || ''), sec, secL: sec, secq: normQ(sec), mcap: 0 }); } });
+  SECTORS = null;
+}
+let SECTORS = null;
+function sectorList(mkt) {   // [{sec, n}] 시장별 종목 수, 일반 섹터(많은 순) → ETF 유형(많은 순)
+  if (!SIDX) buildIndex();
+  const cnt = new Map();
+  for (const it of SIDX) { if (mkt && mkt !== 'all' && it.mk !== mkt) continue; cnt.set(it.sec, (cnt.get(it.sec) || 0) + 1); }
+  const isEtf = s => /^ETF/.test(s);
+  return [...cnt].map(([sec, n]) => ({ sec, n })).sort((a, b) => (isEtf(a.sec) - isEtf(b.sec)) || (b.n - a.n) || a.sec.localeCompare(b.sec, 'ko'));
+}
+function sectorItems(sec, mkt) {   // 섹터 전체 목록, 시가총액 큰 순
+  if (!SIDX) buildIndex();
+  return SIDX.filter(it => it.sec === sec && (!mkt || mkt === 'all' || it.mk === mkt)).sort((a, b) => (b.mcap - a.mcap) || a.name.localeCompare(b.name, 'ko'));
 }
 function searchStocks(q, mkt) {
   if (!SIDX) buildIndex();
@@ -72,6 +86,7 @@ function searchStocks(q, mkt) {
     else if (it.n.includes(nq)) sc = 2;
     else if (it.ko.includes(nq)) sc = 2.5;
     else if (it.n2.includes(nq) || it.c.includes(nq)) sc = 3;
+    else if (it.secq && it.secq.includes(nq)) sc = 4;   // 섹터명으로 조회 (예: 금융, 헬스케어, 리츠)
     if (sc >= 0) out.push({ it, sc });
   }
   out.sort((a, b) => (a.sc - b.sc) || (b.it.mcap - a.it.mcap) || a.it.name.localeCompare(b.it.name, 'ko'));
@@ -85,16 +100,24 @@ function itemFor(id) {
 function stockIdOf(it) { return it.cid || it.id; }   // 시뮬레이션에서 쓰는 id (큐레이션 우선)
 
 /* 검색 창 */
-const MD = { q: '', mkt: 'all', results: [], sel: null, ctx: { mode: 'browse' }, lastFocus: null, limit: 120 };
+const MD = { q: '', mkt: 'all', sec: 'all', results: [], sel: null, ctx: { mode: 'browse' }, lastFocus: null, limit: 120 };
 const isNarrow = () => window.matchMedia('(max-width: 920px)').matches;
 function initModal() {
   $('#mdForm').addEventListener('submit', e => { e.preventDefault(); runSearch($('#mdQ').value); });
-  document.querySelectorAll('#mdMkt button').forEach(b => b.addEventListener('click', () => { MD.mkt = b.dataset.v; syncMdMkt(); if (MD.q) runSearch(MD.q, true); }));
+  document.querySelectorAll('#mdMkt button').forEach(b => b.addEventListener('click', () => { MD.mkt = b.dataset.v; syncMdMkt(); if (MD.q || MD.sec !== 'all') runSearch(MD.q, true); }));
+  $('#mdSector').addEventListener('change', e => { MD.sec = e.target.value; runSearch(MD.q, true); if (!MD.q) setTimeout(() => $('#mdSector').focus(), 0); });
   document.querySelectorAll('#modal [data-close]').forEach(el => el.addEventListener('click', closeModal));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').hidden) { e.preventDefault(); closeModal(); } });
   syncMdMkt();
 }
-function syncMdMkt() { document.querySelectorAll('#mdMkt button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === MD.mkt))); }
+function syncMdMkt() {
+  document.querySelectorAll('#mdMkt button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === MD.mkt)));
+  const sel = $('#mdSector'); if (!sel) return;   // 섹터 목록은 시장에 따라 수가 달라져 다시 채움
+  const list = sectorList(MD.mkt); if (MD.sec !== 'all' && !list.some(x => x.sec === MD.sec)) MD.sec = 'all';
+  sel.textContent = ''; sel.append(h('option', { value: 'all', text: '섹터: 전체' }));
+  list.forEach(x => sel.append(h('option', { value: x.sec, text: `${x.sec} (${x.n.toLocaleString('ko-KR')})` })));
+  sel.value = MD.sec;
+}
 const MD_TITLE = { browse: '종목 검색', hold: '보유 종목 찾기', pick: '종목 구성에 담을 종목 찾기', replace: '직접 입력한 종목 찾기' };
 function openShell() {
   const m = $('#modal');
@@ -102,14 +125,14 @@ function openShell() {
   $('#mdTtl').textContent = MD_TITLE[MD.ctx.mode] || '종목 검색';
 }
 function openSearch(q, ctx) {
-  MD.ctx = ctx || { mode: 'browse' }; MD.sel = null;
+  MD.ctx = ctx || { mode: 'browse' }; MD.sel = null; MD.sec = 'all'; syncMdMkt();   // 섹터 필터는 열 때마다 초기화
   openShell();
   $('#mdQ').value = q || '';
   runSearch(q || '');
   if (!q || isNarrow()) setTimeout(() => $('#mdQ').focus(), 30);
 }
 function openStock(id, ctx) {
-  MD.ctx = ctx || { mode: 'browse' };
+  MD.ctx = ctx || { mode: 'browse' }; MD.sec = 'all'; syncMdMkt();
   openShell();
   const it = itemFor(id);
   MD.q = it ? it.name : ''; $('#mdQ').value = MD.q;
@@ -125,7 +148,8 @@ function closeModal() {
 }
 function runSearch(q, keepSel) {
   MD.q = (q || '').trim(); MD.limit = 120;
-  MD.results = searchStocks(MD.q, MD.mkt);
+  MD.results = MD.q ? searchStocks(MD.q, MD.mkt) : (MD.sec !== 'all' ? sectorItems(MD.sec, MD.mkt) : []);
+  if (MD.q && MD.sec !== 'all') MD.results = MD.results.filter(it => it.sec === MD.sec);   // 검색어 + 섹터
   renderList();
   const keep = keepSel && MD.sel && MD.results.includes(MD.sel);
   if (keep) selectItem(MD.sel, true);
@@ -143,14 +167,14 @@ function itemTags(it) {
 }
 function renderList() {
   const box = $('#mdList'); box.textContent = '';
-  if (!MD.q) { box.append(h('div', { class: 'md-empty', text: '종목명 일부·종목코드·미국 티커를 넣고 [조회]를 누르세요. 예: 두산 → 두산·두산에너빌리티·두산밥캣 등이 모두 나옵니다.' })); return; }
-  const n = MD.results.length;
-  box.append(h('div', { class: 'md-count', role: 'status', text: n ? `‘${MD.q}’ 검색 결과 ${n.toLocaleString('ko-KR')}개${MD.mkt !== 'all' ? ' · ' + (MD.mkt === 'KR' ? '국내' : '미국') : ''} · 시가총액 큰 순` : `‘${MD.q}’ 검색 결과가 없어요` }));
+  if (!MD.q && MD.sec === 'all') { box.append(h('div', { class: 'md-empty', text: '종목명·코드·티커를 넣거나, 위 섹터 상자에서 업종을 고르세요. 섹터명(예: 금융, 헬스케어, 리츠)을 검색해도 됩니다.' })); return; }
+  const n = MD.results.length, mk = MD.mkt !== 'all' ? ' · ' + (MD.mkt === 'KR' ? '국내' : '미국') : '', what = MD.q ? `‘${MD.q}’ 검색 결과` : `‘${MD.sec}’ 섹터`;
+  box.append(h('div', { class: 'md-count', role: 'status', text: n ? `${what}${MD.q && MD.sec !== 'all' ? ` · ${MD.sec}` : ''} ${n.toLocaleString('ko-KR')}개${mk} · 시가총액 큰 순` : `${what}에 해당하는 종목이 없어요${mk}` }));
   if (!n) { box.append(h('div', { class: 'md-empty', text: '철자를 바꾸거나 일부만 넣어 보세요. 국내 ETF·펀드는 이 데이터에 없어 보유 종목 카드의 [+ 목록에 없는 종목]으로 직접 입력할 수 있어요.' })); return; }
   MD.results.slice(0, MD.limit).forEach(it => {
     const rec = it.rec, st = it.cid ? U.get(it.cid) : null;
     const price = rec ? rec[RF.price] : st ? st.p0 : null, chg = rec ? rec[RF.chg] : null;
-    const sub = [it.code, rec ? mktLabel(rec) : (it.mk === 'US' ? '미국 ETF' : '국내'), ...itemTags(it)].join(' · ');
+    const sub = [it.code, rec ? mktLabel(rec) : (it.mk === 'US' ? '미국 ETF' : '국내'), /^ETF/.test(it.secL) ? null : it.secL, ...itemTags(it)].filter(Boolean).join(' · ');   // ETF는 시장 표시에 유형이 이미 있음
     const b = h('button', { class: 'ritem', type: 'button', role: 'option', 'aria-selected': String(MD.sel === it) },
       h('span', { class: 'n', text: it.name }), h('span', { class: 'p', text: price != null ? pxFmt(price, it.mk) : '—' }),
       h('span', { class: 'm', text: sub }), h('span', { class: 'c ' + dirCls(chg), text: chg != null ? sp(chg, 2) : '' }));

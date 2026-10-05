@@ -88,6 +88,31 @@ assert T['브렌트유']['v'] == '$102.25' and T['브렌트유']['d'] == 'WTI $9
 # 한 출처가 비면 그 타일은 건너뛰고 경고만
 tiles2, warn2 = refresh.build_tiles({**src, 'bok': []})
 assert len(tiles2) == 9 and any('韓 기준금리' in w for w in warn2), warn2
+# 분석 글 자동 생성: 수치는 모두 src·meta·섹터 등락에서, 음수는 ▲, 7개 절·시나리오 3개·업종 표 3행
+import json as _json
+secs_fix = [{'tk': 'SOXX', 'nm': '반도체', 'm1': 3.0, 'm3': 10.0, 'ytd': 95.6, 'y1': 80.0}, {'tk': 'XLE', 'nm': '에너지', 'm1': -1.0, 'm3': 4.0, 'ytd': 40.5, 'y1': 30.0},
+            {'tk': 'XLU', 'nm': '유틸리티', 'm1': -2.0, 'm3': -3.0, 'ytd': -4.1, 'y1': 1.0}, {'tk': 'XLRE', 'nm': '리츠', 'm1': -2.5, 'm3': -6.0, 'ytd': -8.7, 'y1': -3.0}]
+nar = refresh.build_narrative(src, {'fx_range': {'hi': 1554.48, 'hiD': '6/8', 'lo': 1339.17, 'loD': '9/10'}}, secs_fix)
+assert nar['headline'].startswith('연준 인상 국면 · 물가 반등(CPI 4.6%)') and '원화 강세(원/달러 1,360.6원, 연초 대비 ▲78.4원)' in nar['headline'] and '코스피 7,003.74' in nar['headline'], nar['headline']
+assert len(nar['key3']) == 3 and len({k['name'] for k in nar['key3']}) == 3 and all(k['why'] and k['s'] for k in nar['key3']), nar['key3']
+assert any(k['name'] == '美 10년물' and '연초 대비 +110bp' in k['why'] for k in nar['key3']), nar['key3']
+S = nar['sections']; assert [s['no'] for s in S] == ['①', '②', '③', '④', '⑤', '⑥', '⑦'] and all(s['items'] for s in S)
+txt = lambda s: ' '.join(i['x'] for i in s['items'])
+assert '한·미 기준금리 차 1.00%p' in txt(S[0]) and '긴축 쪽' in txt(S[0]), txt(S[0])
+assert '물가가 다시 오르는 중' in txt(S[1]) and '실업률이 전월보다 올라' in txt(S[1]), txt(S[1])
+assert '원화 강세' in txt(S[2]) and '고점 1,554.5원(6/8)' in txt(S[2]) and '1달러 = 1,361원' in txt(S[2]), txt(S[2])
+assert '연초 대비 +110bp, 연중 고점 5.28%' in txt(S[3]) and '2,676' not in txt(S[3]) and '이긴 구간' in txt(S[3]), txt(S[3])
+assert '브렌트유 $102.25' in txt(S[4]) and 'WTI $91.11' in txt(S[4]) and '연초 대비' not in S[4]['items'][0]['x'], txt(S[4])   # 브렌트는 전년 자료가 없어 연초 대비를 뺀다
+assert [x['k'] for x in S[5]['scen']] == ['낙관', '기준', '비관'] and '브렌트 $92 아래' in S[5]['scen'][0]['x'] and '10년물 4.78~5.78%' in S[5]['scen'][1]['x'], S[5]['scen']
+assert len(S[6]['sect']) == 3 and '반도체(+95.6%)' in S[6]['sect'][1]['good'] and '리츠(▲8.7%)' in S[6]['sect'][1]['bad'] and '리츠·유틸리티 같은 금리 민감' in txt(S[6]), S[6]
+flat = _json.dumps(nar, ensure_ascii=False); assert 'None' not in flat and 'nan' not in flat and ' -' not in flat.replace(' - ', ''), flat[:300]
+# 자료가 빠져도 7개 절은 남고(문장만 줄어듦) 지어내지 않는다
+nar2 = refresh.build_narrative({'us': '2026-10-02', 'kospi': src['kospi']}, {}, [])
+assert len(nar2['sections']) == 7 and nar2['headline'].startswith('코스피 7,003.74') and nar2['key3'][0]['name'] == '코스피' and all(s['items'] for s in nar2['sections']), nar2['headline']
+assert nar2['sections'][6]['sect'][1]['good'] == '섹터 등락 자료 없음' and '자료를 받지 못했어요' in txt(nar2['sections'][0])
+# 섹터 ETF 등락 읽기: DB 레코드의 stats[1,2,4,5]
+db_fix = {'s': [['US', 'XLE', 'Energy', '', 'ETF', '섹터', 90.0, 0.1, 40000, 0, 0, [1.0, -1.0, 4.0, 9.0, 40.5, 30.0, 0, 0, 0, 0, 0, 0, 0, '']], ['US', 'SOXX', 'Semi', '', 'ETF', '섹터', 300.0, 0.1, 10000, 0, 0, [2.0, 3.0, 10.0, 20.0, 95.6, 80.0, 0, 0, 0, 0, 0, 0, 0, '']], ['KS', '005930', '삼성전자', '', 'IT', '', 1, 0, 1, 0, 0, [0] * 14]]}
+assert [s['nm'] for s in refresh.sector_stats(db_fix)] == ['반도체', '에너지'] and refresh.sector_stats(db_fix)[1]['m1'] == -1.0
 
 # ── 개별 주식 배당 (fetch_stock_div.py) ──
 import fetch_stock_div as fsd

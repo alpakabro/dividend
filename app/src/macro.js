@@ -3,9 +3,7 @@ const MACRO = window.MACRO || null;
 const SECT_ETF = [['SPY', 'S&P500'], ['QQQ', '나스닥100'], ['IWM', '러셀2000'], ['SOXX', '반도체'], ['XLK', '기술'], ['XLE', '에너지'], ['XLV', '헬스케어'], ['XLI', '산업재'], ['XLB', '소재'], ['XLP', '필수소비재'], ['XLF', '금융'], ['XLRE', '부동산'], ['XLC', '커뮤니케이션'], ['XLU', '유틸리티'], ['XLY', '경기소비재']];
 function msrc(code) {
   if (code === 'DB') return { title: MACRO ? MACRO.db_note : '앱 DB 자체 계산', url: null, date: DATA_DATE.US };
-  if (MACRO && MACRO.src_auto && MACRO.src_auto[code]) return MACRO.src_auto[code];   // Y·F·B: 지표 타일 자동 수집 출처(야후 파이낸스·FRED·한국은행), refresh.py가 기록
-  const set = code[0] === 'U' ? (RESEARCH.macro.us || {}) : (RESEARCH.macro.kr || {}), n = +code.slice(1);
-  return (set.sources || []).find(s => s.n === n) || null;
+  return (MACRO && MACRO.src_auto && MACRO.src_auto[code]) || null;   // Y·F·B: 지표 자동 수집 출처(야후 파이낸스·FRED·한국은행), refresh.py가 기록
 }
 function mcite(codes) {
   if (!codes || !codes.length) return null;
@@ -37,7 +35,7 @@ function renderMacro() {
   const fold = h('button', { class: 'btn sm fold', type: 'button', 'aria-expanded': String(!folded), 'aria-controls': 'macroContent', title: folded ? '매크로 브리핑 펼치기' : '매크로 브리핑 접기', text: folded ? '펼치기 ▾' : '접기 ▴' });
   fold.addEventListener('click', () => { state.macroFold = !folded; save(); renderMacro(); fold.blur(); const f2 = $('#macro .macro-h .fold'); if (f2) f2.focus(); });
   box.append(h('div', { class: 'macro-h' },
-    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: (MACRO.tiles_asof ? '지표 ' + dateKo(MACRO.tiles_asof) + ' · 분석 ' : '') + dateKo(MACRO.asof) + ' 기준' }))),
+    h('div', null, h('h2', null, '글로벌 매크로 브리핑 ', h('span', { class: 'badge', style: 'vertical-align:2px', text: dateKo(MACRO.tiles_asof || MACRO.asof) + ' 기준 · 자동 생성' }))),
     h('div', { class: 'r', style: 'display:flex;gap:6px' }, folded ? null : tog, fold)));
   if (folded) {   // 접힌 상태: 핵심 지표 4개를 한 줄 띠로
     const strip = h('div', { class: 'mstrip', role: 'list', 'aria-label': '핵심 지표' });
@@ -82,7 +80,7 @@ function renderMacro() {
   const TAGC = { 사실: 'f', 전망: 'o', 해석: 'i' };
   MACRO.sections.forEach(s => {
     const d = h('div', { class: 'msec' }, h('h3', { text: `${s.no} ${s.title}` }));
-    if (s.scen) d.append(h('div', { class: 'scen3', style: 'margin-bottom:6px' }, ...s.scen.map(x => h('div', { class: 'sc' }, h('b', { class: x.k === '낙관' ? 'up' : x.k === '비관' ? 'down' : '', text: x.k + ' 시나리오' }), h('p', { text: x.x }), h('p', { style: 'color:var(--muted)' }, '(전망) ' + x.ref, mcite(x.s))))));
+    if (s.scen) d.append(h('div', { class: 'scen3', style: 'margin-bottom:6px' }, ...s.scen.map(x => h('div', { class: 'sc' }, h('b', { class: x.k === '낙관' ? 'up' : x.k === '비관' ? 'down' : '', text: x.k + ' 시나리오' }), h('p', { text: x.x }), x.ref ? h('p', { style: 'color:var(--muted)' }, '(전망) ' + x.ref, mcite(x.s)) : null))));
     if (s.sect) {
       const t = h('table', { class: 'ftbl', style: 'margin-bottom:6px' }, h('thead', null, h('tr', null, h('th', { text: '시나리오' }), h('th', { style: 'text-align:left', text: '유리할 수 있는 업종' }), h('th', { style: 'text-align:left', text: '불리할 수 있는 업종' }))));
       const tb = h('tbody'); s.sect.forEach(x => tb.append(h('tr', null, h('td', { text: x.k }), h('td', { style: 'text-align:left;white-space:normal', text: x.good }), h('td', { style: 'text-align:left;white-space:normal', text: x.bad }))));
@@ -94,18 +92,13 @@ function renderMacro() {
   });
   body.append(secs);
 
-  // 일정 · 출처 · AI
-  const ev = [...((RESEARCH.macro.us || {}).calendar || []).map(e => Object.assign({ m: '미국' }, e)), ...((RESEARCH.macro.kr || {}).calendar || []).map(e => Object.assign({ m: '한국' }, e))].sort((a, b) => a.date.localeCompare(b.date));
-  const cal = h('table', { class: 'cal' }); const cb = h('tbody');
-  ev.forEach(e => cb.append(h('tr', null, h('td', { text: dateKo(e.date) }), h('td', null, h('span', { class: 'cd', style: 'margin:0 6px 0 0', text: e.m }), e.event, e.note ? h('span', { style: 'color:var(--muted)', text: ' · ' + e.note.replace(/\[\d+\]/g, '') }) : null))));
-  cal.append(cb);
-  body.append(h('div', { class: 'msec' }, h('h3', { text: '앞으로의 주요 일정 (10~12월)' }), h('div', { class: 'tv-wrap', style: 'max-height:260px' }, cal)));
+  // 출처 · AI
   const used = new Set(); [...MACRO.tiles, ...MACRO.key3].forEach(x => (x.s || []).forEach(c => used.add(c))); MACRO.sections.forEach(s => { (s.items || []).forEach(x => (x.s || []).forEach(c => used.add(c))); (s.scen || []).forEach(x => (x.s || []).forEach(c => used.add(c))); });
   const ol = h('ul', { class: 'srcs', style: 'list-style:none;padding-left:0' });
   [...used].sort((a, b) => a[0].localeCompare(b[0]) || (+a.slice(1) - +b.slice(1))).forEach(c => { const s = msrc(c); if (!s) return; ol.append(h('li', { id: 'msrc-' + c }, h('b', { text: `[${c}] ` }), s.url ? h('a', { href: s.url, target: '_blank', rel: 'noopener noreferrer', text: s.title }) : s.title, s.date ? ` (${s.date})` : '')); });
-  body.append(h('details', { class: 'sub', id: 'macroSrc' }, h('summary', { text: `출처 ${used.size}건 — U: 미국·글로벌, K: 한국·환율·지정학, DB: 앱 자체 계산, Y·F·B: 지표 자동 수집(야후 파이낸스·FRED·한국은행)` }), ol));
-  body.append(aiPanel({ key: 'macro', title: 'AI 매크로 분석 (가이드라인 ①~⑦)', prompt: () => promptMacro(false), copy: () => promptMacro(true), intro: '위 브리핑의 분석은 ' + dateKo(MACRO.asof) + '에 공식 자료·언론 보도로 정리한 스냅샷이에요(지표 타일은 매일 자동 갱신). 그 뒤 소식은 [프롬프트 복사] 후 웹 검색이 되는 Claude 채팅에서 받아 보세요.' }));
-  body.append(h('p', { class: 'mini', text: '[사실] 발표된 수치·사건 · [전망] 기관 전망·점도표 · [해석] 사실을 바탕으로 한 이 앱의 정리. 이 분석은 참고용입니다.' }));
+  body.append(h('details', { class: 'sub', id: 'macroSrc' }, h('summary', { text: `출처 ${used.size}건 — Y·F·B: 지표 자동 수집(야후 파이낸스·FRED·한국은행), DB: 앱 자체 계산` }), ol));
+  body.append(aiPanel({ key: 'macro', title: 'AI 매크로 분석 (가이드라인 ①~⑦)', prompt: () => promptMacro(false), copy: () => promptMacro(true), intro: '위 브리핑은 ' + dateKo(MACRO.tiles_asof || MACRO.asof) + ' 지표로 자동 생성한 요약이에요(뉴스·전망 없음). 최신 소식까지 더한 분석은 [프롬프트 복사] 후 웹 검색이 되는 Claude 채팅에서 받아 보세요.' }));
+  body.append(h('p', { class: 'mini', text: '[사실] 자동 수집한 수치 · [해석] 수치를 규칙에 따라 정리한 자동 설명(전망·뉴스 아님). 이 분석은 참고용입니다.' }));
 }
 function idxChart(host, leg) {
   const sers = [['코스피', () => idxSeries('KOSPI', 'd'), 'var(--s1)', v => Math.round(v).toLocaleString('ko-KR')], ['코스닥', () => idxSeries('KOSDAQ', 'd'), 'var(--s3)', v => fx1(v, 2)], ['S&P500(SPY)', () => DB_IDX.get('U:SPY') && seriesOf(DB_IDX.get('U:SPY'), 'd'), 'var(--s2)', v => '$' + v.toFixed(2)], ['나스닥100(QQQ)', () => DB_IDX.get('U:QQQ') && seriesOf(DB_IDX.get('U:QQQ'), 'd'), 'var(--s7)', v => '$' + v.toFixed(2)]]
@@ -134,10 +127,8 @@ function idxChart(host, leg) {
   host.append(s);
 }
 function promptMacro(forCopy) {
-  const L = [`[앱 데이터 — 지표 타일은 ${MACRO.tiles_asof || MACRO.asof} 기준 자동 수집(야후 파이낸스·FRED·한국은행), 분석은 ${MACRO.asof}에 공식 자료·언론으로 확인한 사실, 괄호는 발표일/기준일]`];
+  const L = [`[앱 데이터 — 지표는 ${MACRO.tiles_asof || MACRO.asof} 기준 자동 수집(야후 파이낸스·FRED·한국은행), 괄호는 발표일/기준일. 뉴스·전망은 포함되지 않음]`];
   MACRO.tiles.forEach(t => { const c = mchg(t.chg); L.push(`- ${t.k}: ${t.v} (${c ? c.lab + ' ' + c.txt + ', ' : ''}${t.d})`); });
-  const add = set => (set.facts || []).forEach(f => { if (f.value) L.push(`- ${f.label}: ${f.value} | ${f.period || ''} | ${f.date || ''}`); });
-  add(RESEARCH.macro.us || {}); add(RESEARCH.macro.kr || {});
   const sects = SECT_ETF.map(([tk, nm]) => { const r = DB_IDX.get('U:' + tk); return r ? `${nm} 연초 이후 ${sp(r[RF.st][4])}, 3개월 ${sp(r[RF.st][2])}` : null; }).filter(Boolean);
   L.push('- 미국 섹터 ETF 등락(' + DATA_DATE.US + '): ' + sects.join(' / '));
   const g = G_MACRO + rulesBlock(forCopy) + (forCopy ? '' : '\n- 아래 [앱 데이터]에 있는 날짜·수치만 사실로 쓰고, 그 밖의 내용은 전망이나 해석으로 구분해.');

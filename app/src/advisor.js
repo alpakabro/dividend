@@ -93,7 +93,7 @@ function advRules(forCopy) {
 function advContext() {
   const L = [];
   if (MACRO) {
-    L.push(`[시장 요약 — ${dateKo(MACRO.asof)} 기준, 공식 자료·언론으로 확인한 값]`);
+    L.push(`[시장 요약 — ${dateKo(MACRO.asof)} 기준, 자동 수집한 지표로 만든 요약]`);
     MACRO.tiles.forEach(t => { const c = mchg(t.chg); L.push(`- ${t.k}: ${t.v}${c ? ` (${c.lab} ${c.txt})` : ''} · ${t.d}`); });
     if (MACRO.headline) L.push(`- 요약: ${MACRO.headline}`);
     L.push('');
@@ -230,7 +230,7 @@ function advLocalPf() {
 }
 function advLocalMacro() {
   if (!MACRO) return '매크로 데이터가 없어요.';
-  const L = [`### 매크로 한눈에 (지표 ${dateKo(MACRO.tiles_asof || MACRO.asof)} · 분석 ${dateKo(MACRO.asof)})`, '- ' + MACRO.headline];
+  const L = [`### 매크로 한눈에 (${dateKo(MACRO.tiles_asof || MACRO.asof)} 기준 · 자동 생성)`, '- ' + MACRO.headline];
   MACRO.tiles.forEach(t => { const c = mchg(t.chg); L.push(`- ${t.k}: **${t.v}**${c ? ` (${c.lab} ${c.txt})` : ''} · ${t.d}`); });
   L.push('', '**주목할 지표**'); MACRO.key3.forEach(k => L.push(`- ${k.name}: ${k.why}`));
   L.push('', '분석 ①~⑦ 전체는 메인 화면 매크로 브리핑의 [전체 분석 보기]에 있어요.');

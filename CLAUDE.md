@@ -13,8 +13,8 @@
 | `index.html`, `db.js`, `sw.js` | **빌드 결과물. 직접 고치지 않는다.** `sw.js`는 `app/sw.js`에 DB 해시 버전을 넣은 서비스 워커(설치형 웹앱·오프라인·캐시). GitHub Pages가 그대로 배포. 종목 DB는 `db.js`(약 11MB)로 분리돼 있고 `index.html`(약 0.7MB)이 `db.js?v=해시`로 불러온다(머리말이 먼저 뜨고, 데이터가 안 바뀌면 캐시 사용). 아티팩트용 `app/dist/artifact.html`은 DB 인라인 |
 | `app/app_src.html` | 페이지 틀: CSS(테마 토큰) + HTML + 핵심 스크립트(상태·시뮬레이션·보유 종목·종목 구성·차트) |
 | `app/src/*.js` | 기능 모듈 (2절) |
-| `app/src/research.json` | 종목 리포트 8개(삼성전자·KT·KT&G·두산에너빌리티·하나금융·ADP·맥도날드·P&G) + 매크로 사실(us/kr, 출처 번호 포함) |
-| `app/src/macro_report.json` | 매크로 브리핑 화면 데이터. 지표 타일 10개는 `refresh.py`의 `macro` 단계가 매일 자동 갱신(출처 코드 Y/F/B, `tiles_asof`·`src_auto`도 자동 기록), headline·주목 지표 3개·분석 ①~⑦은 수동(출처 코드 U#/K#) |
+| `app/src/research.json` | 종목 리포트 8개(삼성전자·KT·KT&G·두산에너빌리티·하나금융·ADP·맥도날드·P&G). 사람이 쓰는 유일한 콘텐츠(30일 넘게 오래되면 실행 요약에 ⚠) |
+| `app/src/macro_report.json` | 매크로 브리핑 화면 데이터. **전부 자동**: 지표 타일 10개(`build_tiles`)와 머리말·주목 지표 3개·분석 ①~⑦(`build_narrative`, 규칙 기반 문장 조립)을 `refresh.py`의 `macro` 단계가 매일 다시 쓴다(출처 코드 Y/F/B/DB, `asof`=`tiles_asof`). 뉴스·기관 전망은 넣지 않는다(비용 0). 직접 편집해도 다음 갱신에 덮어써진다 |
 | `app/data/stock_db_full.js` | 종목 DB `window.STOCK_DB`(약 11MB): 국내 주식·ETF, 미국 주식·ETF 약 8,000개(종목 수는 `meta.json`의 `counts`) |
 | `app/data/meta.json` | 데이터 날짜(`asof`)·원/달러(`fx`, 출처 `fx_src`)·연중 환율 고저(`fx_range`)·코스피/코스닥 실제 종가·첫 적립 월·종목 수. `refresh.py`가 쓰고 `build.py`가 문구와 `window.META`에 넣는다 |
 | `app/build.py` | 조립 스크립트(`fill`이 문구 자리표시자 `{{KR_D}}` 등을 meta로 채움) → `index.html`, `db.js`, `sw.js`, `app/dist/artifact.html` |
@@ -47,11 +47,11 @@
 - **`ai.js`:** 앱 안 AI(`window.claude.use('sample')`), `aiPanel`(실행/중지/프롬프트 복사), `stockData`, 프롬프트 빌더
   - **사용자가 지정한 분석 가이드라인 원문 `G_COMPANY/G_CHART/G_EARN/G_FIN/G_PF/G_MACRO`는 문구를 바꾸지 않는다**
 - **`pa.js`:** '포트폴리오 완성' 다음 화면(비중·섹터 쏠림, 상관관계, 변동성·VaR, 백테스트, 배당 현금흐름, 강점·취약점·조정안). 성향별 한도 `RISKP`, 환율 고저 `FX_RANGE = META.fx_range`, `promptPortfolio`의 매크로 줄은 `MACRO.tiles`에서 조립(박힌 숫자 없음)
-- **`macro.js`:** 메인 상단 매크로 브리핑(타일 등락 `mchg`, 접기/펼치기, 전체 분석 ①~⑦, 지수 차트, 섹터 ETF 표). 출처 코드 Y·F·B는 `MACRO.src_auto`에서 해석하고, 배지는 "지표 {tiles_asof} · 분석 {asof} 기준"
+- **`macro.js`:** 메인 상단 매크로 브리핑(타일 등락 `mchg`, 접기/펼치기, 전체 분석 ①~⑦, 지수 차트, 섹터 ETF 표). 출처 코드 Y·F·B는 `MACRO.src_auto`, DB는 `db_note`에서 해석(U#/K# 수동 출처·일정표는 없앴다). 배지는 "{tiles_asof} 기준 · 자동 생성"
 - **`advisor.js`:** 오른쪽 아래 'AI 조언' 버튼과 채팅 창. **Claude가 없는 곳(사이트·exe)에서는 '조언 도우미'로 동작**: `advLocal`이 질문 의도에 따라 앱 데이터로 마크다운 답을 만든다 — 종목 카드(`advLocalStock`: 시세·배당·차트 지표·체크 포인트), 포트폴리오 진단(`advLocalPf` ← `paCompute`), 매크로 요약, 비교 표, 고배당 스크리닝(`advLocalScreen` ← 섹터·시장·월배당 파싱, 시총 2,000억 이상), 수익 계산(`advLocalCalc` ← `simulate`). 끝에 '참고용' 문구. Claude용 질문 복사는 [Claude용 질문 복사] 링크
   - 질문 속 종목 자동 인식 `advFindStocks`: 이름·한글명·별명·티커(소문자 포함), 한국 기업 ADR은 국내 종목으로 연결
   - 의도 분류 `advIntent`: 의견/차트/실적/재무/기업/포트폴리오/매크로 → 해당 가이드라인 형식
-  - 앱 데이터를 붙여 보내고, Claude 밖(사이트)에서는 '질문 복사'로 동작
+  - Claude 안에서는 앱 데이터를 붙여 보내고, 밖에서는 `advLocal`이 답하며 [Claude용 질문 복사]로 프롬프트를 복사할 수 있다
 
 핵심 스크립트(`app_src.html`):
 
@@ -123,11 +123,11 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
   - `div`: `fetch_stock_div.py`가 DB의 모든 주식(약 4,800개)의 배당락 이력을 야후 파이낸스에서 받는다(80개씩 묶음, 약 6분) → `pipeline/raw_div/stock_div.csv`. 이력 있는 종목이 1,000개 미만이면 실패
   - `merge`: `fetch_kr_sector.py`(KIND, 실패 시 기존 csv)로 국내 업종을 갱신한 뒤 `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)
   - `meta`: 야후 파이낸스에서 원/달러(`KRW=X`, 미국 데이터 날짜 종가)와 연중 고저, 코스피·코스닥 실제 종가(`^KS11`·`^KQ11`, 국내 데이터 날짜) → `app/data/meta.json`. 그 날짜 종가가 아직 없으면 실패하고 다음 실행에서 다시 시도한다(수치를 지어내지 않음). 이 단계에서 큐레이션 배당(RAW·RAW_ADD의 d)과 DB의 최근 12개월 실제 배당을 비교해 10% 이상 다르면 요약에 ⚠ "배당 변동 의심"을 남긴다(비교만 하고 자동 수정은 없음, 야후 이력 누락일 수도 있으니 공시로 확인)
-  - `macro`: 매크로 브리핑 지표 타일 10개를 다시 쓴다 → `app/src/macro_report.json`의 `tiles`(값·설명·등락·출처)와 `tiles_asof`·`src_auto`. 출처는 야후 파이낸스(美 10년물 `^TNX`, 달러인덱스 `DX-Y.NYB`, 원/달러 `KRW=X`, 코스피 `^KS11`, S&P500 `^GSPC`, 브렌트 `BZ=F`·WTI `CL=F`), FRED CSV(기준금리 `DFEDTARU`/`DFEDTARL`, CPI `CPIAUCNS`/`CPILFENS`(비계절조정, 공식 전년 대비와 같음), 실업률 `UNRATE`, 고용 `PAYEMS` — 파이썬 기본 접속은 차단되므로 `curl_cffi`로 크롬처럼 접속), 한국은행 기준금리 페이지(표 해석). 기준일은 미국 데이터 날짜. 어느 출처가 실패하면 그 타일은 이전 값을 두고 요약에 ⚠ 경고만 남긴다(수치를 지어내지 않음). headline·key3·sections는 사람이 쓴다
+  - `macro`: 매크로 브리핑을 통째로 다시 쓴다 → `app/src/macro_report.json`의 `tiles`(값·설명·등락·출처)와 `tiles_asof`·`src_auto`, 그리고 `build_narrative`가 같은 수치로 `headline`·`key3`·`sections`(①~⑦, ⑥ `scen` 3개·⑦ `sect` 3행)·`db_note`·`asof`를 만든다. 문장은 규칙(국면 판정·비교·조건문)으로 조립하고 자료가 빠진 문장은 뺀다. 섹터 ETF 등락은 `sector_stats(load_db(DB_FULL))`. 출처는 야후 파이낸스(美 10년물 `^TNX`, 달러인덱스 `DX-Y.NYB`, 원/달러 `KRW=X`, 코스피 `^KS11`, S&P500 `^GSPC`, 브렌트 `BZ=F`·WTI `CL=F`), FRED CSV(기준금리 `DFEDTARU`/`DFEDTARL`, CPI `CPIAUCNS`/`CPILFENS`(비계절조정, 공식 전년 대비와 같음), 실업률 `UNRATE`, 고용 `PAYEMS` — 파이썬 기본 접속은 차단되므로 `curl_cffi`로 크롬처럼 접속), 한국은행 기준금리 페이지(표 해석). 기준일은 미국 데이터 날짜. 어느 출처가 실패하면 그 타일은 이전 값을 두고 요약에 ⚠ 경고만 남긴다(수치를 지어내지 않음). 뉴스·전망·일정은 넣지 않는다
   - `build`: `app/build.py`
   - `verify`: 헤드리스 크롬으로 `index.html`을 열어 오류·경고 0건, 월배당 계산값 > 0, 종목 수가 마지막 커밋의 90% 이상, 페이지의 `FX0`가 meta와 같음, 검색 동작을 확인한다. 하나라도 어긋나면 실패
   - `commit`: 위 3개 파일과 `macro_report.json`만 커밋. `--push`면 `origin main`으로(거절되면 원격 변경을 받아 한 번 더)
-- **사람이 계속 관리하는 것(자동 갱신 안 됨):** 매크로 브리핑의 분석 글(`macro_report.json`의 headline·key3·sections와 `asof`), `research.json`, 큐레이션 배당 `RAW`/`RAW_ADD`, Claude 아티팩트 게시(3절). 분석 글·리포트가 가격 데이터보다 7일 넘게 오래되면 실행 요약에 ⚠ 경고가 뜬다
+- **사람이 계속 관리하는 것(자동 갱신 안 됨):** `research.json`의 종목 리포트 8개, 큐레이션 배당 `RAW`/`RAW_ADD`, Claude 아티팩트 게시(3절). 리포트가 가격 데이터보다 30일 넘게 오래되면 실행 요약에 ⚠ 경고가 뜬다. 매크로 브리핑은 글까지 전부 자동이라 손댈 것이 없다
 - **환율 출처:** 뉴스 기사(서울외환시장 15:30 주간종가) 대신 야후 파이낸스 `KRW=X` 일별 종가(UTC 기준)를 쓴다. 몇 원 차이가 날 수 있고, 화면의 출처 문구는 meta의 `fx_src`·`fx_url`로 자동 표기된다
 
 ETF 데이터의 특성:
@@ -160,10 +160,9 @@ ETF 데이터의 특성:
 - **가격 이력:** 미국 개별 주식은 2024.7부터라(원본 데이터 한계) 3년·5년 수익률이 없다. 주요 미국 ETF는 2016~, 나머지 ETF는 2023.9~
 - **사이트의 AI:** GitHub Pages에는 Claude 연결이 없어 AI가 바로 답하지 못한다(질문 복사로 동작). 바로 답하게 하려면 아티팩트를 공유하거나 API 키와 서버가 필요하다
 - **종목 리포트:** 종목 창의 '기업/실적/재무' 리포트는 research.json의 8개 종목만 사전 조사돼 있다. 나머지 종목은 AI 실행 또는 프롬프트 복사를 쓴다
-- **자동 갱신 범위:** 가격·분배금·개별 주식 배당·환율·지수·매크로 지표 타일만 자동이다. 매크로 분석 글·종목 리포트·큐레이션 배당은 사람이 갱신한다(4절). 분석 글이 타일보다 오래되면 글 속 숫자와 타일이 어긋날 수 있다(배지에 두 날짜를 보여 줌)
+- **자동 갱신 범위:** 가격·분배금·개별 주식 배당·환율·지수·매크로 브리핑(타일+글)이 자동이다. 종목 리포트·큐레이션 배당은 사람이 갱신한다(4절). 매크로 글은 수치로만 조립하므로 뉴스·정책 이벤트·기관 전망은 담기지 않는다(그런 분석은 AI 매크로 분석 프롬프트 복사로)
 
 ## 7. 다음 작업 후보
 
-- 매크로 브리핑 분석 글(headline·key3·①~⑦) 자동 갱신 — 출처(U#/K#)가 필요해 AI 조사 단계가 필요(지표 타일은 이미 자동)
 - 윈도우 exe를 GitHub Actions(windows 러너)에서 만들어 릴리스에 첨부하기
 - 거래량이 적은 ETF는 요청이 오면 `MUST_US`에 추가

@@ -149,6 +149,122 @@ def build_tiles(src):
     tile('브렌트유', lambda: lvl('브렌트유', 'brent', lambda v: f'${v:.2f}', lambda d1, v1: f"WTI ${upto(src['wti'], us)[-1][1]:.2f} · {md(d1)}", 2, pre='$'))
     return tiles, warn
 
+# ── 매크로 분석 글 자동 생성: 규칙 기반 (수집한 수치만 쓰고 뉴스·기관 전망은 넣지 않음 → 비용 0, 매일 바뀜) ──
+SECT_ETF = [('SOXX', '반도체'), ('XLK', '기술'), ('XLE', '에너지'), ('XLV', '헬스케어'), ('XLI', '산업재'), ('XLB', '소재'), ('XLP', '필수소비재'),
+            ('XLF', '금융'), ('XLRE', '리츠'), ('XLC', '커뮤니케이션'), ('XLU', '유틸리티'), ('XLY', '경기소비재')]
+def sector_stats(db):
+    """DB의 미국 섹터 ETF 등락률(%) → [{'tk','nm','m1','m3','ytd','y1'}] 연초 이후 높은 순. stats = [1주, 1개월, 3개월, 6개월, 연초, 1년, …]"""
+    idx = {r[1]: r for r in db['s'] if r[0] == 'US'}; out = []
+    for tk, nm in SECT_ETF:
+        r = idx.get(tk)
+        if r and r[11][4] is not None: out.append({'tk': tk, 'nm': nm, 'm1': r[11][1], 'm3': r[11][2], 'ytd': r[11][4], 'y1': r[11][5]})
+    return sorted(out, key=lambda x: -x['ytd'])
+
+def build_narrative(src, meta=None, sectors=None):
+    """수집값(src, build_tiles와 같은 모양) + meta.fx_range + 섹터 ETF 등락 → 머리말·주목 지표 3개·분석 ①~⑦ (화면 모양은 그대로).
+    모든 숫자는 src/meta/sectors에서 오고, 자료가 빠진 문장은 건너뛴다(문장이 줄어들 뿐 지어내지 않음). 전망·뉴스는 없다(자동)"""
+    us = src['us']; meta = meta or {}; sectors = sectors or []
+    def g(fn):
+        try: return fn()
+        except Exception: return None
+    p1 = lambda x, u='%': pm(x, 1, u)
+    bp = lambda x: pm(int(round(x * 100)), 0, 'bp')
+    def fed_f():
+        u, l = upto(src['fed_u'], us), upto(src['fed_l'], us); d, cu, pu = last_change(u)
+        return {'u': cu, 'l': l[-1][1], 'd': d, 'pu': pu, 'pl': [v for dd, v in l if dd < d][-1], 'age': days_between(d, us), 'up': cu > pu}
+    def bok_f():
+        (d1, r1), (d0, r0) = src['bok'][0], src['bok'][1]
+        return {'r': r1, 'p': r0, 'd': d1, 'age': days_between(d1, us), 'w': '인상' if r1 > r0 else '인하' if r1 < r0 else '동결'}
+    def cpi_f():
+        (d1, y1), (d0, y0) = yoy(src['cpi']); return {'m': mon(d1), 'y': y1, 'p': y0, 'core': yoy(src['cpi_core'])[0][1]}
+    def jobs_f():
+        (d1, u1), (d0, u0) = src['unrate'][-1], src['unrate'][-2]
+        return {'m': mon(d1), 'u': u1, 'p': u0, 'pay': (src['payems'][-1][1] - src['payems'][-2][1]) / 10}
+    def lvl_f(key):
+        (d1, v1), (d0, v0) = last_two(src[key], us); b = ytd_base(src[key], us)
+        return {'v': v1, 'p': v0, 'dd': (v1 / v0 - 1) * 100, 'ytd': (v1 / b - 1) * 100 if b else None, 'ydiff': (v1 - b) if b else None, 'hi': g(lambda: ytd_high(src[key], us))}
+    fed, bok, cpi, jobs = g(fed_f), g(bok_f), g(cpi_f), g(jobs_f)
+    tnx, dxy, krw, kospi, spx, brent = (g(lambda k=k: lvl_f(k)) for k in ('tnx', 'dxy', 'krw', 'kospi', 'spx', 'brent'))
+    wti = g(lambda: upto(src['wti'], us)[-1][1]); fxr = meta.get('fx_range') or {}
+    ytd_s = lambda o: f", 연초 대비 {p1(o['ytd'])}" if o and o['ytd'] is not None else ''
+    ytd_bp = lambda o: f", 연초 대비 {bp(o['ydiff'])}" if o and o['ydiff'] is not None else ''   # 금리는 %p 차이를 bp로 (비율 변화가 아님)
+
+    # 머리말: 국면(금리·물가·환율·유가) + 지수·금리 한 줄
+    parts, idx = [], []
+    if fed: parts.append(f"연준 {'인상' if fed['up'] else '인하'} 국면")
+    if cpi: parts.append(f"물가 {'반등' if cpi['y'] > cpi['p'] else '둔화' if cpi['y'] < cpi['p'] else '보합'}(CPI {cpi['y']}%)")
+    if krw and krw['ydiff'] is not None: parts.append(f"원화 {'강세' if krw['ydiff'] < 0 else '약세'}(원/달러 {krw['v']:,.1f}원, 연초 대비 {p1(krw['ydiff'], '원')})")
+    if brent: parts.append(f"브렌트 ${brent['v']:.2f}" + (f"(연초 대비 {p1(brent['ytd'])})" if brent['ytd'] is not None else ''))
+    if kospi: idx.append(f"코스피 {kospi['v']:,.2f}(전일 {p1(kospi['dd'])}{ytd_s(kospi)})")
+    if spx: idx.append(f"S&P500 {spx['v']:,.2f}(전일 {p1(spx['dd'])}{ytd_s(spx)})")
+    if tnx: idx.append(f"美 10년물 {tnx['v']:.2f}%(전일 {bp(tnx['v'] - tnx['p'])}" + (f", 연초 대비 {bp(tnx['ydiff'])})" if tnx['ydiff'] is not None else ')'))
+    headline = '. '.join(x for x in (' · '.join(parts), ' · '.join(idx)) if x) + '.' if (parts or idx) else '지표를 받지 못해 요약을 만들지 못했어요.'
+
+    # 주목할 지표 3개: 움직임 크기 + 배당 투자자 관련도 점수 상위 (why 문구는 지표별 고정 설명 + 현재 수치)
+    cand = []
+    if tnx: cand.append((abs(tnx['v'] - tnx['p']) * 100 / 5 + 0.6, '美 10년물', f"{tnx['v']:.2f}% (전일 {bp(tnx['v'] - tnx['p'])}{ytd_bp(tnx)}). 국채 금리가 오르면 배당주·리츠·유틸리티의 상대 매력이 줄고, 내리면 되살아나요", ['Y']))
+    if krw: cand.append((abs(krw['dd']) / 0.5 + 0.6, '원/달러', f"{krw['v']:,.1f}원 (전일 {p1(krw['v'] - krw['p'], '원')}{(', 연초 대비 ' + p1(krw['ydiff'], '원')) if krw['ydiff'] is not None else ''}). 미국 배당 1달러가 {krw['v']:,.0f}원이 되는 셈이라 원화가 강해지면 미국 배당의 원화 가치는 줄어요", ['Y']))
+    if fed: cand.append((max(0.0, 1.5 - fed['age'] / 30) + 0.4, '美 기준금리', f"{fed['l']:.2f}~{fed['u']:.2f}% ({md(fed['d'])} {int(round(abs(fed['u'] - fed['pu']) * 100))}bp {'인상' if fed['up'] else '인하'} 적용 후 {fed['age']}일). 예금·단기채 금리의 기준이라 배당수익률과 비교되는 잣대예요", ['F']))
+    if cpi: cand.append((abs(cpi['y'] - cpi['p']) / 0.2 + 0.4, '美 CPI', f"{cpi['m']} {cpi['y']}% (전월 {cpi['p']}%, 근원 {cpi['core']}%). 물가가 오르면 금리 인하 기대가 늦춰지고 배당의 실질 가치가 줄어요", ['F']))
+    if jobs: cand.append((abs(jobs['u'] - jobs['p']) / 0.1 + 0.2, '美 실업률', f"{jobs['m']} {jobs['u']}% (전월 {jobs['p']}%, 고용 {pm(jobs['pay'], 1, '만')}). 고용이 식으면 금리 인하 쪽, 뜨거우면 고금리 유지 쪽으로 읽혀요", ['F']))
+    if bok: cand.append((max(0.0, 1.5 - bok['age'] / 30) + 0.3, '韓 기준금리', f"{bok['r']:.2f}% ({md(bok['d'])} {bok['w']} 후 {bok['age']}일). 국내 예금 금리와 은행주 이자이익의 기준이에요", ['B']))
+    if kospi: cand.append((abs(kospi['dd']) + 0.3, '코스피', f"{kospi['v']:,.2f} (전일 {p1(kospi['dd'])}{ytd_s(kospi)}{(', 연중 고점 대비 ' + p1((kospi['v'] / kospi['hi'] - 1) * 100)) if kospi['hi'] else ''}). 지수가 오를수록 같은 돈으로 사는 배당수익률은 낮아져요", ['Y']))
+    if spx: cand.append((abs(spx['dd']) + 0.3, 'S&P500', f"{spx['v']:,.2f} (전일 {p1(spx['dd'])}{ytd_s(spx)}). 미국 배당주·ETF 가격의 기준 지수예요", ['Y']))
+    if brent: cand.append((abs(brent['dd']) / 1.5 + 0.3, '브렌트유', f"${brent['v']:.2f} (전일 {p1(brent['dd'])}{ytd_s(brent)}). 유가는 물가·금리와 에너지 배당주 이익에 직결돼요", ['Y']))
+    if dxy: cand.append((abs(dxy['dd']) / 0.5 + 0.1, '달러인덱스', f"{dxy['v']:.2f} (전일 {p1(dxy['dd'])}{ytd_s(dxy)}). 달러가 강하면 원화에 약세 압력이 생겨 미국 배당의 원화 가치는 늘어요", ['Y']))
+    cand.sort(key=lambda c: -c[0]); key3 = [{'name': n, 'why': w, 's': s} for _, n, w, s in cand[:3]]
+
+    # 분석 ①~⑦
+    F = lambda x, s=None: {'t': '사실', 'x': x, **({'s': s} if s else {})}
+    I = lambda x, s=None: {'t': '해석', 'x': x, **({'s': s} if s else {})}
+    NONE = I('이번 갱신에서 자료를 받지 못했어요. 다음 갱신에서 다시 시도해요.')
+    def sec(no, title, items, **extra):
+        items = [x for x in items if x]; return {'no': no, 'title': title, **extra, 'items': items or [NONE]}
+    s1 = sec('①', '미국 기준금리와 연준(Fed)의 통화정책 방향', [
+        fed and F(f"美 기준금리 {fed['l']:.2f}~{fed['u']:.2f}%. {md(fed['d'])}부터 {int(round(abs(fed['u'] - fed['pu']) * 100))}bp {'인상' if fed['up'] else '인하'} 적용(그 전 {fed['pl']:.2f}~{fed['pu']:.2f}%), 결정 후 {fed['age']}일", ['F']),
+        bok and F(f"韓 기준금리 {bok['r']:.2f}% ({md(bok['d'])} {bok['w']}, 직전 {bok['p']:.2f}%), 결정 후 {bok['age']}일", ['B']),
+        fed and bok and F(f"한·미 기준금리 차 {fed['u'] - bok['r']:.2f}%p (미국 상단 기준, {'미국이 높음' if fed['u'] > bok['r'] else '한국이 높음' if fed['u'] < bok['r'] else '같음'})", ['F', 'B']),
+        fed and tnx and I(f"美 10년물 {tnx['v']:.2f}%는 기준금리 상단보다 {pm(round(tnx['v'] - fed['u'], 2), 2, '%p')} — " + ('장기금리가 정책금리보다 높은 정상 기울기' if tnx['v'] > fed['u'] else '장기금리가 정책금리보다 낮은 역전 상태(시장이 금리 인하를 기대할 때 흔한 모양)'), ['Y', 'F']),
+        fed and I('최근 결정이 인상이라 긴축 쪽이에요. 예금·단기채 금리가 높을수록 배당수익률이 그보다 낮은 종목은 비교에서 불리해요' if fed['up'] else '최근 결정이 인하라 완화 쪽이에요. 예금·단기채 금리가 내려가면 배당주·리츠의 상대 매력이 커져요')])
+    s2 = sec('②', '물가·고용 등 미국 핵심 경제지표', [
+        cpi and F(f"美 CPI {cpi['m']} {cpi['y']}% (전월 {cpi['p']}%), 근원 {cpi['core']}% — 전년 동월 대비", ['F']),
+        jobs and F(f"실업률 {jobs['m']} {jobs['u']}% (전월 {jobs['p']}%), 비농업 고용 {pm(jobs['pay'], 1, '만')}명 (전월 대비)", ['F']),
+        cpi and I(('물가가 다시 오르는 중' if cpi['y'] > cpi['p'] else '물가 둔화 중' if cpi['y'] < cpi['p'] else '물가 보합') + '. ' + ('근원이 헤드라인보다 낮아 에너지·식품 같은 변동성 항목이 물가를 끌어올린 모양' if cpi['core'] < cpi['y'] - 0.3 else '근원이 헤드라인보다 높아 물가 압력이 넓게 퍼진 모양' if cpi['core'] > cpi['y'] + 0.3 else '근원과 헤드라인이 비슷한 수준') + f". 물가 {cpi['y']}%보다 배당 성장률이 낮은 종목은 실질 배당이 줄어요"),
+        jobs and I('실업률이 전월보다 올라 고용이 식는 신호 — 보통 금리 인하 기대를 키워요' if jobs['u'] > jobs['p'] else '실업률이 전월보다 내려 고용이 탄탄한 신호 — 고금리가 오래갈 수 있다는 쪽' if jobs['u'] < jobs['p'] else '실업률은 전월과 같아요')])
+    s3 = sec('③', '달러인덱스와 원/달러 환율', [
+        dxy and F(f"달러인덱스 {dxy['v']:.2f} (전일 {p1(dxy['dd'])}{ytd_s(dxy)})", ['Y']),
+        krw and F(f"원/달러 {krw['v']:,.1f}원 (전일 {p1(krw['v'] - krw['p'], '원')}" + (f", 연초 대비 {p1(krw['ydiff'], '원')} → {'원화 강세' if krw['ydiff'] < 0 else '원화 약세'})" if krw['ydiff'] is not None else ')'), ['Y']),
+        krw and fxr.get('hi') and F(f"연중 고점 {fxr['hi']:,.1f}원({fxr['hiD']}) · 저점 {fxr['lo']:,.1f}원({fxr['loD']}) — 지금은 고점 대비 {p1((krw['v'] / fxr['hi'] - 1) * 100)}, 저점 대비 {p1((krw['v'] / fxr['lo'] - 1) * 100)}", ['Y']),
+        krw and I(f"미국 배당 1달러 = {krw['v']:,.0f}원" + (f". 연초보다 원화가 {'강해' if krw['ydiff'] < 0 else '약해'}져 같은 달러 배당의 원화 가치는 {abs(krw['ytd']):.1f}% {'줄었어요' if krw['ydiff'] < 0 else '늘었어요'}" if krw['ytd'] is not None else '')),
+        dxy and krw and dxy['ytd'] is not None and krw['ydiff'] is not None and I('달러가 다른 통화 대비 강한데도 원화는 더 강했어요 — 원화 자체의 강세' if dxy['ytd'] > 0 and krw['ydiff'] < 0 else '달러 약세 속 원화 약세 — 원화 자체가 약한 상태' if dxy['ytd'] < 0 and krw['ydiff'] > 0 else '원/달러는 대체로 달러 전반의 흐름을 따라갔어요')])
+    s4 = sec('④', '미국 국채금리와 유동성이 증시에 미치는 영향', [
+        tnx and F(f"美 10년물 {tnx['v']:.2f}% (전일 {bp(tnx['v'] - tnx['p'])}{ytd_bp(tnx)}" + (f", 연중 고점 {tnx['hi']:.2f}%)" if tnx['hi'] else ')'), ['Y']),
+        (spx or kospi) and F(' · '.join(x for x in [spx and f"S&P500 {spx['v']:,.2f}{ytd_s(spx).replace(', ', ' (')}" + (')' if spx['ytd'] is not None else ''), kospi and f"코스피 {kospi['v']:,.2f}{ytd_s(kospi).replace(', ', ' (')}" + ((f", 연중 고점 대비 {p1((kospi['v'] / kospi['hi'] - 1) * 100)}" if kospi['hi'] else '') + ')' if kospi['ytd'] is not None else '')] if x), ['Y']),
+        tnx and spx and tnx['ydiff'] is not None and spx['ytd'] is not None and I('금리가 연초보다 크게 올랐는데도 지수가 올랐어요 — 실적·성장 기대가 금리 부담을 이긴 구간' if tnx['ydiff'] > 0.5 and spx['ytd'] > 0 else '금리 상승이 지수를 누르는 구간' if tnx['ydiff'] > 0.5 else '금리가 연초보다 내려 밸류에이션에 우호적인 구간' if tnx['ydiff'] < -0.5 else '금리는 연초와 비슷해 지수는 실적·업종 요인에 더 좌우되는 구간'),
+        tnx and I(f"10년물 {tnx['v']:.2f}%는 배당수익률의 비교 기준이에요. 이보다 배당수익률이 낮은 종목은 '채권만 못하다'는 평가를 받기 쉽고, 높은 종목은 금리가 내릴 때 재평가 여지가 커요")])
+    s5 = sec('⑤', '유가·원자재 — 지정학 리스크의 가격 신호', [
+        brent and F(f"브렌트유 ${brent['v']:.2f} (전일 {p1(brent['dd'])}{ytd_s(brent)}" + (f", 연중 고점 ${brent['hi']:.2f})" if brent['hi'] else ')') + (f" · WTI ${wti:.2f}" if wti else ''), ['Y']),
+        brent and brent['ytd'] is not None and I('유가가 연초보다 많이 올라 물가·금리에 상방 압력, 에너지 배당주에는 우호적' if brent['ytd'] > 15 else '유가가 연초보다 많이 내려 물가 둔화 요인, 에너지 배당주 이익에는 부담' if brent['ytd'] < -15 else '유가는 연초와 비슷한 수준이라 물가에 중립'),
+        I('지정학 뉴스 자체는 이 자동 브리핑에 들어가지 않아요. 그 영향이 가격에 반영되는 유가·달러·금리만 추적해요')])
+    bb = brent['v'] if brent else None; tt = tnx['v'] if tnx else None
+    cond = lambda lo_b, lo_t: ' · '.join(x for x in [bb and f"브렌트 ${bb * lo_b:.0f} {'아래' if lo_b < 1 else '위'}", tt and f"美 10년물 {tt + lo_t:.2f}% {'아래' if lo_t < 0 else '위'}"] if x)
+    by = {s['nm']: s for s in sectors}; a = lambda nm: f"{nm}({p1(by[nm]['ytd'])})" if nm in by else nm
+    top = sectors[:3]; bot = sectors[-3:][::-1] if len(sectors) >= 3 else []
+    s6 = sec('⑥', '증시 낙관·기준·비관 시나리오 (현재 지표 기준 조건문)', [I('시나리오는 전망이 아니라, 현재 값에서 유가 ±10%·美 10년물 ±0.5%p 움직일 때 보통 나타나는 반응을 정리한 조건문이에요. 확률을 뜻하지 않아요')],
+             scen=[{'k': '낙관', 'x': (cond(0.9, -0.5) + '로 내려오면: ' if (bb or tt) else '유가·금리가 내리면: ') + '금리 부담 완화 → 성장주와 금리 민감 배당주(리츠·유틸리티) 반등 여지'},
+                   {'k': '기준', 'x': ((f"브렌트 ${bb * 0.9:.0f}~{bb * 1.1:.0f}" if bb else '') + (' · ' if bb and tt else '') + (f"10년물 {tt - 0.5:.2f}~{tt + 0.5:.2f}%" if tt else '') + ' 유지: ' if (bb or tt) else '지금 수준 유지: ') + '업종별 차별화 지속' + (f" (연초 이후 상위 {a(top[0]['nm'])}, 하위 {a(bot[0]['nm'])})" if top and bot else '')},
+                   {'k': '비관', 'x': (cond(1.1, 0.5) + '로 올라가면: ' if (bb or tt) else '유가·금리가 오르면: ') + '물가 재가속·금리 부담 → 위험자산 조정, 부채 많은 기업·리츠 압박'}])
+    rate_up = tnx and tnx['ydiff'] is not None and tnx['ydiff'] > 0.5; rate_dn = tnx and tnx['ydiff'] is not None and tnx['ydiff'] < -0.5
+    s7 = sec('⑦', '시나리오별로 유리하거나 불리할 수 있는 업종', [
+        top and F(f"미국 섹터 ETF 연초 이후 — 상위: {', '.join(f'{s['nm']} {p1(s['ytd'])}' for s in top)} / 하위: {', '.join(f'{s['nm']} {p1(s['ytd'])}' for s in bot)} · 표의 괄호 숫자도 연초 이후 등락", ['DB']),
+        sectors and F('최근 1개월 — 상위: ' + ', '.join(f"{s['nm']} {p1(s['m1'])}" for s in sorted(sectors, key=lambda s: -s['m1'])[:3]) + ' / 하위: ' + ', '.join(f"{s['nm']} {p1(s['m1'])}" for s in sorted(sectors, key=lambda s: s['m1'])[:3]), ['DB']),
+        I('월배당 포트폴리오 관점: ' + ('장기금리가 연초보다 올라 리츠·유틸리티 같은 금리 민감 배당주는 부담, 은행·에너지 배당주는 상대적으로 유리한 구간' if rate_up else '장기금리가 연초보다 내려 리츠·유틸리티·필수소비재 배당주에 우호적인 구간' if rate_dn else '금리가 연초와 비슷해 업종보다 개별 종목의 배당 안정성(삭감 이력·배당성향)이 더 중요한 구간') + (' · 유가 상승으로 에너지 배당주 이익에는 순풍' if brent and brent['ytd'] is not None and brent['ytd'] > 15 else ''), ['DB', 'Y'])],
+        sect=[{'k': '낙관', 'good': ', '.join(a(n) for n in ('기술', '반도체', '리츠', '유틸리티', '경기소비재')), 'bad': a('에너지') + ' — 유가 하락 시 이익 감소'},
+              {'k': '기준', 'good': ', '.join(f"{s['nm']}({p1(s['ytd'])})" for s in top) if top else '섹터 등락 자료 없음', 'bad': ', '.join(f"{s['nm']}({p1(s['ytd'])})" for s in bot) if bot else '섹터 등락 자료 없음'},
+              {'k': '비관', 'good': ', '.join(a(n) for n in ('에너지', '필수소비재', '헬스케어')) + ', 현금·단기채', 'bad': ', '.join(a(n) for n in ('반도체', '기술', '리츠', '유틸리티', '경기소비재')) + ', 부채 많은 기업'}])
+    return {'headline': headline, 'key3': key3, 'sections': [s1, s2, s3, s4, s5, s6, s7],
+            'db_note': f'업종 등락률(DB)은 이 앱의 미국 섹터 ETF(XLK·XLE·XLU·XLRE 등) {us} 종가 기준 자체 계산'}
+
 # ── 공통 ──
 LOGF = None
 def log(*a):
@@ -308,7 +424,7 @@ def step_meta():
     return meta
 
 def step_macro():
-    """매크로 브리핑 지표 타일 10개 → app/src/macro_report.json (야후 파이낸스·FRED·한국은행). 실패한 타일은 이전 값 유지 + 경고"""
+    """매크로 브리핑 지표 타일 10개 + 분석 글(머리말·주목 지표·①~⑦, 규칙 기반 자동 생성) → app/src/macro_report.json (야후 파이낸스·FRED·한국은행). 실패한 타일은 이전 값 유지 + 경고"""
     us = read_json(META_PATH)['asof']['US']
     rep = read_json(MACRO_PATH); src = {'us': us}; warn = []
     try:
@@ -325,12 +441,16 @@ def step_macro():
     new = {base(t['k']): t for t in tiles}
     rep['tiles'] = [new.pop(base(t['k']), t) for t in rep['tiles']] + list(new.values())
     rep['tiles_asof'] = us
+    try: sectors = sector_stats(load_db(DB_FULL))
+    except Exception as e: sectors = []; warn.append(f'섹터 ETF 등락 읽기 실패: {e}')
+    rep.update(build_narrative(src, read_json(META_PATH), sectors)); rep['asof'] = us   # 분석 글은 매번 지표로 다시 쓴다(수동 편집 없음)
     rep['src_auto'] = {'Y': {'title': '야후 파이낸스 (시세·지수·환율·유가 일별 종가)', 'url': 'https://finance.yahoo.com/', 'date': us},
                        'F': {'title': 'FRED 세인트루이스 연준 (연방기금금리 목표범위·CPI·실업률·비농업 고용)', 'url': 'https://fred.stlouisfed.org/', 'date': (upto(src.get('fed_u', []), us) or [(us, 0)])[-1][0]},
                        'B': {'title': '한국은행 기준금리 변동 추이', 'url': BOK_URL, 'date': (src.get('bok') or [(us, 0)])[0][0]}}
     json.dump(rep, open(MACRO_PATH, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
     WARN.extend('매크로 타일 ' + w for w in warn)
-    log(f'macro: 타일 {len(tiles)}/10 갱신 ({us} 기준)' + (' · 경고: ' + ' / '.join(warn) if warn else ''))
+    log(f'macro: 타일 {len(tiles)}/10 갱신 + 분석 글 자동 생성 ({us} 기준)' + (' · 경고: ' + ' / '.join(warn) if warn else ''))
+    log('  머리말: ' + rep['headline'])
     for t in tiles: log(f"  {t['k']}: {t['v']} · {t['d']}")
     return tiles
 
@@ -384,15 +504,11 @@ def summary(lines):
     if gh: open(gh, 'a', encoding='utf-8').write('\n'.join(f'- {l}' for l in lines) + '\n')
 
 def stale_notes(meta):
-    """사람이 관리하는 콘텐츠(매크로 분석 글·종목 리포트)가 가격 데이터보다 일주일 넘게 오래되면 알림"""
-    out = []
-    for name, path, getter in (('매크로 브리핑 분석 글(app/src/macro_report.json)', 'macro_report.json', lambda j: j['asof']),
-                               ('종목 리포트·매크로 사실(app/src/research.json)', 'research.json', lambda j: j['macro']['us']['asof'])):
-        try: asof = getter(read_json(os.path.join(APP, 'src', path)))
-        except Exception: continue
-        age = days_between(asof, meta['asof']['US'])
-        if age > 7: out.append(f'⚠ {name}은 {asof} 기준으로 가격 데이터보다 {age}일 오래됨 — 갱신 권장')
-    return out
+    """사람이 쓰는 종목 리포트(research.json의 8종목)가 가격 데이터보다 30일 넘게 오래되면 알림 (매크로 글은 자동 생성이라 제외)"""
+    try: asof = min(v['asof'] for v in read_json(os.path.join(APP, 'src', 'research.json'))['stocks'].values())
+    except Exception: return []
+    age = days_between(asof, meta['asof']['US'])
+    return [f'⚠ 종목 리포트(app/src/research.json)는 {asof} 기준으로 가격 데이터보다 {age}일 오래됨 — 갱신 권장'] if age > 30 else []
 
 def main():
     global LOGF

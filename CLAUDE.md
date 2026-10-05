@@ -54,7 +54,7 @@
 
 - 상수: `META = window.META`(meta.json), `FX0 = META.fx`, `START_MONTH = META.start_month`
 - 계산: `simulate`, `portOf`, `itemsOf`, `metrics`, `needCalc`
-- 렌더: `renderAll`, 보유 종목(`renderHold/holdRow/holdValue/pnlOf`), 종목 구성(`renderPicker/toggle/equalize`), KPI·캘린더·성장 차트·시나리오·연도별 표
+- 렌더: `renderAll`, 보유 종목(`renderHold/holdRow/holdValue/pnlOf`), 종목 구성(`renderPicker/toggle/equalize`), KPI·캘린더·성장 차트·시나리오·연도별 표. KPI의 `#taxTile`(세금 경계선)은 연간 세전 배당 `yrs[].recvG`(ISA면 미국분 `recvGus`만)이 1,000만원·2,000만원을 처음 넘는 연차. 확인은 `app/tests/test_tax_line.py`
 - 저장: `state`를 localStorage 키 `monthly-div-sim-v1`에 저장
 - 백업·복원·공유: 머리말 버튼 `설정 내보내기`(JSON 파일)·`가져오기`·`공유 링크 복사`(`#s=` 뒤에 base64url JSON). `exportState/applyState/shareLink`, 대상 키는 `SHARE_KEYS`(sel·base·a·hold·custom·ov·extra·risk·slots). 공유 링크로 열면 확인 뒤 저장소에 넣고 새로고침. 확인은 `app/tests/test_backup_share.py`
 

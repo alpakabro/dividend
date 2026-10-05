@@ -1012,7 +1012,7 @@ function simulate(port, a, scenKey) {
   const fxAt = k => FX0 * Math.pow(1 + fxg, k / 12);
   let held0 = 0; items.forEach((it, i) => { held0 += sh[i] * pxKRW0(it.st); });
   const init = held0 + cash0;
-  const yrs = []; let contrib = held0, yG = 0, yN = 0, detail = null, hzBy = null;
+  const yrs = []; let contrib = held0, yG = 0, yN = 0, yGu = 0, detail = null, hzBy = null;   // yGu: 그해 미국 종목 세전 배당(ISA 밖 금융소득 판정용)
 
   function forward(k0, withDetail) {
     let g = 0, nt = 0; const dG = withDetail ? [] : null, dN = withDetail ? [] : null;
@@ -1037,20 +1037,20 @@ function simulate(port, a, scenKey) {
       px[i] = items[i].st.p0 * Math.pow(1 + gp[i], k / 12) * (us[i] ? f : 1);
       if (c > 0) sh[i] += c * wv[i] / px[i];
     }
-    let g = 0, nt = 0;
+    let g = 0, nt = 0, gu = 0;
     for (let i = 0; i < n; i++) {
       const s = items[i].st.mon[cal]; if (!s) continue;
       const d = sh[i] * items[i].st.d0 * Math.pow(1 + gd[i], k / 12) * (us[i] ? f : 1) * s;
-      g += d; nt += d * (1 - tr[i]);
+      g += d; nt += d * (1 - tr[i]); if (us[i]) gu += d;
     }
     if (a.drip && nt > 0) for (let i = 0; i < n; i++) sh[i] += nt * wv[i] / px[i];
-    yG += g; yN += nt;
+    yG += g; yN += nt; yGu += gu;
     if ((k + 1) % 12 === 0) {
       let val = 0; for (let i = 0; i < n; i++) val += sh[i] * px[i];
       const y = (k + 1) / 12, fw = forward(k + 1, y === H);
       if (y === H) { detail = { gross: fw.dG, net: fw.dN }; hzBy = items.map((_, i) => sh[i] * px[i]); }
-      yrs.push({ y, contrib, value: val, recvG: yG, recvN: yN, fwdG: fw.g, fwdN: fw.n });
-      yG = yN = 0;
+      yrs.push({ y, contrib, value: val, recvG: yG, recvN: yN, recvGus: yGu, fwdG: fw.g, fwdN: fw.n });
+      yG = yN = yGu = 0;
     }
   }
   const hz = yrs[H - 1];
@@ -1494,6 +1494,14 @@ function renderKpis() {
     h('div', { class: 'sub', text: `세후 ${pct(M.ny)} · 배당성장 가정 ${pct(M.g, 1)}` }),
     B ? deltaEl((M.y - B.y) * 100, v => fx1(v, 2) + '%p', true, 0.005) : null
   ));
+  // 세금 경계선: 연간 세전 배당이 1,000만원(건강보험료 반영)·2,000만원(금융소득종합과세)을 처음 넘는 연차. ISA 계좌면 국내 배당은 분리과세라 빼고 미국 배당만 합산
+  const finY = y => a.tax === 'normal' ? y.recvG : (y.recvGus || 0);
+  const crossY = lim => { const y = CUR.yrs.find(x => finY(x) >= lim); return y ? y.y : null; };
+  const c10 = crossY(1e7), c20 = crossY(2e7), yTxt = c => c ? `${c}년차` : `${EXT_YEARS}년 내 없음`;
+  box.append(h('div', { class: 'tile', id: 'taxTile' },
+    h('div', { class: 'lab', text: '세금 경계선 · 연간 세전 배당' + (a.tax === 'normal' ? '' : ' (ISA 밖 미국 배당만)') }),
+    h('div', { class: 'val' }, yTxt(c20), h('small', { text: ' 2,000만원 초과' })),
+    h('div', { class: 'sub', text: `1,000만원 초과 ${yTxt(c10)} · 1,000만원 넘으면 건강보험료에 반영, 2,000만원 넘으면 종합과세 신고 대상 (연차 기준, 아래 세금 체크리스트 참고)` })));
   box.append(h('div', { class: 'tile' },
     h('div', { class: 'lab', text: '배당 들어오는 달' }),
     h('div', { class: 'val' }, String(M.covered), h('small', { text: ' / 12개월' + (M.covered === 12 ? ' ✅' : ' ⚠️') })),

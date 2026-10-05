@@ -168,20 +168,20 @@ function divCard(it, st, rec) {
   const card = h('section', { class: 'card' }, h('div', { class: 'card-h' }, h('div', null, h('h2', { text: '배당' }))));
   const tax = TAX[A().tax] || TAX.normal;
   if (st && ((!st.dbOnly && !st.custom) || st.divSrc === 'db')) {
-    const y = yieldOf(st), tr = st.mkt === 'US' ? tax.US : tax.KR, etfDb = st.divSrc === 'db';
+    const y = yieldOf(st), tr = st.mkt === 'US' ? tax.US : tax.KR, fromDb = st.divSrc === 'db', etfDb = fromDb && isEtfRec(rec);
     if (etfDb) card.querySelector('h2').textContent = '분배금 (ETF)';
     const mo = h('div', { class: 'mo', style: 'grid-template-columns:repeat(12,10px);gap:3px' }), mx = Math.max(...st.mon) || 1;
     st.mon.forEach(v => mo.append(h('i', v > 0 ? { class: 'on', style: `width:10px;height:${Math.max(6, Math.round(18 * v / mx))}px` } : { style: 'width:10px;height:3px' })));
     card.append(h('dl', { class: 'kv' },
-      h('dt', { text: etfDb ? '최근 12개월 분배금' : '연간 배당(주당)' }), h('dd', { text: st.mkt === 'US' ? `$${st.d0.toFixed(st.d0 < 1 ? 3 : 2)}` : `${Math.round(st.d0).toLocaleString('ko-KR')}원` }),
+      h('dt', { text: etfDb ? '최근 12개월 분배금' : fromDb ? '최근 12개월 배당(주당)' : '연간 배당(주당)' }), h('dd', { text: st.mkt === 'US' ? `$${st.d0.toFixed(st.d0 < 1 ? 3 : 2)}` : `${Math.round(st.d0).toLocaleString('ko-KR')}원` }),
       h('dt', { text: etfDb ? '분배율(최근 12개월)' : '배당수익률' }), h('dd', { text: `${pct(y)} (세후 ${pct(y * (1 - tr))})` }),
-      h('dt', { text: '지급월' }), h('dd', { text: monthsText(st.mon) + (etfDb ? ' (추정)' : '') }),
+      h('dt', { text: '지급월' }), h('dd', { text: monthsText(st.mon) + (fromDb ? ' (추정)' : '') }),
       h('dt', { text: '배당성장 가정' }), h('dd', { text: fx1(st.g, 1) + '% / 년' }),
-      etfDb ? h('dt', { text: '분배금 변동' }) : h('dt', { text: '삭감 위험' }), etfDb ? h('dd', { text: '시장 상황에 따라 매번 달라져요' }) : h('dd', { text: `${SAFE[st.safe].e} ${SAFE[st.safe].t}` })),
+      etfDb ? h('dt', { text: '분배금 변동' }) : h('dt', { text: '삭감 위험' }), etfDb ? h('dd', { text: '시장 상황에 따라 매번 달라져요' }) : fromDb ? h('dd', { text: '미확인 — 최근 12개월 지급 실적만 반영(정책·특별배당 미구분)' }) : h('dd', { text: `${SAFE[st.safe].e} ${SAFE[st.safe].t}` })),
       h('div', { style: 'margin:10px 0 2px' }, mo, h('div', { class: 'mo-h', style: 'grid-template-columns:repeat(12,10px);gap:3px;font-size:9px' }, ...Array.from({ length: 12 }, (_, i) => h('span', { text: (i % 3 === 0 ? i + 1 : '') + '' })))), h('p', { class: 'mini', text: st.note }));
-    if (etfDb) {
-      card.append(h('p', { class: 'mini', text: '분배 이력: 야후 파이낸스(배당락일 기준). 과거 분배가 앞으로도 같다는 보장은 없어요.' }));
-      const det = h('details', { style: 'margin-top:6px' }, h('summary', { style: 'cursor:pointer;font-size:12px;color:var(--ink-2)', text: '분배율·지급월 직접 고치기' }));
+    if (fromDb) {
+      card.append(h('p', { class: 'mini', text: etfDb ? '분배 이력: 야후 파이낸스(배당락일 기준). 과거 분배가 앞으로도 같다는 보장은 없어요.' : '배당 이력: 야후 파이낸스(배당락일 기준), 지급월은 배당락일로 추정. 특별배당이 섞였거나 정책이 바뀌었을 수 있으니 중요한 종목은 공시로 확인하세요.' }));
+      const det = h('details', { style: 'margin-top:6px' }, h('summary', { style: 'cursor:pointer;font-size:12px;color:var(--ink-2)', text: etfDb ? '분배율·지급월 직접 고치기' : '배당수익률·지급월 직접 고치기' }));
       det.append(divOverrideForm(it, null)); card.append(det);
     }
     return card;

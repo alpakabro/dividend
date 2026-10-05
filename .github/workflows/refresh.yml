@@ -12,7 +12,7 @@ on:
         type: boolean
         default: false
       steps:
-        description: '실행 단계(쉼표로 나열, 비우면 전체): db,etf,merge,meta,macro,build,verify,commit'
+        description: '실행 단계(쉼표로 나열, 비우면 전체): db,etf,div,merge,meta,macro,build,verify,commit'
         default: ''
 permissions:
   contents: write

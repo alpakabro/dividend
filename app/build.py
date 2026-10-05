@@ -29,7 +29,8 @@ def fill(src, meta):
          'START': lambda: f'{sy}년 {sm}월', 'AS_Y': lambda: a['US'][:4], 'AS_M': lambda: str(int(a['US'][5:7])),
          'N_ALL': lambda: f'{sum(c.values()) // 1000 * 1000:,}여 개',
          'N_KR_STK': lambda: f"{c['kr_stk']:,}", 'N_KR_ETF': lambda: f"{c['kr_etf']:,}",
-         'N_US_STK': lambda: f"{c['us_stk']:,}", 'N_US_ETF': lambda: f"{c['us_etf']:,}", 'N_US_ETF_UNI': lambda: f"{meta['us_etf_universe']:,}"}
+         'N_US_STK': lambda: f"{c['us_stk']:,}", 'N_US_ETF': lambda: f"{c['us_etf']:,}", 'N_US_ETF_UNI': lambda: f"{meta['us_etf_universe']:,}",
+         'N_KR_DIV': lambda: f"{meta.get('div_counts', {}).get('kr', 0):,}", 'N_US_DIV': lambda: f"{meta.get('div_counts', {}).get('us', 0):,}"}
     return re.sub(r'\{\{(\w+)\}\}', lambda m: V[m.group(1)](), src)
 
 def mod(name):

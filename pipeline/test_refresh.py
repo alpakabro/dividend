@@ -88,4 +88,22 @@ assert T['브렌트유']['v'] == '$102.25' and T['브렌트유']['d'] == 'WTI $9
 # 한 출처가 비면 그 타일은 건너뛰고 경고만
 tiles2, warn2 = refresh.build_tiles({**src, 'bok': []})
 assert len(tiles2) == 9 and any('韓 기준금리' in w for w in warn2), warn2
+
+# ── 개별 주식 배당 (fetch_stock_div.py) ──
+import fetch_stock_div as fsd
+# 지급월 추정: 국내는 12월 배당락 → 이듬해 4월(주총 뒤), 그 외는 배당락 두 달 뒤. 미국은 배당락 약 한 달(25일) 뒤
+assert fsd.kr_pay_month('2025-12-29') == 4 and fsd.kr_pay_month('2026-03-30') == 5 and fsd.kr_pay_month('2026-06-29') == 8 and fsd.kr_pay_month('2026-11-28') == 1
+assert fsd.us_pay_month('2026-03-14') == 4 and fsd.us_pay_month('2026-12-20') == 1 and fsd.us_pay_month('2026-08-10') == 9
+# 배당 성장 가정: 완전한 연도 3개 이상이면 연간 합계의 연평균 증가율(0~8%로 제한), 아니면 3.0
+hist = [('2022-12-28', 1000.0), ('2023-12-28', 1100.0), ('2024-12-27', 1210.0), ('2025-12-29', 1331.0), ('2026-06-29', 700.0)]
+assert fsd.growth_est(hist, '2026-10-01') == 8.0                     # 10%/년이지만 상한 8
+assert fsd.growth_est([('2024-12-27', 500.0), ('2025-12-29', 400.0)], '2026-10-01') == 3.0   # 자료 부족 → 기본값
+assert fsd.growth_est([('2022-12-28', 1000.0), ('2023-12-28', 800.0), ('2024-12-27', 700.0), ('2025-12-29', 600.0)], '2026-10-01') == 0.0   # 감소 → 하한 0
+# 종목 배당 정보 = [최근 12개월 합계, 지급월 비중 12개, 횟수, 마지막 배당락일, 성장 가정] (ETF와 같은 형식)
+di = fsd.stock_div_info(hist, '2026-10-01', kr=True)
+assert di[0] == 2031 and di[2] == 2 and di[3] == '2026-06-29' and di[4] == 8.0, di
+assert di[1][3] == round(1331 / 2031, 3) and di[1][7] == round(700 / 2031, 3) and abs(sum(di[1]) - 1) < 1e-9, di[1]   # 4월·8월
+assert fsd.stock_div_info([], '2026-10-01', kr=True) == [0, [0] * 12, 0, '', 3.0]
+us = fsd.stock_div_info([('2025-11-10', 0.25), ('2026-02-10', 0.25), ('2026-05-11', 0.26), ('2026-08-10', 0.26)], '2026-10-01', kr=False)
+assert us[0] == 1.02 and us[2] == 4 and [i + 1 for i, v in enumerate(us[1]) if v > 0] == [3, 6, 9, 12], us
 print('OK')

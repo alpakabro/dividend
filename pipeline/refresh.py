@@ -1,6 +1,6 @@
 # 데이터 자동 갱신: DB 생성 → (새 데이터일 때만) ETF 수집 → ETF 병합 → 메타(환율·지수·종목 수) → 매크로 타일 → 빌드 → 검증 → 커밋
 #   python pipeline/refresh.py                              # 전체 실행. 데이터 날짜가 그대로면 '변동 없음'으로 끝남
-#   python pipeline/refresh.py --steps meta,build,verify    # 일부 단계만 (쉼표: db etf merge meta macro build verify commit)
+#   python pipeline/refresh.py --steps meta,build,verify    # 일부 단계만 (쉼표: db etf div merge meta macro build verify commit)
 #   python pipeline/refresh.py --force                      # 날짜가 같아도 끝까지 실행
 #   python pipeline/refresh.py --push                       # 커밋 뒤 origin main에 푸시 (GitHub Actions가 쓰는 옵션)
 # 기록: pipeline/refresh.log. GitHub Actions에서는 실행 요약도 남긴다($GITHUB_STEP_SUMMARY).
@@ -18,7 +18,7 @@ MACRO_PATH = os.path.join(APP, 'src', 'macro_report.json')
 DB_FULL = os.path.join(APP, 'data', 'stock_db_full.js')
 DB_RAW = os.path.join(D, 'stock_db.js')
 RAW = os.path.join(D, 'raw_etf')
-STEPS = ['db', 'etf', 'merge', 'meta', 'macro', 'build', 'verify', 'commit']
+STEPS = ['db', 'etf', 'div', 'merge', 'meta', 'macro', 'build', 'verify', 'commit']
 PY = sys.executable
 ENV = {**os.environ, 'PYTHONUTF8': '1', 'PYTHONIOENCODING': 'utf-8'}
 YF = {'fx': 'KRW=X', 'kospi': '^KS11', 'kosdaq': '^KQ11'}     # 야후 파이낸스 심볼
@@ -155,6 +155,13 @@ def load_db(path):
     s = open(path, encoding='utf-8').read().strip()
     return json.loads(s[len('window.STOCK_DB='):].rstrip(';'))
 
+def div_counts(db):
+    """최근 12개월 배당이 있는 주식 수(ETF 제외) {'kr': n, 'us': m}"""
+    c = {'kr': 0, 'us': 0}
+    for r in db['s']:
+        if r[4] != 'ETF' and len(r) > 21 and r[21][0] > 0: c['us' if r[0] == 'US' else 'kr'] += 1
+    return c
+
 def counts_of(db):
     c = {'kr_stk': 0, 'kr_etf': 0, 'us_stk': 0, 'us_etf': 0}
     for r in db['s']: c[('us' if r[0] == 'US' else 'kr') + ('_etf' if r[4] == 'ETF' else '_stk')] += 1
@@ -238,6 +245,13 @@ def step_etf():
         dst = os.path.join(RAW, out); shutil.rmtree(dst, ignore_errors=True); shutil.move(os.path.join(work, 'out'), dst)
         log(f'{out}: ' + ', '.join(f'{k} {v}' for k, v in m.items() if not isinstance(v, list)))
 
+def step_div():
+    """개별 주식 배당 이력(야후 파이낸스) → raw_div/stock_div.csv. 약 4,800종목, 10~15분"""
+    run([PY, 'fetch_stock_div.py'], cwd=D)
+    m = read_json(os.path.join(D, 'raw_div', 'meta.json')) or {}
+    if m.get('with_div', 0) < 1000: raise RuntimeError(f"배당 이력 수집 부족: with_div={m.get('with_div')} (최소 1000)")
+    log(f"stock dividends: {m.get('tickers')}종목 중 {m.get('with_div')}종목 이력 있음, 실패 {m.get('n_fail')}")
+
 def step_merge():
     """ETF를 DB에 병합 → app/data/stock_db_full.js"""
     run([PY, 'add_etf.py'], cwd=D)
@@ -261,7 +275,7 @@ def step_meta():
             'fx_range': fx_range(fx_rows),
             'kospi': idx['kospi'], 'kosdaq': idx['kosdaq'], 'idx_date': kr, 'idx_src': '야후 파이낸스 ^KS11·^KQ11',
             'start_year': sy, 'start_month': sm,
-            'counts': counts_of(db), 'us_etf_universe': us_all.get('symbols', old.get('us_etf_universe', 0)),
+            'counts': counts_of(db), 'div_counts': div_counts(db), 'us_etf_universe': us_all.get('symbols', old.get('us_etf_universe', 0)),
             'updated': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
     json.dump(meta, open(META_PATH, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     log(f"meta: 국내 {kr} · 미국 {us} · 원/달러 {meta['fx']} ({fx_date}) · 연중 {meta['fx_range']} · 코스피 {idx['kospi']} · 코스닥 {idx['kosdaq']} · 종목 {meta['counts']}")
@@ -302,7 +316,7 @@ def step_verify():
     from playwright.sync_api import sync_playwright
     meta = read_json(META_PATH)
     prev = json.loads(git('show', 'HEAD:app/data/meta.json', check=False) or 'null')
-    bad = count_gate((prev or {}).get('counts'), meta['counts'])
+    bad = count_gate((prev or {}).get('counts'), meta['counts']) + count_gate((prev or {}).get('div_counts'), meta.get('div_counts', {}))
     errs = []
     with sync_playwright() as p:
         b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1400, 'height': 1000})
@@ -369,6 +383,7 @@ def main():
             if not ARGS.force and not is_newer(asof, old.get('asof')):
                 summary(head + [f"변동 없음: 국내 {asof['KR']} · 미국 {asof['US']} 데이터가 이미 반영돼 있어 종료 ({time.time() - t0:.0f}초)"]); return
         if 'etf' in steps: step_etf()
+        if 'div' in steps: step_div()
         if 'merge' in steps: step_merge()
         meta = step_meta() if 'meta' in steps else read_json(META_PATH)
         mt = step_macro() if 'macro' in steps else None
@@ -378,7 +393,7 @@ def main():
     except Exception as e:
         log(traceback.format_exc()); summary(head + [f'**실패**: {e}']); sys.exit(1)
     lines = head + [f"새 데이터: 국내 {meta['asof']['KR']} · 미국 {meta['asof']['US']} · 원/달러 {meta['fx']:,}원({meta['fx_date']}, {meta['fx_src']}) · 코스피 {meta['kospi']:,} · 코스닥 {meta['kosdaq']:,}",
-                   '종목 수: ' + ', '.join(f'{k} {v:,}' for k, v in meta['counts'].items())]
+                   '종목 수: ' + ', '.join(f'{k} {v:,}' for k, v in meta['counts'].items()) + (f" · 배당 정보 있는 주식 국내 {meta['div_counts']['kr']:,}·미국 {meta['div_counts']['us']:,}" if meta.get('div_counts') else '')]
     if mt is not None: lines.append(f"매크로 타일 {len(mt)}/10 자동 갱신 ({meta['asof']['US']} 기준): " + ', '.join(f"{t['k']} {t['v']}" for t in mt))
     if r: lines.append(f"검증 통과: 기본 구성 20년 후 세후 월배당 {r['m']:,.0f}원, 페이지 오류 0건")
     lines += ['⚠ ' + w for w in WARN] + stale_notes(meta)

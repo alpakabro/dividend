@@ -25,6 +25,10 @@
   "us_stk": 2031,
   "us_etf": 2033
  },
+ "div_counts": {
+  "kr": 1362,
+  "us": 1221
+ },
  "us_etf_universe": 5758,
- "updated": "2026-10-05T01:15:12Z"
+ "updated": "2026-10-05T02:17:52Z"
 }

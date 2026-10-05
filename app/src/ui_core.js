@@ -15,11 +15,11 @@ function mkDbStock(id) {
   if (!ov && dv && dv[0] > 0) {   // ETF: 최근 12개월 분배 이력(배당락일 기준)으로 연간 분배금·지급월 자동 입력
     const amt = mkt === 'US' ? '$' + dv[0].toFixed(dv[0] < 1 ? 3 : 2) : Math.round(dv[0]).toLocaleString('ko-KR') + '원';
     if (dv[2] >= 11) tags.push('월배당');
-    return { id, mkt, name: recName(rec), code: rec[1], p0, d0: dv[0], mon: dv[1].slice(), g: dv[4], safe: 'warn', rec: false, tags, note: `최근 12개월 분배금 ${amt}(${dv[2]}회, 마지막 배당락 ${dateKo(dv[3])}) · 지급월은 배당락일로 추정 · 성장 가정 ${fx1(dv[4], 0)}%(유형 기본값)`, custom: false, db: id, dbOnly: true, noDiv: false, divSrc: 'db', sector: recSectorKo(rec) };
+    return { id, mkt, name: recName(rec), code: rec[1], p0, d0: dv[0], mon: dv[1].slice(), g: dv[4], safe: 'warn', rec: false, tags, note: `최근 12개월 ${etf ? '분배금' : '배당금'} ${amt}(${dv[2]}회, 마지막 배당락 ${dateKo(dv[3])}) · 지급월은 배당락일로 추정 · 성장 가정 ${fx1(dv[4], 1)}%(${etf ? '유형 기본값' : '최근 연간 배당 증가율에서 추정'})`, custom: false, db: id, dbOnly: true, noDiv: false, divSrc: 'db', sector: recSectorKo(rec) };
   }
   const note = ov ? `배당 직접 입력 · 수익률 ${fx1(y * 100, 2)}%, 성장 ${fx1(numOr(ov.g, 4), 1)}% 가정`
     : nd ? '현재 무배당 · ' + nd.split(' · ').slice(1).join(' · ')
-    : dv ? '최근 12개월 분배 없음 — 분배금을 재투자하는 상품(TR·레버리지)이거나 새로 상장했을 수 있어요' : '배당 정보 없음 — 종목명을 눌러 배당수익률·지급월 입력';
+    : dv ? (etf ? '최근 12개월 분배 없음 — 분배금을 재투자하는 상품(TR·레버리지)이거나 새로 상장했을 수 있어요' : '최근 12개월 배당 없음(야후 파이낸스 배당락 이력 기준) — 배당을 다시 준다면 종목명을 눌러 직접 입력') : '배당 정보 없음 — 종목명을 눌러 배당수익률·지급월 입력';
   return { id, mkt, name: recName(rec), code: rec[1], p0, d0: p0 * y, mon: ov ? presetMonths(ov.mp || 'none') : new Array(12).fill(0), g: ov ? numOr(ov.g, 4) : (dv ? dv[4] : 4), safe: ov ? (ov.s || 'warn') : 'warn', rec: false, tags, note, custom: false, db: id, dbOnly: true, noDiv: !ov, divSrc: ov ? 'user' : null, sector: recSectorKo(rec) };
 }
 function S(id) {

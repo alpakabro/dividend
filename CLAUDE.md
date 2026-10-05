@@ -19,8 +19,9 @@
 | `app/data/meta.json` | 데이터 날짜(`asof`)·원/달러(`fx`, 출처 `fx_src`)·연중 환율 고저(`fx_range`)·코스피/코스닥 실제 종가·첫 적립 월·종목 수. `refresh.py`가 쓰고 `build.py`가 문구와 `window.META`에 넣는다 |
 | `app/build.py` | 조립 스크립트(`fill`이 문구 자리표시자 `{{KR_D}}` 등을 meta로 채움) → `index.html`, `app/dist/artifact.html` |
 | `app/tests/*.py` | Playwright 확인 스크립트 |
-| `pipeline/` | DB 생성 `build_db.py`, ETF 병합 `add_etf.py`, 검증 `check_db.py`, 미국 종목 메타 `universe.csv`, 주요 미국 ETF 168개의 한글명·유형 `us_etf_list.json` |
-| `pipeline/refresh.py` | **데이터 자동 갱신 본체**(4절): 수집 → DB → 병합 → 메타 → 매크로 타일 → 빌드 → 검증 → 커밋. `test_refresh.py`는 그 도우미 함수 점검 |
+| `pipeline/` | DB 생성 `build_db.py`, ETF 병합 `add_etf.py`(개별 주식 배당도 붙임), 검증 `check_db.py`, 미국 종목 메타 `universe.csv`, 주요 미국 ETF 168개의 한글명·유형 `us_etf_list.json` |
+| `pipeline/fetch_stock_div.py` | 개별 주식 배당락 이력 수집(야후 파이낸스, 2021~) → `pipeline/raw_div/stock_div.csv`(git 제외). 지급월 추정·성장 가정·배당 정보 조립 함수는 여기 있고 `add_etf.py`가 가져다 쓴다 |
+| `pipeline/refresh.py` | **데이터 자동 갱신 본체**(4절): 수집(ETF·주식 배당) → DB → 병합 → 메타 → 매크로 타일 → 빌드 → 검증 → 커밋. `test_refresh.py`는 그 도우미 함수 점검 |
 | `.github/workflows/refresh.yml` | 매일 08:00 KST(화~토) GitHub Actions에서 `refresh.py --push` 정기 실행, 수동 실행(Run workflow)도 가능 |
 | `desktop/app.py`, `desktop/build_exe.py` | 윈도우 PC 프로그램: pywebview 창(Edge WebView2)으로 공개 사이트를 열고, 오프라인이면 exe 안의 `index.html` 사본을 연다. `build_exe.py`가 PyInstaller로 `desktop/dist/월배당시뮬레이터.exe`(단일 파일, git 제외)를 만든다 |
 | 브랜치 `etf-job` | ETF 수집 GitHub Actions(`.github/workflows/etf-data.yml`, `tools/etf/*.py`) |
@@ -79,7 +80,7 @@ DB 레코드(인덱스는 `RF`):
 - `mk`: `KS`/`KQ`/`KE`(국내 ETF)/`US`. ETF는 `sector='ETF'`, `industry`=유형
 - 시리즈 인코딩: base64 VLQ 델타. 미국 가격은 센트(×100), 거래량은 `round(ln(1+v)*20)`
 - `stats`: `[1주, 1개월, 3개월, 6개월, 연초, 1년, 3년, 5년, 변동성, 최대낙폭, 52주고, 52주저, 상장후, 시작일]`
-- `div`(ETF만): `[최근 12개월 분배금, 지급월 비중 12개, 횟수, 마지막 배당락일, 성장 가정]` → `mkDbStock`이 자동 반영
+- `div`(ETF와 배당 이력이 있는 주식): `[최근 12개월 분배금(배당), 지급월 비중 12개, 횟수, 마지막 배당락일, 성장 가정]` → `mkDbStock`이 자동 반영(`divSrc:'db'`). 주식의 지급월 추정은 국내 12월 배당락→4월·그 외 +2개월, 미국 +25일. 성장 가정은 완전한 연도 3개 이상이면 연간 합계 증가율(0~8%), 아니면 3.0. 큐레이션(RAW) 종목은 큐레이션 값이 우선
 - 축: 국내는 d 250일(~10/1)·w 156·m 120·y 2016~, 미국은 d 250일(~10/2)·w/m 2024-07~
 
 화면 공통:
@@ -105,15 +106,16 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
 
 ## 4. 데이터 갱신 (자동)
 
-`pipeline/refresh.py`가 전 과정을 한 번에 한다: **DB 생성 → (새 종가일 때만) ETF 수집 → ETF 병합 → 메타(환율·지수·종목 수) → 매크로 지표 타일 → 빌드 → 검증 → 커밋**.
+`pipeline/refresh.py`가 전 과정을 한 번에 한다: **DB 생성 → (새 종가일 때만) ETF 수집 → 주식 배당 수집 → 병합 → 메타(환율·지수·종목 수) → 매크로 지표 타일 → 빌드 → 검증 → 커밋**.
 
 - **정기 실행:** `.github/workflows/refresh.yml`이 매일 한국시간 08:00(화~토)에 GitHub Actions에서 `refresh.py --push`를 돌린다. 새 종가가 있으면 `index.html`·`app/data/stock_db_full.js`·`app/data/meta.json`을 main에 커밋하고 GitHub Pages가 배포한다. 데이터 날짜가 그대로면 "변동 없음"으로 끝난다(커밋 없음). 검증에 실패하면 커밋하지 않고 끝나며 GitHub가 소유자에게 이메일을 보낸다
 - **수동 실행:** GitHub → Actions → refresh → Run workflow (`force`: 날짜가 같아도 다시 빌드·배포, `steps`: 일부 단계만). 실행 페이지의 요약(Summary)에 날짜·환율·지수·종목 수·검증 결과·경고가 나오고, `artifact.html`과 `refresh.log`를 내려받을 수 있다(14일 보관)
-- **내 컴퓨터에서:** `python3 pipeline/refresh.py` (`--steps db,etf,merge,meta,macro,build,verify,commit` 중 골라 쉼표로, `--force`, `--push`). 필요 패키지는 3절. 기록은 `pipeline/refresh.log`
+- **내 컴퓨터에서:** `python3 pipeline/refresh.py` (`--steps db,etf,div,merge,meta,macro,build,verify,commit` 중 골라 쉼표로, `--force`, `--push`). 필요 패키지는 3절. 기록은 `pipeline/refresh.log`
 - **단계별 하는 일**
   - `db`: 올해 marcap 파일과 미국 가격 파일을 지우고 `build_db.py`(FinanceData/marcap 2016~올해 + us-stock-data) → `pipeline/stock_db.js`, `check_db.py`로 점검. 새해 첫 거래일 전에는 올해 파일이 없어 전년도까지로 만든다
   - `etf`: etf-job 브랜치의 `tools/etf/fetch_etf.py`(국내 ETF 전체 + 주요 미국 ETF 168개)·`fetch_us_all.py`(미국 ETF 전체)를 받아 실행 → `pipeline/raw_etf/etf-data`, `etf-data-us` (약 20분). etf-job 브랜치의 Actions는 그대로 있어 따로 돌려도 된다
-  - `merge`: `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`
+  - `div`: `fetch_stock_div.py`가 DB의 모든 주식(약 4,800개)의 배당락 이력을 야후 파이낸스에서 받는다(80개씩 묶음, 약 6분) → `pipeline/raw_div/stock_div.csv`. 이력 있는 종목이 1,000개 미만이면 실패
+  - `merge`: `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)
   - `meta`: 야후 파이낸스에서 원/달러(`KRW=X`, 미국 데이터 날짜 종가)와 연중 고저, 코스피·코스닥 실제 종가(`^KS11`·`^KQ11`, 국내 데이터 날짜) → `app/data/meta.json`. 그 날짜 종가가 아직 없으면 실패하고 다음 실행에서 다시 시도한다(수치를 지어내지 않음)
   - `macro`: 매크로 브리핑 지표 타일 10개를 다시 쓴다 → `app/src/macro_report.json`의 `tiles`(값·설명·등락·출처)와 `tiles_asof`·`src_auto`. 출처는 야후 파이낸스(美 10년물 `^TNX`, 달러인덱스 `DX-Y.NYB`, 원/달러 `KRW=X`, 코스피 `^KS11`, S&P500 `^GSPC`, 브렌트 `BZ=F`·WTI `CL=F`), FRED CSV(기준금리 `DFEDTARU`/`DFEDTARL`, CPI `CPIAUCNS`/`CPILFENS`(비계절조정, 공식 전년 대비와 같음), 실업률 `UNRATE`, 고용 `PAYEMS` — 파이썬 기본 접속은 차단되므로 `curl_cffi`로 크롬처럼 접속), 한국은행 기준금리 페이지(표 해석). 기준일은 미국 데이터 날짜. 어느 출처가 실패하면 그 타일은 이전 값을 두고 요약에 ⚠ 경고만 남긴다(수치를 지어내지 않음). headline·key3·sections는 사람이 쓴다
   - `build`: `app/build.py`
@@ -152,7 +154,7 @@ ETF 데이터의 특성:
 - **가격 이력:** 미국 개별 주식은 2024.7부터라(원본 데이터 한계) 3년·5년 수익률이 없다. 주요 미국 ETF는 2016~, 나머지 ETF는 2023.9~
 - **사이트의 AI:** GitHub Pages에는 Claude 연결이 없어 AI가 바로 답하지 못한다(질문 복사로 동작). 바로 답하게 하려면 아티팩트를 공유하거나 API 키와 서버가 필요하다
 - **종목 리포트:** 종목 창의 '기업/실적/재무' 리포트는 research.json의 8개 종목만 사전 조사돼 있다. 나머지 종목은 AI 실행 또는 프롬프트 복사를 쓴다
-- **자동 갱신 범위:** 가격·분배금·환율·지수·매크로 지표 타일만 자동이다. 매크로 분석 글·종목 리포트·큐레이션 배당은 사람이 갱신한다(4절). 분석 글이 타일보다 오래되면 글 속 숫자와 타일이 어긋날 수 있다(배지에 두 날짜를 보여 줌)
+- **자동 갱신 범위:** 가격·분배금·개별 주식 배당·환율·지수·매크로 지표 타일만 자동이다. 매크로 분석 글·종목 리포트·큐레이션 배당은 사람이 갱신한다(4절). 분석 글이 타일보다 오래되면 글 속 숫자와 타일이 어긋날 수 있다(배지에 두 날짜를 보여 줌)
 
 ## 7. 다음 작업 후보
 

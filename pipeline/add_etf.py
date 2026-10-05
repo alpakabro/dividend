@@ -187,6 +187,18 @@ if os.path.exists(os.path.join(US_ALL, 'etf_us_all_list.csv')):
         n_all += 1
     print('US ETFs from full list', n_all, '(min ADV $%.1fM)' % (MIN_ADV_BUILD / 1e6), '| DRAM in:', any(x[1] == 'DRAM' for x in us_out))
 
+# ── 개별 주식 배당 (raw_div/stock_div.csv = fetch_stock_div.py 결과) → 주식 레코드 끝에 ETF와 같은 형식의 div 정보 ──
+DIVF = os.path.join(D, 'raw_div', 'stock_div.csv')
+n_div = {'KR': 0, 'US': 0}
+if os.path.exists(DIVF):
+    from fetch_stock_div import stock_div_info
+    SD = pd.read_csv(DIVF, dtype={'code': str}); SD['date'] = SD['date'].astype(str)
+    sd_by = {k: sorted(zip(g['date'], g['div'])) for k, g in SD.groupby('code')}
+    for rec in db['s']:
+        if rec[4] == 'ETF' or len(rec) > 21 or rec[1] not in sd_by: continue
+        kr = rec[0] != 'US'
+        rec.append(stock_div_info(sd_by[rec[1]], str((KR_ASOF if kr else US_ASOF).date()), kr)); n_div['KR' if kr else 'US'] += 1
+    print('stock dividends attached', n_div, '| KT&G', next((r[21] for r in db['s'] if r[1] == '033780' and len(r) > 21), '-'))
 db['s'] = db['s'] + kr_out + us_out
 for rec in db['s']:
     assert len(rec) in (21, 22), rec[1]

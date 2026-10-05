@@ -5,6 +5,7 @@ app/tests/out/
 pipeline/*.parquet
 pipeline/stock_db.js
 pipeline/raw_etf/
+pipeline/raw_div/
 pipeline/*.pkl
 pipeline/*.log
 pipeline/manifest.json

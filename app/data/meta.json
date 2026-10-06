@@ -1,10 +1,10 @@
 {
  "asof": {
-  "KR": "2026-10-01",
-  "US": "2026-10-02"
+  "KR": "2026-10-02",
+  "US": "2026-10-05"
  },
- "fx": 1360.6,
- "fx_date": "2026-10-02",
+ "fx": 1342.6,
+ "fx_date": "2026-10-05",
  "fx_src": "야후 파이낸스 USD/KRW",
  "fx_url": "https://finance.yahoo.com/quote/KRW%3DX/",
  "fx_range": {
@@ -13,22 +13,22 @@
   "lo": 1339.17,
   "loD": "9/10"
  },
- "kospi": 6971.35,
- "kosdaq": 894.29,
- "idx_date": "2026-10-01",
+ "kospi": 7003.74,
+ "kosdaq": 893.29,
+ "idx_date": "2026-10-02",
  "idx_src": "야후 파이낸스 ^KS11·^KQ11",
  "start_year": 2026,
  "start_month": 11,
  "counts": {
   "kr_stk": 2766,
   "kr_etf": 1171,
-  "us_stk": 2031,
-  "us_etf": 2033
+  "us_stk": 2030,
+  "us_etf": 2045
  },
  "div_counts": {
   "kr": 1362,
-  "us": 1221
+  "us": 1220
  },
- "us_etf_universe": 5758,
- "updated": "2026-10-05T04:50:03Z"
+ "us_etf_universe": 5755,
+ "updated": "2026-10-06T03:05:38Z"
 }

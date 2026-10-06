@@ -1,6 +1,6 @@
-// 설치형 웹앱(PWA) 서비스 워커 — build.py가 만든다(버전 24019bb79e = 종목 DB 해시). 두 번째부터 빠르게 열리고 오프라인에서도 열린다
-const SHELL = 'divsim-shell-24019bb79e', DATA = 'divsim-data';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'], DB = './db.js?v=24019bb79e';
+// 설치형 웹앱(PWA) 서비스 워커 — build.py가 만든다(버전 2a30c26ca1 = 종목 DB 해시). 두 번째부터 빠르게 열리고 오프라인에서도 열린다
+const SHELL = 'divsim-shell-2a30c26ca1', DATA = 'divsim-data';
+const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'], DB = './db.js?v=2a30c26ca1';
 self.addEventListener('install', e => { e.waitUntil(Promise.all([
   caches.open(SHELL).then(c => c.addAll(CORE)),
   caches.open(DATA).then(c => c.add(DB).then(() => c.keys()).then(ks => Promise.all(ks.filter(k => !k.url.endsWith(DB.slice(1))).map(k => c.delete(k)))))   // 첫 방문에 종목 DB도 캐시(페이지가 방금 받은 것을 HTTP 캐시에서 재사용), 옛 버전은 지움

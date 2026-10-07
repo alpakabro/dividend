@@ -1,10 +1,10 @@
 {
  "asof": {
   "KR": "2026-10-02",
-  "US": "2026-10-05"
+  "US": "2026-10-06"
  },
- "fx": 1342.6,
- "fx_date": "2026-10-05",
+ "fx": 1343.8,
+ "fx_date": "2026-10-06",
  "fx_src": "야후 파이낸스 USD/KRW",
  "fx_url": "https://finance.yahoo.com/quote/KRW%3DX/",
  "fx_range": {
@@ -22,13 +22,13 @@
  "counts": {
   "kr_stk": 2766,
   "kr_etf": 1171,
-  "us_stk": 2030,
+  "us_stk": 2034,
   "us_etf": 2045
  },
  "div_counts": {
-  "kr": 1362,
-  "us": 1220
+  "kr": 1361,
+  "us": 1221
  },
- "us_etf_universe": 5755,
- "updated": "2026-10-06T03:05:38Z"
+ "us_etf_universe": 5758,
+ "updated": "2026-10-07T02:34:00Z"
 }

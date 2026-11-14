@@ -8,7 +8,7 @@ D = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(D)
 
 DATA_MODS = ['data.js']                     # app_src.html의 /*__DATA_MODULES__*/ 자리 (RAW 정의 직후)
-UI_MODS = ['ui_core.js', 'tech.js', 'detail.js', 'ai.js', 'pa.js', 'macro.js', 'screen.js', 'advisor.js']   # /*__UI_MODULES__*/ 자리, 이 순서로 한 스크립트에 이어 붙임
+UI_MODS = ['ui_core.js', 'tech.js', 'detail.js', 'ai.js', 'pa.js', 'macro.js', 'themes.js', 'screen.js', 'advisor.js']   # /*__UI_MODULES__*/ 자리, 이 순서로 한 스크립트에 이어 붙임
 
 # ── 날짜 표기 (refresh.py와 공유) ──
 def ko_date(s):                 # '2026-10-01' → '2026.10.1' (화면의 dateKo와 같은 형식)

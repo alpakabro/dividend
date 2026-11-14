@@ -41,53 +41,67 @@ function scCompute() {
     rows.push({ it, rec, id: it.id, mk: it.mk, etf, name: it.name, code: it.code, sec: it.sec, ind, P, vr, r1m, r3m, buy, rsi, chk,
       sVol: scClamp(vr, 0.8, 2.5), sBuy: scClamp(buy, 0.35, 0.7), sChart: chk.filter(x => x[1]).length * 5 });
   }
-  // 테마: 주식은 세부 업종(8종목 이상), 없으면 섹터. ETF는 유형. 1개월 수익률 중앙값 순위 + 거래량 변화 중앙값 순위
+  // 테마: 시장 테마(themes.js)에 속하면 그중 가장 강한 테마, 아니면 업종(8종목 이상)·섹터·ETF 유형으로 대신 채점
+  const TK = new Map(), TU = new Map(), put = (m, k, i) => { k = k.trim(); if (!k) return; if (!m.has(k)) m.set(k, []); if (!m.get(k).includes(i)) m.get(k).push(i); };
+  THEMES.forEach((t, i) => { t.kr.split(',').forEach(n => put(TK, n, i)); t.us.split(',').forEach(n => put(TU, n, i)); });
   const cnt = new Map();
   rows.forEach(r => { if (!r.etf && r.ind) { const k = r.mk + '|' + r.ind; cnt.set(k, (cnt.get(k) || 0) + 1); } });
   const groups = new Map();
+  const join = (r, key, mk) => { if (!groups.has(key)) groups.set(key, mk()); groups.get(key).m.push(r); return groups.get(key); };
   rows.forEach(r => {
-    const fine = !r.etf && r.ind && cnt.get(r.mk + '|' + r.ind) >= 8;
-    r.theme = fine ? r.ind : r.sec; r.tkey = r.mk + '|' + (r.etf ? 'E' : 'S') + '|' + r.theme;
-    if (!groups.has(r.tkey)) groups.set(r.tkey, { key: r.tkey, name: r.theme, mk: r.mk, etf: r.etf, m: [] });
-    groups.get(r.tkey).m.push(r);
+    const kind = r.etf ? 'E' : 'S';
+    const ths = r.etf ? THEMES.map((t, i) => t.etf.test(r.rec[RF.name] + ' ' + (r.rec[RF.ko] || '')) ? i : -1).filter(i => i >= 0) : ((r.mk === 'US' ? TU.get(r.code) : TK.get(r.rec[RF.name])) || []);
+    r.gs = ths.map(i => join(r, r.mk + '|' + kind + '|T|' + i, () => ({ key: r.mk + '|' + kind + '|T|' + i, name: (r.mk === 'US' && THEMES[i].un) || THEMES[i].name, e: THEMES[i].e, mk: r.mk, etf: r.etf, mkt: true, m: [] })));
+    if (!r.gs.length) {
+      const fine = !r.etf && r.ind && cnt.get(r.mk + '|' + r.ind) >= 8, nm = fine ? r.ind : r.sec, key = r.mk + '|' + kind + '|F|' + nm;
+      r.gs = [join(r, key, () => ({ key, name: nm, e: '', mk: r.mk, etf: r.etf, mkt: false, m: [] }))];
+    }
   });
   const themes = [...groups.values()];
   themes.forEach(g => { g.n = g.m.length; g.r1m = scMedian(g.m.map(r => r.r1m)); g.vr = scMedian(g.m.map(r => r.vr)); g.up = g.m.filter(r => r.chk[0][1]).length / g.n; });
-  const pools = new Map();
-  themes.forEach(g => { const k = g.mk + (g.etf ? 'E' : 'S'); if (!pools.has(k)) pools.set(k, []); if (g.n >= 5) pools.get(k).push(g); });
+  const pools = new Map();   // 시장 테마와 업종은 따로 순위를 매긴다
+  themes.forEach(g => { const k = g.mk + (g.etf ? 'E' : 'S') + (g.mkt ? 'T' : 'F'); if (!pools.has(k)) pools.set(k, []); if (g.n >= (g.mkt ? 3 : 5)) pools.get(k).push(g); });
   pools.forEach(list => {
     const rank = f => { const s = list.slice().sort((a, b) => f(a) - f(b)); s.forEach((g, i) => { g._r = (g._r || 0) + (list.length > 1 ? i / (list.length - 1) : 0.5); }); };
     rank(g => g.r1m); rank(g => g.vr);
     list.forEach(g => { g.str = g._r / 2; });
     list.sort((a, b) => b.str - a.str).forEach((g, i) => { g.rank = i + 1; g.of = list.length; });
   });
-  rows.forEach(r => { const g = groups.get(r.tkey); r.g = g; r.sTheme = g.str != null ? g.str * 25 : 12.5; r.tot = Math.round(r.sTheme + r.sVol + r.sBuy + r.sChart); });
+  rows.forEach(r => {
+    r.gs.sort((a, b) => (b.str == null ? -1 : b.str) - (a.str == null ? -1 : a.str));
+    const g = r.gs[0]; r.g = g; r.theme = (g.e ? g.e + ' ' : '') + g.name;
+    r.sTheme = g.str != null ? g.str * 25 : 12.5; r.tot = Math.round(r.sTheme + r.sVol + r.sBuy + r.sChart);
+  });
   return (SC.data = { rows, themes, pools });
 }
 function scList() {
   const d = scCompute();
-  return d.rows.filter(r => r.mk === SC.mkt && r.etf === (SC.kind === 'etf') && scSizeOk(r, SC.size) && (SC.theme === 'all' || r.tkey === SC.theme))
+  return d.rows.filter(r => r.mk === SC.mkt && r.etf === (SC.kind === 'etf') && scSizeOk(r, SC.size) && (SC.theme === 'all' || r.gs.some(g => g.key === SC.theme)))
     .sort((a, b) => (b.tot - a.tot) || (b.sChart - a.sChart) || (b.it.mcap - a.it.mcap));
 }
 function scWhy(r) {
-  const g = r.g, t = g.rank ? `‘${g.name}’ ${g.of}개 테마 중 ${g.rank}위 — 소속 ${g.n}종목의 1개월 수익률 중간값 ${sp(g.r1m)}, 거래량 ${fx1(g.vr, 2)}배, 20일선 위 종목 ${fx1(g.up * 100, 0)}%` : `‘${g.name}’은 종목 수가 적어 중간 점수를 줬어요`;
+  const g = r.g, stat = `소속 ${g.n}종목의 1개월 수익률 중간값 ${sp(g.r1m)}, 거래량 ${fx1(g.vr, 2)}배, 20일선 위 종목 ${fx1(g.up * 100, 0)}%`;
+  const more = r.gs.slice(1).filter(x => x.mkt).map(x => x.name + (x.rank ? ` ${x.rank}위` : ''));
+  const t = !g.rank ? `‘${g.name}’은 종목 수가 적어 중간 점수를 줬어요`
+    : g.mkt ? `‘${g.name}’ 테마 ${g.of}개 중 ${g.rank}위 — ${stat}` + (more.length ? ` · 함께 속한 테마: ${more.join(', ')}` : '')
+    : `시장 테마 목록에 없는 종목이라 ${r.etf ? 'ETF 유형' : '업종'} ‘${g.name}’(${g.of}개 중 ${g.rank}위)로 채점 — ${stat}`;
   return [
     ['테마', r.sTheme, t],
     ['거래량', r.sVol, `최근 5일 평균 거래량이 그 전 60일 평균의 ${fx1(r.vr, 2)}배 (0.8배 이하 0점 ~ 2.5배 이상 만점)`],
     ['매수세', r.sBuy, `최근 20일 거래량 중 오른 날 거래량 ${fx1(r.buy * 100, 0)}% (35% 이하 0점 ~ 70% 이상 만점) · 외국인·기관 매매 자료 대신 쓰는 추정치`],
     ['차트', r.sChart, r.chk.map(x => (x[1] ? '✓ ' : '✗ ') + x[0]).join(' · ') + ` (RSI ${fx1(r.rsi, 0)})`]];
 }
-function scBar(v, max) { return h('span', { class: 'sc-bar', title: `${fx1(v, 0)} / ${max}` }, h('i', { style: `width:${Math.round(v / max * 100)}%` })); }
+function scBar(v, max, k) { return h('span', { class: 'sc-bar' + (k ? ' ' + k : ''), title: `${fx1(v, 0)} / ${max}` }, h('i', { style: `width:${Math.round(v / max * 100)}%` })); }
 function renderScreen() {
   const box = $('#viewScreen'); box.textContent = '';
   const d = scCompute(), list = scList();
   const seg = (items, cur, on) => { const s = h('div', { class: 'seg' }); items.forEach(([v, l]) => s.append(h('button', { type: 'button', 'aria-pressed': String(v === cur), text: l, onclick: () => on(v) }))); return s; };
   const set = (k, v) => { SC[k] = v; if (k !== 'theme') SC.theme = 'all'; SC.open = null; SC.limit = 50; renderScreen(); };
-  const pool = (d.pools.get(SC.mkt + (SC.kind === 'etf' ? 'E' : 'S')) || []);
-  const sel = h('select', { 'aria-label': '테마 선택', onchange: e => set('theme', e.target.value) }, h('option', { value: 'all', text: '전체 테마' }), ...pool.map(g => h('option', { value: g.key, text: `${g.rank}위 ${g.name} (${g.n})` })));
+  const pool = (d.pools.get(SC.mkt + (SC.kind === 'etf' ? 'E' : 'S') + 'T') || []);
+  const sel = h('select', { 'aria-label': '테마 선택', onchange: e => set('theme', e.target.value) }, h('option', { value: 'all', text: '전체 테마' }), ...pool.map(g => h('option', { value: g.key, text: `${g.rank}위 ${g.e} ${g.name} (${g.n})` })));
   sel.value = SC.theme;
   box.append(h('div', { class: 'pa-top' },
-    h('div', null, h('button', { class: 'btn sm', type: 'button', text: '← 포트폴리오 설계로 돌아가기', onclick: goMain }), h('h2', { style: 'margin-top:8px', text: '종목 분석기' }),
+    h('div', null, h('button', { class: 'btn sm', type: 'button', text: '← 포트폴리오 설계로 돌아가기', onclick: goMain }), h('h2', { style: 'margin-top:8px', text: '🔎 종목 분석기' }),
       h('p', { text: `테마·거래량·매수세·차트 4가지 조건을 25점씩 점수로 매겨 후보를 추립니다 · 종가 국내 ${dataDate('KR')}·미국 ${dataDate('US')} 기준` })),
     h('div', { class: 'pa-set' },
       h('div', { class: 'field' }, h('span', { class: 'lab', text: '시장' }), seg([['KR', '국내'], ['US', '미국']], SC.mkt, v => set('mkt', v))),
@@ -95,13 +109,14 @@ function renderScreen() {
       h('div', { class: 'field' }, h('span', { class: 'lab', text: '규모' }), seg(SC_SIZES, SC.size, v => set('size', v))),
       h('div', { class: 'field' }, h('span', { class: 'lab', text: '테마' }), sel))));
 
-  const top = pool.slice(0, 8);
-  if (top.length) box.append(h('div', { class: 'card sc-themes' }, h('div', { class: 'card-h' }, h('div', null, h('h2', { text: '지금 강한 테마' }), h('p', { text: '소속 종목의 1개월 수익률·거래량 변화가 시장 안에서 상대적으로 큰 순서 · 누르면 그 테마만 봅니다' }))),
+  const top = SC.allT ? pool : pool.slice(0, 8);
+  if (top.length) box.append(h('div', { class: 'card sc-themes' }, h('div', { class: 'card-h' }, h('div', null, h('h2', { text: '🔥 지금 강한 테마' }), h('p', { text: '소속 종목의 1개월 수익률·거래량 변화가 시장 안에서 상대적으로 큰 순서 · 누르면 그 테마만 봅니다' }))),
     h('div', { class: 'sc-tlist' }, ...top.map(g => h('button', { type: 'button', class: 'sc-theme', 'aria-pressed': String(SC.theme === g.key), onclick: () => set('theme', SC.theme === g.key ? 'all' : g.key) },
-      h('b', { text: `${g.rank}. ${g.name}` }), h('span', { class: dirCls(g.r1m), text: `1개월 ${sp(g.r1m)}` }), h('span', { text: `거래량 ${fx1(g.vr, 2)}배 · ${g.n}종목` }))))));
+      h('span', { class: 'sc-emo', 'aria-hidden': 'true', text: g.e }), h('b', { text: `${g.rank}위 ${g.name}` }), h('span', { class: dirCls(g.r1m), text: `1개월 ${sp(g.r1m)}` }), h('span', { text: `거래량 ${fx1(g.vr, 2)}배 · ${g.n}종목` })))),
+    pool.length > 8 ? h('div', { style: 'text-align:center;margin-top:10px' }, h('button', { class: 'btn sm', type: 'button', text: SC.allT ? '접기' : `테마 모두 보기 (${pool.length})`, onclick: () => { SC.allT = !SC.allT; renderScreen(); } })) : null));
 
   const card = h('div', { class: 'card' });
-  card.append(h('div', { class: 'card-h' }, h('div', null, h('h2', { text: `점수 높은 순 ${list.length.toLocaleString('ko-KR')}종목` }), h('p', { text: `${scSizeHint()} · 종목을 누르면 점수 근거가 펼쳐집니다` }))));
+  card.append(h('div', { class: 'card-h' }, h('div', null, h('h2', { text: `🏅 점수 높은 순 ${list.length.toLocaleString('ko-KR')}종목` }), h('p', { text: `${scSizeHint()} · 종목을 누르면 점수 근거가 펼쳐집니다` }))));
   if (!list.length) card.append(h('div', { class: 'empty', text: '조건에 맞는 종목이 없어요. 규모나 테마를 바꿔 보세요.' }));
   else {
     const tb = h('tbody');
@@ -111,7 +126,7 @@ function renderScreen() {
         h('td', { text: String(i + 1) }),
         h('td', { class: 'sc-name' }, h('b', { text: r.name }), h('span', { class: 'mini', text: ` ${r.code} · ${r.theme}` })),
         h('td', { class: 'sc-tot' }, h('b', { text: String(r.tot) }), scBar(r.tot, 100)),
-        h('td', null, scBar(r.sTheme, 25)), h('td', null, scBar(r.sVol, 25)), h('td', null, scBar(r.sBuy, 25)), h('td', null, scBar(r.sChart, 25)),
+        h('td', null, scBar(r.sTheme, 25, 'a')), h('td', null, scBar(r.sVol, 25, 'b')), h('td', null, scBar(r.sBuy, 25, 'c')), h('td', null, scBar(r.sChart, 25, 'd')),
         h('td', { text: pxFmt(r.rec[RF.price], mkt) }),
         h('td', { class: dirCls(r.r1m), text: sp(r.r1m) }),
         h('td', { text: fx1(r.vr, 2) + '배' }));
@@ -124,11 +139,11 @@ function renderScreen() {
           h('button', { class: 'btn sm primary', type: 'button', text: '차트·배당 자세히 보기', onclick: e => { e.stopPropagation(); openStock(stockIdOf(r.it)); } })))));
     });
     card.append(h('div', { class: 'tblw' }, h('table', { class: 'ftbl sc-tbl' }, h('thead', null, h('tr', null,
-      ...['순위', '종목', '종합(100)', '테마', '거래량', '매수세', '차트', '현재가', '1개월', '거래량 변화'].map(x => h('th', { text: x })))), tb)));
+      ...['순위', '종목', '종합(100)', '🔥 테마', '📊 거래량', '🏦 매수세', '📈 차트', '현재가', '1개월', '거래량 변화'].map(x => h('th', { text: x })))), tb)));
     if (list.length > SC.limit) card.append(h('div', { style: 'text-align:center;margin-top:10px' }, h('button', { class: 'btn sm', type: 'button', text: `50개 더 보기 (${SC.limit}/${list.length.toLocaleString('ko-KR')})`, onclick: () => { SC.limit += 50; renderScreen(); } })));
   }
   box.append(card);
-  box.append(h('p', { class: 'mini', style: 'margin-top:10px', text: '점수는 과거 종가·거래량을 규칙대로 계산한 값이며 매수 추천이 아닙니다. 외국인·기관 매매 자료는 이 앱에 없어 ‘매수세’는 오른 날 거래량 비중으로 추정합니다. 실적·뉴스와 함께 판단하세요. 이 분석은 참고용입니다.' }));
+  box.append(h('p', { class: 'mini', style: 'margin-top:10px', text: '점수는 과거 종가·거래량을 규칙대로 계산한 값이며 매수 추천이 아닙니다. 테마는 직접 고른 시장 테마 목록(종목이 빠져 있을 수 있음)이고, 외국인·기관 매매 자료는 이 앱에 없어 ‘매수세’는 오른 날 거래량 비중으로 추정합니다. 실적·뉴스와 함께 판단하세요. 이 분석은 참고용입니다.' }));
 }
 function goScreen() {
   if (isPending()) commit();

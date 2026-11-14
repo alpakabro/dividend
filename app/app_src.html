@@ -6,7 +6,7 @@
 <title>월배당 포트폴리오 시뮬레이터</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 :root{
   color-scheme: light;
@@ -543,6 +543,39 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   .top-r{width:100%}.gsearch{flex:1 1 100%}.gsearch input{flex:1;width:auto;min-width:0}.top h1{font-size:18px}.dt-price{text-align:left}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media print{.controls,.actions,.addform,.pick-tools,.hold-foot .btn,.adv-fab,.adv-panel{display:none}.card,.tile{break-inside:avoid}}
+
+/* ── 아기자기 테마(2026-11): 파스텔 색·둥근 모서리·둥근 제목 글꼴. 기존 규칙 위에 덮어쓰는 층 ── */
+:root{--page:#fff8f3;--surface-2:#fff4ec;--hover:#ffefe4;--grid:#f6ebe2;--line:rgba(120,70,40,.10);--line-strong:rgba(120,70,40,.20);
+  --accent:#ffb8a6;--accent-2:#ffd9cf;--accent-ink:#4a1d12;--radius:18px;--shadow:0 10px 30px rgba(230,130,100,.18);--soft:0 3px 14px rgba(230,140,110,.10);
+  --cute:"Jua","Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --p1:#ffb8a6;--p2:#ffd98a;--p3:#a8dcc0;--p4:#b9c8f5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--page:#17131a;--surface:#211c25;--surface-2:#28222d;--hover:#302935;--grid:#322b37;--line:rgba(255,220,230,.09);--line-strong:rgba(255,220,230,.18);--accent:#ffb8a6;--accent-2:#5a3a36;--accent-ink:#3a150c;--shadow:0 10px 30px rgba(0,0,0,.5);--soft:0 3px 14px rgba(0,0,0,.25)}}
+:root[data-theme="dark"]{--page:#17131a;--surface:#211c25;--surface-2:#28222d;--hover:#302935;--grid:#322b37;--line:rgba(255,220,230,.09);--line-strong:rgba(255,220,230,.18);--accent:#ffb8a6;--accent-2:#5a3a36;--accent-ink:#3a150c;--shadow:0 10px 30px rgba(0,0,0,.5);--soft:0 3px 14px rgba(0,0,0,.25)}
+.top h1,.card-h h2,.pa-top h2,.macro-h h2,.pf-h h2,details.card summary,.md-ttl,.dt-name,.adv-ph b{font-family:var(--cute);font-weight:400;letter-spacing:0}
+.top h1{font-size:24px}.card-h h2,details.card summary{font-size:16px}.pa-top h2{font-size:22px}.macro-h h2{font-size:16px}
+.card,.tile,.macro,.controls{border-color:transparent;box-shadow:var(--soft)}
+.tile.hero{background:linear-gradient(135deg,var(--accent-2),var(--surface) 70%)}
+.tile.hero .val{font-family:var(--cute);font-weight:400;letter-spacing:0}
+.btn,.seg,select,.inp,.gsearch input,.sbar input,.md-head input{border-radius:999px}
+.btn.icon{border-radius:50%}
+.btn.primary,.btn.query,.btn.dark,.seg button[aria-pressed="true"],.mtog button[aria-pressed="true"],.tag.rec,.adv-fab,.adv-q{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover,.btn.query:hover,.btn.dark:hover{opacity:1;filter:brightness(.96)}
+.adv-fab.on{background:var(--surface);color:var(--ink)}
+.switch input:checked{background:var(--accent)}
+.btn{transition:transform .12s}.btn:active{transform:scale(.96)}
+.sbar,.cfields,.addform,.mtile,.key3 .kc,.scen3 .sc,.box3>div,.ai,.ta-sum,.hold-issues,.dt-form{border-radius:14px}
+.chip{border-radius:999px}.tag{border-radius:6px}
+.menu-list{border-radius:16px}.menu-list .btn{border-radius:10px}
+.modal-panel,.adv-panel{border-radius:22px}
+.empty{border-radius:14px}
+.sc-bar{height:8px;border-radius:4px;background:var(--grid)}.sc-bar i{background:var(--accent);border-radius:4px}
+.sc-bar.a i{background:var(--p1)}.sc-bar.b i{background:var(--p2)}.sc-bar.c i{background:var(--p3)}.sc-bar.d i{background:var(--p4)}
+.sc-theme{border-radius:16px;padding:10px 12px;border-color:transparent;background:var(--surface-2);position:relative;transition:transform .12s}
+.sc-theme:hover{transform:translateY(-2px);background:var(--hover)}
+.sc-theme[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent);background:var(--surface)}
+.sc-emo{font-size:22px;line-height:1.2}
+.sc-tot b{font-family:var(--cute);font-weight:400;font-size:15px}
+@media (max-width:720px){.modal-panel{border-radius:0}}
 </style>
 </head>
 <body>
@@ -550,7 +583,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 
   <header class="top">
     <div class="top-l">
-      <h1>월배당 포트폴리오 시뮬레이터</h1>
+      <h1>🐷 월배당 포트폴리오 시뮬레이터</h1>
       <p class="sub">국내·미국 배당주로 매달 배당 받기 · 종가 국내 {{KR_D}} · 미국 {{US_DS}} · 원/달러 {{FX}}원</p>
       <p class="sub" id="dbLoading" role="status">종목 데이터를 불러오는 중…</p>
     </div>
@@ -560,7 +593,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         <button class="btn query" type="submit">조회</button>
       </form>
       <button class="btn primary" id="btnDone" title="지금 보유 종목과 종목 구성으로 포트폴리오 분석 화면을 엽니다">포트폴리오 완성 →</button>
-      <button class="btn" id="btnScreen" title="테마·거래량·매수세·차트 4가지 조건을 점수로 매겨 종목 후보를 추립니다">종목 분석기</button>
+      <button class="btn" id="btnScreen" title="테마·거래량·매수세·차트 4가지 조건을 점수로 매겨 종목 후보를 추립니다">🔎 종목 분석기</button>
       <button class="btn" id="btnPf" title="보유 종목·종목 구성·가정을 이름 붙여 여러 개 저장하고 불러옵니다 (이 브라우저에 저장)">내 포트폴리오</button>
       <button class="btn icon" id="btnTheme" aria-label="밝은/어두운 테마 전환" title="테마 전환"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>
       <details class="menu" id="moreMenu">
@@ -610,7 +643,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
     <div class="col">
       <section class="card" id="holdCard" aria-labelledby="holdTitle">
         <div class="card-h">
-          <div><h2 id="holdTitle">보유 종목 → 초기 투자금</h2><p>지금 가진 주식과 바로 넣을 현금</p></div>
+          <div><h2 id="holdTitle">🧺 보유 종목 → 초기 투자금</h2><p>지금 가진 주식과 바로 넣을 현금</p></div>
         </div>
         <form class="sbar" id="holdSearch" autocomplete="off">
           <span class="lab">보유 종목 찾기</span>
@@ -634,7 +667,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 
       <section class="card" id="pickCard" aria-labelledby="pickTitle">
         <div class="card-h">
-          <div><h2 id="pickTitle">종목 구성 (매달 투자할 종목)</h2><p>체크로 담고 비중(%)을 넣은 뒤 조회 · 종목명을 누르면 상세</p></div>
+          <div><h2 id="pickTitle">🧩 종목 구성 (매달 투자할 종목)</h2><p>체크로 담고 비중(%)을 넣은 뒤 조회 · 종목명을 누르면 상세</p></div>
         </div>
         <form class="sbar" id="pickSearch" autocomplete="off">
           <span class="lab">목록 걸러보기</span>
@@ -678,7 +711,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
       </section>
 
       <section class="card">
-        <div class="card-h"><div><h2>구성 비중</h2><p>매달 투자 · 지금 보유 · 미래 예상</p></div></div>
+        <div class="card-h"><div><h2>🥧 구성 비중</h2><p>매달 투자 · 지금 보유 · 미래 예상</p></div></div>
         <div id="mix"></div>
       </section>
     </div>
@@ -686,7 +719,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
     <div class="col">
       <figure class="card" id="calCard">
         <div class="card-h">
-          <div><h2>월별 배당 캘린더</h2><p id="calSub"></p></div>
+          <div><h2>📅 월별 배당 캘린더</h2><p id="calSub"></p></div>
           <div class="r"><button class="btn sm" data-view="cal" aria-pressed="false">표 보기</button></div>
         </div>
         <div class="legend" id="calLegend"></div>
@@ -696,7 +729,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
       <div class="two">
         <figure class="card" id="valCard">
           <div class="card-h">
-            <div><h2>자산 성장</h2><p id="valSub">평가액과 누적 원금</p></div>
+            <div><h2>🌱 자산 성장</h2><p id="valSub">평가액과 누적 원금</p></div>
             <div class="r"><button class="btn sm" data-view="val" aria-pressed="false">표 보기</button></div>
           </div>
           <div class="legend" id="valLegend"></div>
@@ -704,7 +737,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         </figure>
         <figure class="card" id="incCard">
           <div class="card-h">
-            <div><h2>월평균 배당 추이</h2><p id="incSub"></p></div>
+            <div><h2>💸 월평균 배당 추이</h2><p id="incSub"></p></div>
             <div class="r"><button class="btn sm" data-view="inc" aria-pressed="false">표 보기</button></div>
           </div>
           <div class="legend" id="incLegend"></div>
@@ -713,7 +746,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
       </div>
 
       <section class="card">
-        <div class="card-h"><div><h2>시나리오 비교</h2><p>지금 보유·종목 구성·가정에서 수익률 가정만 바꿨을 때</p></div></div>
+        <div class="card-h"><div><h2>🔮 시나리오 비교</h2><p>지금 보유·종목 구성·가정에서 수익률 가정만 바꿨을 때</p></div></div>
         <div id="scenTbl"></div>
       </section>
 
@@ -783,7 +816,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 </div>
 
 <dialog class="pf-dlg" id="pfDlg" aria-labelledby="pfTitle">
-  <div class="pf-h"><h2 id="pfTitle">내 포트폴리오</h2><button class="btn icon" type="button" id="pfClose" aria-label="닫기" title="닫기 (Esc)">×</button></div>
+  <div class="pf-h"><h2 id="pfTitle">💼 내 포트폴리오</h2><button class="btn icon" type="button" id="pfClose" aria-label="닫기" title="닫기 (Esc)">×</button></div>
   <p class="pf-note">보유 종목·종목 구성·가정을 이름을 붙여 저장해 두고 언제든 불러옵니다. 이 브라우저(기기)에만 저장되며, 다른 기기로 옮기려면 ⋯ 메뉴의 '공유 링크'나 '설정 내보내기'를 쓰세요.</p>
   <div class="pf-new"><input id="pfName" type="text" maxlength="30" placeholder="이름 (예: 은퇴 준비, 공격형)" aria-label="포트폴리오 이름"><button class="btn primary" type="button" id="pfSave">현재 상태 저장</button></div>
   <div class="pf-list" id="pfList"></div>

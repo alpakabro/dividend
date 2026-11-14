@@ -497,6 +497,20 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
 .pa-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .pa-top h2{font-size:18px;margin:0}
 .pa-top p{margin:2px 0 0;font-size:12px;color:var(--ink-2)}
+.sc-bar{display:inline-block;width:44px;height:6px;border-radius:3px;background:var(--line);overflow:hidden;vertical-align:middle}
+.sc-bar i{display:block;height:100%;background:var(--ink)}
+.sc-tot b{display:inline-block;min-width:22px;margin-right:6px;font-size:13px}.sc-tot .sc-bar{width:64px}
+.sc-row{cursor:pointer}.sc-row:hover td{background:var(--hover)}
+.sc-tbl td.sc-name{text-align:left;white-space:normal;min-width:150px}.sc-tbl th:nth-child(2){text-align:left}
+.sc-det td{text-align:left!important;white-space:normal!important;background:var(--surface-2);padding:10px 12px!important}
+.sc-det ul{margin:0;padding-left:18px;font-size:12px;line-height:1.7;color:var(--ink-2)}.sc-det li b{color:var(--ink)}
+.sc-act{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.sc-themes{margin-bottom:12px}
+.sc-tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.sc-theme{display:flex;flex-direction:column;gap:2px;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);cursor:pointer;font-size:11.5px;color:var(--ink-2);min-width:0}
+.sc-theme b{font-size:12.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-theme:hover{background:var(--hover)}.sc-theme[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+#viewScreen select{height:32px;max-width:220px;font-size:12px}
 .pa-set{display:flex;gap:10px 18px;flex-wrap:wrap;align-items:flex-end}
 .pa-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:12px}
 .pa-grid .full{grid-column:1/-1}
@@ -546,6 +560,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
         <button class="btn query" type="submit">조회</button>
       </form>
       <button class="btn primary" id="btnDone" title="지금 보유 종목과 종목 구성으로 포트폴리오 분석 화면을 엽니다">포트폴리오 완성 →</button>
+      <button class="btn" id="btnScreen" title="테마·거래량·매수세·차트 4가지 조건을 점수로 매겨 종목 후보를 추립니다">종목 분석기</button>
       <button class="btn" id="btnPf" title="보유 종목·종목 구성·가정을 이름 붙여 여러 개 저장하고 불러옵니다 (이 브라우저에 저장)">내 포트폴리오</button>
       <button class="btn icon" id="btnTheme" aria-label="밝은/어두운 테마 전환" title="테마 전환"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 3a7 7 0 0 1 0 14z" fill="currentColor"/></svg></button>
       <details class="menu" id="moreMenu">
@@ -764,6 +779,7 @@ details.sub summary{cursor:pointer;font-size:11.5px;color:var(--ink-2)}
   </div>
 
   <div id="viewAnalysis" hidden></div>
+  <div id="viewScreen" hidden></div>
 </div>
 
 <dialog class="pf-dlg" id="pfDlg" aria-labelledby="pfTitle">
@@ -2053,6 +2069,7 @@ $('#pickSearch').addEventListener('submit', e => { e.preventDefault(); openSearc
 $('#pickQ').value = state.pickQ || '';
 $('#pickQ').addEventListener('input', e => { state.pickQ = e.target.value; renderPicker(); });
 $('#btnDone').addEventListener('click', goAnalysis);
+$('#btnScreen').addEventListener('click', goScreen);
 $('#btnDone2').addEventListener('click', goAnalysis);
 initModal();
 renderMacro();

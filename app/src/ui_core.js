@@ -263,11 +263,11 @@ function checkCustomLookup() {
 function goAnalysis() {
   if (isPending()) commit();
   state.view = 'analysis';
-  $('#viewMain').hidden = true; $('#macro').hidden = true; $('#viewAnalysis').hidden = false;
+  $('#viewMain').hidden = true; $('#macro').hidden = true; $('#viewScreen').hidden = true; $('#viewAnalysis').hidden = false;
   renderPA(); window.scrollTo(0, 0);
 }
 function goMain() {
   state.view = 'main';
-  $('#viewAnalysis').hidden = true; $('#viewMain').hidden = false; $('#macro').hidden = false;
+  $('#viewAnalysis').hidden = true; $('#viewScreen').hidden = true; $('#viewMain').hidden = false; $('#macro').hidden = false;
   renderAll(); window.scrollTo(0, 0);
 }

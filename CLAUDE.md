@@ -25,7 +25,7 @@
 | `pipeline/fetch_kr_sector.py`, `pipeline/kr_sector.csv` | 국내 상장사 업종(KRX KIND 표준산업분류·주요제품)을 받아 앱 섹터로 매핑한 표(git 포함). `add_etf.py`가 국내 주식 레코드의 `sector`·`industry`에 넣고, `recSectorKo`가 `KR_SECTOR` 다음 순위로 쓴다. 우선주는 보통주 코드로 연결. 매핑은 규칙 기반이라 종목 창에 KRX 업종명을 함께 표시 |
 | `pipeline/fetch_stock_div.py` | 개별 주식 배당락 이력 수집(야후 파이낸스, 2021~) → `pipeline/raw_div/stock_div.csv`(git 제외). 지급월 추정·성장 가정·배당 정보 조립 함수는 여기 있고 `add_etf.py`가 가져다 쓴다 |
 | `pipeline/refresh.py` | **데이터 자동 갱신 본체**(4절): 수집(ETF·주식 배당) → DB → 병합 → 메타 → 매크로 타일 → 빌드 → 검증 → 커밋. `test_refresh.py`는 그 도우미 함수 점검 |
-| `.github/workflows/refresh.yml` | 매일 08:00 KST(화~토) GitHub Actions에서 `refresh.py --push` 정기 실행, 수동 실행(Run workflow)도 가능 |
+| `.github/workflows/refresh.yml` | 매일 08:00 KST(화~토, 미국 종가)와 17:30 KST(월~금, 국내 당일 종가) GitHub Actions에서 `refresh.py --push` 정기 실행, 수동 실행(Run workflow)도 가능 |
 | `desktop/app.py`, `desktop/build_exe.py` | 윈도우 PC 프로그램: pywebview 창(Edge WebView2)으로 공개 사이트를 열고, 오프라인이면 exe 안의 `index.html` 사본을 연다. `build_exe.py`가 PyInstaller로 `desktop/dist/월배당시뮬레이터.exe`(단일 파일, git 제외)를 만든다 |
 | 브랜치 `etf-job` | ETF 수집 GitHub Actions(`.github/workflows/etf-data.yml`, `tools/etf/*.py`) |
 | 브랜치 `etf-data`, `etf-data-us` | 수집 결과(국내 ETF + 주요 미국 ETF / 미국 ETF 전체) |
@@ -117,11 +117,11 @@ git add -A && git commit -m "..." && git push origin main            # GitHub Pa
 
 `pipeline/refresh.py`가 전 과정을 한 번에 한다: **DB 생성 → (새 종가일 때만) ETF 수집 → 주식 배당 수집 → 병합 → 메타(환율·지수·종목 수) → 매크로 지표 타일 → 빌드 → 검증 → 커밋**.
 
-- **정기 실행:** `.github/workflows/refresh.yml`이 매일 한국시간 08:00(화~토)에 GitHub Actions에서 `refresh.py --push`를 돌린다. 새 종가가 있으면 `index.html`·`db.js`·`app/data/stock_db_full.js`·`app/data/meta.json`(·`macro_report.json`)을 main에 커밋하고 GitHub Pages가 배포한다. 데이터 날짜가 그대로면 "변동 없음"으로 끝난다(커밋 없음). 검증에 실패하면 커밋하지 않고 끝나며 GitHub가 소유자에게 이메일을 보낸다
+- **정기 실행:** `.github/workflows/refresh.yml`이 매일 한국시간 08:00(화~토)과 17:30(월~금, 국내 장 마감 뒤)에 GitHub Actions에서 `refresh.py --push`를 돌린다. 새 종가가 있으면 `index.html`·`db.js`·`app/data/stock_db_full.js`·`app/data/meta.json`(·`macro_report.json`)을 main에 커밋하고 GitHub Pages가 배포한다. 데이터 날짜가 그대로면 "변동 없음"으로 끝난다(커밋 없음). 검증에 실패하면 커밋하지 않고 끝나며 GitHub가 소유자에게 이메일을 보낸다
 - **수동 실행:** GitHub → Actions → refresh → Run workflow (`force`: 날짜가 같아도 다시 빌드·배포, `steps`: 일부 단계만). 실행 페이지의 요약(Summary)에 날짜·환율·지수·종목 수·검증 결과·경고가 나오고, `artifact.html`과 `refresh.log`를 내려받을 수 있다(14일 보관)
 - **내 컴퓨터에서:** `python3 pipeline/refresh.py` (`--steps db,etf,div,merge,meta,macro,build,verify,commit` 중 골라 쉼표로, `--force`, `--push`). 필요 패키지는 3절. 기록은 `pipeline/refresh.log`
 - **단계별 하는 일**
-  - `db`: 올해 marcap 파일과 미국 가격 파일을 지우고 `build_db.py`(FinanceData/marcap 2016~올해 + us-stock-data) → `pipeline/stock_db.js`, `check_db.py`로 점검. 새해 첫 거래일 전에는 올해 파일이 없어 전년도까지로 만든다
+  - `db`: 올해 marcap 파일과 미국 가격 파일을 지우고 `build_db.py`(FinanceData/marcap 2016~올해 + us-stock-data) → `pipeline/stock_db.js`, `check_db.py`로 점검. **marcap은 하루쯤 늦게 올라오므로** `kr_supplement`가 marcap 마지막 날 이후 거래일(보통 하루)을 야후 파이낸스 일봉(수정 전 종가·고저·거래량)으로 보충한다: 기준일 종가가 marcap과 0.5% 넘게 다르거나, 그날 일봉이 없거나, 하루 30.5% 넘게 움직인 종목(권리락·분할 의심)은 전일 종가 유지·거래량 0, 실제 값이 들어간 종목이 85% 미만인 날짜는 보충하지 않음, 장중(한국시간 16:40 전)에는 오늘 제외, 거래대금은 근사·시가총액은 전일 주식 수×종가, 그날 신규 상장은 다음 날 반영. 실패하면 경고만 남기고 marcap 날짜까지만 쓴다(`KR_SUPPLEMENT=0`으로 끔). 보충분은 다음 갱신 때 marcap 실제 값으로 바뀐다. 새해 첫 거래일 전에는 올해 파일이 없어 전년도까지로 만든다
   - `etf`: etf-job 브랜치의 `tools/etf/fetch_etf.py`(국내 ETF 전체 + 주요 미국 ETF 168개)·`fetch_us_all.py`(미국 ETF 전체)를 받아 실행 → `pipeline/raw_etf/etf-data`, `etf-data-us` (약 20분). etf-job 브랜치의 Actions는 그대로 있어 따로 돌려도 된다
   - `div`: `fetch_stock_div.py`가 DB의 모든 주식(약 4,800개)의 배당락 이력을 야후 파이낸스에서 받는다(80개씩 묶음, 약 6분) → `pipeline/raw_div/stock_div.csv`. 이력 있는 종목이 1,000개 미만이면 실패
   - `merge`: `fetch_kr_sector.py`(KIND, 실패 시 기존 csv)로 국내 업종을 갱신한 뒤 `add_etf.py`(`MIN_ADV=2000000`) → `app/data/stock_db_full.js`. `raw_div`가 있으면 주식 레코드에도 `div`를 붙인다(최근 12개월 배당 있는 종목 수는 `meta.json`의 `div_counts`, 검증 관문이 이전 커밋의 90% 이상인지 확인)

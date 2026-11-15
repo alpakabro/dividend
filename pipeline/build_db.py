@@ -100,6 +100,76 @@ def kr_index(allr):
     return lv
 
 # ───────── 국내 ─────────
+KR_MKTS = ['KOSPI', 'KOSDAQ', 'KOSDAQ GLOBAL']
+KR_COLS = ['Date', 'Code', 'Name', 'Close', 'Changes', 'ChangesRatio', 'Amount', 'Marcap', 'Stocks', 'Market', 'High', 'Low', 'Volume']
+def kr_last_session(now_utc=None):
+    """장이 끝난 마지막 국내 거래 가능 날짜(한국시간). 장중·마감 직후(16:40 전)에는 오늘을 빼서 덜 끝난 값이 들어가지 않게 한다"""
+    now = (now_utc or dt.datetime.now(dt.timezone.utc)).astimezone(dt.timezone(dt.timedelta(hours=9)))
+    return now.date() if now.hour * 60 + now.minute >= 16 * 60 + 40 else now.date() - dt.timedelta(days=1)
+
+def kr_supplement_rows(base, bars, ld, until, min_cover=0.85):
+    """marcap 마지막 날(ld) 이후 거래일의 행을 야후 일봉으로 만든다 (순수 함수, test_refresh.py에서 점검).
+    base: ld 날짜의 marcap 행(KR_COLS), bars: {종목코드: [(날짜, 종가, 고가, 저가, 거래량)]} 수정 전 가격, until: 넣어도 되는 마지막 날짜
+    · ld 종가가 marcap과 0.5% 넘게 다른 종목(야후 값 불신), 그날 일봉이 없는 종목, 하루 30.5% 넘게 움직인 종목(권리락·분할 의심)은
+      전일 종가를 그대로 잇고 거래량 0으로 둔다(다음 날 marcap이 올라오면 실제 값으로 바뀜)
+    · 어느 날짜에 실제 값이 들어간 종목이 min_cover 미만이면 그 날짜부터는 보충하지 않는다(휴장·야후 장애)
+    반환: (행 목록, 보충한 날짜 목록, 날짜별 실제 값 종목 수)"""
+    ld = pd.Timestamp(ld); until = pd.Timestamp(until)
+    trust = {}
+    for code, close in zip(base['Code'], base['Close']):
+        b = {pd.Timestamp(d): (c, h, l, v) for d, c, h, l, v in bars.get(code, []) if c == c and c > 0}
+        if ld in b and close > 0 and abs(b[ld][0] / close - 1) <= 0.005: trust[code] = b
+    days = sorted({d for b in trust.values() for d in b if ld < d <= until})
+    rows, used, cover = [], [], {}
+    prev = {r.Code: r for r in base.itertuples(index=False)}
+    for d in days:
+        out, n_real = [], 0
+        for code, p in prev.items():
+            bar = trust.get(code, {}).get(d)
+            real = bar is not None and p.Close > 0 and abs(bar[0] / p.Close - 1) <= 0.305
+            c, hi, lo, v = (bar if real else (p.Close, p.Close, p.Close, 0))
+            c = int(round(c)); v = int(v) if v == v else 0; n_real += real
+            out.append({'Date': d, 'Code': code, 'Name': p.Name, 'Close': c, 'Changes': c - int(p.Close), 'ChangesRatio': round((c / p.Close - 1) * 100, 2) if p.Close > 0 else 0.0,
+                        'Amount': int(v * (hi + lo + c) / 3), 'Marcap': int(p.Stocks * c), 'Stocks': p.Stocks, 'Market': p.Market, 'High': int(round(hi)), 'Low': int(round(lo)), 'Volume': v})
+        cover[str(d.date())] = n_real
+        if n_real < min_cover * len(prev): break
+        rows += out; used.append(str(d.date()))
+        prev = {r['Code']: pd.Series(r) for r in out}
+    return rows, used, cover
+
+def kr_supplement(last):
+    """marcap(하루쯤 늦게 올라옴)의 마지막 날 이후 거래일을 야후 파이낸스 일봉으로 보충 → DataFrame(KR_COLS) 또는 None.
+    실패하면 경고만 남기고 marcap 날짜까지만 쓴다. KR_SUPPLEMENT=0이면 건너뜀. 거래대금은 (고+저+종)/3×거래량 근사, 시가총액은 전일 주식 수×종가"""
+    if os.environ.get('KR_SUPPLEMENT') == '0': return None
+    ld = last['Date'].max(); until = kr_last_session()
+    if until <= ld.date(): print('KR 보충: marcap이 최신', ld.date()); return None
+    try:
+        import yfinance as yf
+        base = last[(last['Date'] == ld) & last['Market'].isin(KR_MKTS)].drop_duplicates('Code', keep='last')
+        sym = {f"{c}.{'KQ' if m.startswith('KOSDAQ') else 'KS'}": c for c, m in zip(base['Code'], base['Market'])}
+        syms = list(sym); bars = {}; t0 = time.time()
+        for i in range(0, len(syms), 100):
+            part = syms[i:i + 100]; data = None
+            for t in range(3):
+                try:
+                    data = yf.download(part, start=str(ld.date()), end=str(until + dt.timedelta(days=1)), auto_adjust=False, actions=False, group_by='ticker', threads=True, progress=False); break
+                except Exception as e:
+                    print('KR 보충 yf ERR', i, e); time.sleep(8 * (t + 1))
+            if data is None or data.empty: continue
+            for s in part:
+                try: sub = (data[s] if isinstance(data.columns, pd.MultiIndex) else data).dropna(subset=['Close'])
+                except KeyError: continue
+                bars[sym[s]] = [(pd.Timestamp(d).tz_localize(None).normalize(), float(r['Close']), float(r['High']), float(r['Low']), float(r['Volume'])) for d, r in sub.iterrows()]
+            time.sleep(1.0)
+        rows, used, cover = kr_supplement_rows(base, bars, ld, until)
+        print(f'KR 보충: marcap {ld.date()} 이후 {used or "없음"} · 종목 {len(base)} 중 야후 일봉 {len(bars)} · 날짜별 실제 값 {cover} ({time.time() - t0:.0f}초)')
+        if not rows: return None
+        sup = pd.DataFrame(rows, columns=KR_COLS)
+        for c in ('Close', 'Changes', 'Amount', 'Marcap', 'Stocks', 'High', 'Low', 'Volume'): sup[c] = sup[c].astype('int64')
+        return sup
+    except Exception as e:
+        print('⚠ KR 보충 실패(marcap 날짜까지만 사용):', repr(e)); return None
+
 def build_kr():
     years = list(range(2016, dt.date.today().year + 1))
     for y in years:
@@ -108,15 +178,18 @@ def build_kr():
         except RuntimeError:
             if y != years[-1]: raise
             years.pop(); print('marcap', y, '파일이 아직 없음(새해 첫 거래일 전) → 전년도까지 사용')
-    last = pd.read_parquet(f'marcap-{years[-1]}.parquet', columns=['Date', 'Code', 'Name', 'Close', 'Changes', 'ChangesRatio', 'Amount', 'Marcap', 'Stocks', 'Market', 'High', 'Low', 'Volume'])
+    last = pd.read_parquet(f'marcap-{years[-1]}.parquet', columns=KR_COLS)
     last['Date'] = pd.to_datetime(last['Date'])
+    sup = kr_supplement(last)                      # marcap보다 뒤의 거래일(보통 하루)을 야후 일봉으로 보충
+    if sup is not None: last = pd.concat([last, sup], ignore_index=True)
     ld = last['Date'].max()
-    snap = last[(last['Date'] == ld) & (last['Market'].isin(['KOSPI', 'KOSDAQ', 'KOSDAQ GLOBAL']))].copy()
+    snap = last[(last['Date'] == ld) & (last['Market'].isin(KR_MKTS))].copy()
     codes = set(snap['Code'])
     parts = []; full = []
     for y in years:
         df = pd.read_parquet(f'marcap-{y}.parquet', columns=['Date', 'Code', 'Close', 'Changes', 'Volume', 'Amount', 'Marcap', 'Market'])
         df['Date'] = pd.to_datetime(df['Date'])
+        if sup is not None and y == years[-1]: df = pd.concat([df, sup[list(df.columns)]], ignore_index=True)
         full.append(df[['Date', 'Code', 'Close', 'Changes', 'Volume', 'Marcap', 'Market']])   # 지수용: 상폐 포함 전 종목
         df = df.loc[df['Code'].isin(codes), ['Date', 'Code', 'Close', 'Changes', 'Volume', 'Amount']]
         parts.append(df)

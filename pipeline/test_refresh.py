@@ -175,4 +175,24 @@ assert S('기타 금융업', '메리츠금융지주', '투자사업') == '금융
 assert S('기타 금융업', '롯데리츠', '부동산 임대') == '부동산' and S('부동산 임대 및 공급업', '제이알글로벌리츠', '') == '부동산'
 assert S('소프트웨어 개발 및 공급업', '메리츠화재', '') != '부동산'                                   # '메리츠'가 리츠 규칙에 걸리면 안 됨
 assert fks.common_code('000087') == '000080' and fks.common_code('0035S0') == '0035S0'   # 우선주 → 보통주, 새 형식 코드는 그대로
+# 국내 최신 거래일 보충 (marcap 마지막 날 이후를 야후 일봉으로)
+import datetime as dt, pandas as pd, build_db
+U = dt.timezone.utc
+assert build_db.kr_last_session(dt.datetime(2026, 11, 13, 23, 0, tzinfo=U)) == dt.date(2026, 11, 13)   # 한국 14일 08:00 → 13일까지
+assert build_db.kr_last_session(dt.datetime(2026, 11, 16, 5, 0, tzinfo=U)) == dt.date(2026, 11, 15)    # 한국 16일 14:00(장중) → 오늘 제외
+assert build_db.kr_last_session(dt.datetime(2026, 11, 16, 8, 30, tzinfo=U)) == dt.date(2026, 11, 16)   # 한국 16일 17:30(마감 뒤) → 오늘 포함
+_b = pd.DataFrame([dict(Date=pd.Timestamp('2026-11-12'), Code=c, Name=c, Close=cl, Changes=0, ChangesRatio=0.0, Amount=1, Marcap=cl * 10, Stocks=10, Market='KOSPI', High=cl, Low=cl, Volume=5)
+                   for c, cl in (('A', 100), ('B', 200), ('C', 300), ('D', 400), ('E', 500), ('F', 600), ('G', 700), ('H', 800), ('I', 900), ('J', 1000))])
+_d0, _d1 = '2026-11-12', '2026-11-13'
+_bars = {c: [(_d0, cl, cl, cl, 5), (_d1, cl * 1.1, cl * 1.2, cl, 7)] for c, cl in zip(_b['Code'], _b['Close'])}
+_bars['A'] = [(_d0, 100, 100, 100, 5)]                                   # 그날 일봉 없음 → 전일 종가 유지·거래량 0
+_bars['B'] = [(_d0, 100, 100, 100, 5), (_d1, 110, 110, 110, 7)]          # 기준일 종가가 marcap과 다름(분할 등) → 불신, 유지
+_bars['C'] = [(_d0, 300, 300, 300, 5), (_d1, 60, 60, 60, 7)]             # 하루 ▲80% → 권리락·분할 의심, 유지
+_rows, _used, _cov = build_db.kr_supplement_rows(_b, _bars, _d0, _d1, min_cover=0.6)
+_r = {x['Code']: x for x in _rows}
+assert _used == [_d1] and _cov == {_d1: 7} and len(_rows) == 10
+assert (_r['D']['Close'], _r['D']['Changes'], _r['D']['ChangesRatio'], _r['D']['Marcap'], _r['D']['Volume']) == (440, 40, 10.0, 4400, 7)
+assert all((_r[c]['Close'], _r[c]['Changes'], _r[c]['Volume']) == (cl, 0, 0) for c, cl in (('A', 100), ('B', 200), ('C', 300)))
+assert build_db.kr_supplement_rows(_b, _bars, _d0, _d1, min_cover=0.85)[0] == []      # 실제 값 종목이 너무 적으면 보충 안 함
+assert build_db.kr_supplement_rows(_b, _bars, _d0, _d0)[0] == []                       # 허용 날짜가 기준일이면 없음
 print('OK')

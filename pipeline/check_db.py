@@ -37,6 +37,8 @@ for code, mk in (('005930', 'KR'), ('AAPL', 'US')):
     else: raw = raw_us[raw_us['ticker'] == code].set_index('date')[['close', 'volume']]
     print(f'{code} ({r[2]}): d_off {r[12]}, len(d) {len(d)} = len(v) {len(v)}')
     for dt, c, q in list(zip(dates, d, v))[-5:]:
+        if pd.Timestamp(day(dt)) not in raw.index:      # marcap에 아직 없는 날 = build_db.kr_supplement가 야후 일봉으로 보충한 날
+            print(f'  {day(dt)}  close {c / scale:>10,.2f} (원본에 아직 없음 · 야후 보충)  volume {math.exp(q / 20) - 1:>14,.0f}'); continue
         rc, rv = raw.loc[pd.Timestamp(day(dt))].tolist()
         print(f'  {day(dt)}  close {c / scale:>10,.2f} (raw {rc:,.2f})  volume {math.exp(q / 20) - 1:>14,.0f} (raw {rv:,.0f}, q={q})')
 
